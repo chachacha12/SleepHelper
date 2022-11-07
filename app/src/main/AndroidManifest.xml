@@ -17,6 +17,9 @@
             android:name=".Login"
             android:exported="false" />
         <activity
+            android:name=".Join"
+            android:exported="false" />
+        <activity
             android:name=".RecommendTimeActivity"
             android:exported="false">
             <meta-data

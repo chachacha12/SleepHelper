@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "196671615474",
+    "project_id": "sleephelper-7dc42",
+    "storage_bucket": "sleephelper-7dc42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196671615474:android:b0232d9a21136c33d0fb6b",
+        "android_client_info": {
+          "package_name": "com.example.sleephelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "196671615474-pb8idb1k6b1pbioviah2nv8ujr5bc902.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sleephelper",
+            "certificate_hash": "919162f903f41b510fc3ec55e6756d9e9b29026d"
+          }
+        },
+        {
+          "client_id": "196671615474-b0cjgcrie3md4q14n0l4opld90en5ses.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkvoLmjhi0lFE8QnLSoKP2dK6lNBYprCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "196671615474-b0cjgcrie3md4q14n0l4opld90en5ses.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

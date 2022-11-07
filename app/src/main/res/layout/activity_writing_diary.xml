@@ -14,23 +14,12 @@
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/checkButton"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/back_imagebutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -41,7 +30,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginEnd="30dp"
                     android:text="00월 00일 수면일기"
                     android:textAlignment="center"
@@ -58,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="50dp"
-                    android:text="수면 컨디션 : "
+                    android:text="내 수면 컨디션 선택 : "
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -78,7 +67,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
                     android:layout_width="0dp"
-                    android:layout_height="300dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="30dp"
@@ -89,8 +78,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="40dp"
                         android:orientation="vertical"
@@ -99,17 +88,81 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:gravity="center"
+                            android:text="갤럭시 워치에서 받아온 정보"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/gotobedtimetextview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="잠자리에 들어간 시각을 입력해주세요"
+                                android:textColor="#F4F4F4"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/gotobedtimeEdittextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:ems="5"
+                                android:hint="0시간 0분"
+                                android:inputType="textPersonName"
+                                android:textColor="@color/dark_indigo"
+                                android:textColorHint="@color/orange" />
+                        </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/sleepclocktextview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="취침시각을 입력해주세요"
+                                android:textColor="#F4F4F4"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/sleepclockEdittextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:ems="5"
+                                android:hint="0시 0분"
+                                android:inputType="textPersonName"
+                                android:textColor="@color/dark_indigo"
+                                android:textColorHint="@color/orange" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/sleeptimetextview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="수면시간 :"
+                                android:text="수면시간을 입력해주세요"
                                 android:textColor="#F4F4F4"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -119,49 +172,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
-                                android:ems="10"
+                                android:ems="5"
                                 android:hint="0시간 0분"
                                 android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo" />
+                                android:textColor="@color/dark_indigo"
+                                android:textColorHint="@color/orange" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/gotobedtimetextview"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="취침시간 :"
-                                android:textColor="#F4F4F4"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/gotobedEdittextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:ems="10"
-                                android:hint="0시 0분"
-                                android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/waketimetextview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="기상시간 :"
+                                android:text="기상시각을 입력해주세요"
                                 android:textColor="#F4F4F4"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -171,23 +199,51 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
-                                android:ems="10"
+                                android:ems="5"
                                 android:hint="0시 0분"
                                 android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo" />
+                                android:textColor="@color/dark_indigo"
+                                android:textColorHint="@color/orange" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/outtobedtimetextview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="잠자리에서 벗어난 최종 시각을 입력해주세요"
+                                android:textColor="#F4F4F4"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/outtobedtimeEdittextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:ems="5"
+                                android:hint="0시간 0분"
+                                android:inputType="textPersonName"
+                                android:textColor="@color/dark_indigo"
+                                android:textColorHint="@color/orange" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/wakenumbertextview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="수면 중 깬 총 횟수 :"
+                                android:text="수면 중 깬 총 횟수를 입력해주세요"
                                 android:textColor="#F4F4F4"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -197,10 +253,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
-                                android:ems="10"
-                                android:hint="0번"
-                                android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo" />
+                                android:ems="5"
+                                android:hint="0"
+                                android:inputType="number"
+                                android:textColor="@color/dark_indigo"
+                                android:textColorHint="@color/orange" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -220,7 +277,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
                         android:layout_marginBottom="40dp"
                         android:orientation="vertical"
@@ -229,17 +286,27 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:gravity="center"
+                            android:text="해당사항만 입력해주세요"
+                            android:textColor="#FFFFFF"
+                            android:textSize="20sp" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/afternoonsleeptextview"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="낮잠시간 "
+                                android:text="낮잠 잔 시간을 입력해주세요"
                                 android:textColor="#F4F4F4"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -249,16 +316,19 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
-                                android:ems="10"
+                                android:ems="5"
                                 android:hint="0시간 0분"
                                 android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo" />
+                                android:textColor="@color/dark_indigo"
+                                android:textColorHint="@color/orange" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -272,152 +342,185 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                    android:layout_gravity="center_vertical"
+                                    android:orientation="horizontal">
 
-                                    <ImageView
-                                        android:id="@+id/coffee0_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        app:srcCompat="@drawable/coffee" />
-
-                                    <TextView
-                                        android:id="@+id/coffee0_text"
-                                        android:layout_width="match_parent"
+                                    <LinearLayout
+                                        android:id="@+id/coffeetag0"
+                                        android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="0잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                        <TextView
+                                            android:id="@+id/coffeetag0TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  0잔  "
+                                            android:textColor="#000"
+                                            android:textSize="12sp" />
 
-                                    <ImageView
-                                        android:id="@+id/coffee1_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/coffee" />
+                                    </LinearLayout>
 
-                                    <TextView
-                                        android:id="@+id/coffee1_text"
-                                        android:layout_width="match_parent"
+                                    <LinearLayout
+                                        android:id="@+id/coffeetag1"
+                                        android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="1잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
+                                        android:layout_marginLeft="5dp"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                        <TextView
+                                            android:id="@+id/coffeetag1TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  1잔  "
+                                            android:textColor="#000"
+                                            android:textSize="12sp" />
 
-                                    <ImageView
-                                        android:id="@+id/coffee2_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/coffee" />
+                                    </LinearLayout>
 
-                                    <TextView
-                                        android:id="@+id/coffee2_text"
-                                        android:layout_width="match_parent"
+                                    <LinearLayout
+                                        android:id="@+id/coffeetag2"
+                                        android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="2잔"
-                                        android:textColor="#000000" />
+                                        android:layout_marginLeft="5dp"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:id="@+id/coffeetag2TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  2잔  "
+                                            android:textColor="#000"
+                                            android:textSize="12dp" />
+
+                                    </LinearLayout>
+
+
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="7dp"
+                                    android:orientation="horizontal">
 
-                                    <ImageView
-                                        android:id="@+id/coffee3_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/coffee" />
-
-                                    <TextView
-                                        android:id="@+id/coffee3_text"
-                                        android:layout_width="match_parent"
+                                    <LinearLayout
+                                        android:id="@+id/coffeetag3"
+                                        android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="3잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                        <TextView
+                                            android:id="@+id/coffeetag3TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  3잔  "
+                                            android:textColor="#000"
+                                            android:textSize="12dp" />
 
-                                    <ImageView
-                                        android:id="@+id/coffee4_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/coffee" />
+                                    </LinearLayout>
 
-                                    <TextView
-                                        android:id="@+id/coffee4_text"
-                                        android:layout_width="match_parent"
+                                    <LinearLayout
+                                        android:id="@+id/coffeetag4"
+                                        android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="4잔"
-                                        android:textColor="#000000" />
+                                        android:layout_marginLeft="5dp"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:id="@+id/coffeetag4TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  4잔  "
+                                            android:textColor="#000"
+                                            android:textSize="12dp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/coffeetag5"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:id="@+id/coffeetag5TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  5잔 이상 "
+                                            android:textColor="#000"
+                                            android:textSize="12dp" />
+
+                                    </LinearLayout>
+
+
                                 </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/coffee5_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/coffee" />
-
-                                    <TextView
-                                        android:id="@+id/coffee5_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:text="5잔↑"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
                             </LinearLayout>
 
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/textView9"
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
-                            android:background="@color/dark_indigo"
-                            android:text="TextView"
-                            android:textColor="#1C1C1C" />
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -433,151 +536,184 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:orientation="horizontal">
 
-                                    <ImageView
-                                        android:id="@+id/beer0_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        app:srcCompat="@drawable/beer" />
-
-                                    <TextView
-                                        android:id="@+id/beer0_text"
-                                        android:layout_width="match_parent"
+                                    <LinearLayout
+                                        android:id="@+id/beertag0"
+                                        android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="0잔"
-                                        android:textColor="#000000" />
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:id="@+id/beertag0TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  0잔  "
+                                            android:textColor="#000"
+                                            android:textSize="12sp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/beertag1"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:id="@+id/beertag1TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  1잔  "
+                                            android:textColor="#000"
+                                            android:textSize="12sp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/beertag2"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:id="@+id/beertag2TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  2잔  "
+                                            android:textColor="#000"
+                                            android:textSize="12dp" />
+
+                                    </LinearLayout>
+
+
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="7dp"
+                                    android:orientation="horizontal">
 
-                                    <ImageView
-                                        android:id="@+id/beer1_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/beer" />
-
-                                    <TextView
-                                        android:id="@+id/beer1_text"
-                                        android:layout_width="match_parent"
+                                    <LinearLayout
+                                        android:id="@+id/beertag3"
+                                        android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="1잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                        <TextView
+                                            android:id="@+id/beertag3TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  3잔  "
+                                            android:textColor="#000"
+                                            android:textSize="12dp" />
 
-                                    <ImageView
-                                        android:id="@+id/beer2_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/beer" />
+                                    </LinearLayout>
 
-                                    <TextView
-                                        android:id="@+id/beer2_text"
-                                        android:layout_width="match_parent"
+                                    <LinearLayout
+                                        android:id="@+id/beertag4"
+                                        android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="2잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
+                                        android:layout_marginLeft="5dp"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                        <TextView
+                                            android:id="@+id/beertag4TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  4잔  "
+                                            android:textColor="#000"
+                                            android:textSize="12dp" />
 
-                                    <ImageView
-                                        android:id="@+id/beer3_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/beer" />
+                                    </LinearLayout>
 
-                                    <TextView
-                                        android:id="@+id/beer3_text"
-                                        android:layout_width="match_parent"
+                                    <LinearLayout
+                                        android:id="@+id/beertag5"
+                                        android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="3잔"
-                                        android:textColor="#000000" />
+                                        android:layout_marginLeft="5dp"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
+
+                                        <TextView
+                                            android:id="@+id/beertag5TextView"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:paddingLeft="8dp"
+                                            android:paddingTop="4dp"
+                                            android:paddingRight="8dp"
+                                            android:paddingBottom="4dp"
+                                            android:text="  5잔 이상 "
+                                            android:textColor="#000"
+                                            android:textSize="12dp" />
+
+                                    </LinearLayout>
+
+
                                 </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/beer4_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/beer" />
-
-                                    <TextView
-                                        android:id="@+id/beer4_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="4잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/beer5_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/beer" />
-
-                                    <TextView
-                                        android:id="@+id/beer5_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="5잔↑"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
                             </LinearLayout>
 
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/textView8"
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
-                            android:background="@color/dark_indigo"
-                            android:text="TextView"
-                            android:textColor="#1C1C1C" />
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -595,133 +731,181 @@
                                 android:orientation="horizontal">
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:orientation="vertical">
 
-                                    <ImageView
-                                        android:id="@+id/soju0_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        app:srcCompat="@drawable/soju" />
-
-                                    <TextView
-                                        android:id="@+id/soju0_text"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="0잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
+                                        android:layout_gravity="center_vertical"
+                                        android:orientation="horizontal">
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                        <LinearLayout
+                                            android:id="@+id/sojutag0"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
-                                    <ImageView
-                                        android:id="@+id/soju1_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/soju" />
+                                            <TextView
+                                                android:id="@+id/sojutag0TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  0잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
 
-                                    <TextView
-                                        android:id="@+id/soju1_text"
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/sojutag1"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/sojutag1TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  1잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/sojutag2"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/sojutag2TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  2잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="1잔"
-                                        android:textColor="#000000" />
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginTop="7dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:id="@+id/sojutag3"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/sojutag3TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  3잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/sojutag4"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/sojutag4TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  4잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/sojutag5"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/sojutag5TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  5잔 이상 "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
                                 </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/soju2_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/soju" />
-
-                                    <TextView
-                                        android:id="@+id/soju2_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="2잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/soju3_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/soju" />
-
-                                    <TextView
-                                        android:id="@+id/soju3_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="3잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/soju4_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/soju" />
-
-                                    <TextView
-                                        android:id="@+id/soju4_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="4잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/soju5_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/soju" />
-
-                                    <TextView
-                                        android:id="@+id/soju5_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="5잔↑"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
                             </LinearLayout>
 
                         </LinearLayout>
+
 
                         <TextView
                             android:id="@+id/textView12"
@@ -733,10 +917,12 @@
                             android:text="TextView"
                             android:textColor="#1C1C1C" />
 
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -751,151 +937,189 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal" >
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:orientation="vertical">
 
-                                    <ImageView
-                                        android:id="@+id/makgurli0_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        app:srcCompat="@drawable/makgurli" />
-
-                                    <TextView
-                                        android:id="@+id/makgurli0_text"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="0잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
+                                        android:layout_gravity="center_vertical"
+                                        android:orientation="horizontal">
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                        <LinearLayout
+                                            android:id="@+id/makgurlitag0"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
-                                    <ImageView
-                                        android:id="@+id/makgurli1_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/makgurli" />
+                                            <TextView
+                                                android:id="@+id/makgurlitag0TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  0잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
 
-                                    <TextView
-                                        android:id="@+id/makgurli1_text"
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/makgurlitag1"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/makgurlitag1TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  1잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/makgurlitag2"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/makgurlitag2TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  2잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="1잔"
-                                        android:textColor="#000000" />
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginTop="7dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:id="@+id/makgurlitag3"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/makgurlitag3TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  3잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/makgurlitag4"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/makgurlitag4TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  4잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/makgurlitag5"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/makgurlitag5TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  5잔 이상 "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
                                 </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/makgurli2_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/makgurli" />
-
-                                    <TextView
-                                        android:id="@+id/makgurli2_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="2잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/makgurli3_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/makgurli" />
-
-                                    <TextView
-                                        android:id="@+id/makgurli3_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="3잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/makgurli4_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/makgurli" />
-
-                                    <TextView
-                                        android:id="@+id/makgurli4_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="4잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/makgurli5_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/makgurli" />
-
-                                    <TextView
-                                        android:id="@+id/makgurli5_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="5잔↑"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
                             </LinearLayout>
 
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/textView13"
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
-                            android:background="@color/dark_indigo"
-                            android:text="TextView"
-                            android:textColor="#1C1C1C" />
-
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginBottom="100dp"
                             android:orientation="vertical">
 
@@ -912,133 +1136,180 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal" >
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:orientation="vertical">
 
-                                    <ImageView
-                                        android:id="@+id/wine0_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        app:srcCompat="@drawable/wine" />
-
-                                    <TextView
-                                        android:id="@+id/wine0_text"
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="0잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
+                                        android:layout_gravity="center_vertical"
+                                        android:orientation="horizontal">
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
+                                        <LinearLayout
+                                            android:id="@+id/winetag0"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
-                                    <ImageView
-                                        android:id="@+id/wine1_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/wine" />
+                                            <TextView
+                                                android:id="@+id/winetag0TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  0잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
 
-                                    <TextView
-                                        android:id="@+id/wine1_text"
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/winetag1"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/winetag1TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  1잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/winetag2"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/winetag2TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  2잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="1잔"
-                                        android:textColor="#000000" />
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginTop="7dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:id="@+id/winetag3"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/winetag3TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  3잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/winetag4"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/winetag4TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  4잔  "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:id="@+id/winetag5"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="5dp"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
+
+                                            <TextView
+                                                android:id="@+id/winetag5TextView"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="4dp"
+                                                android:paddingRight="8dp"
+                                                android:paddingBottom="4dp"
+                                                android:text="  5잔 이상 "
+                                                android:textColor="#000"
+                                                android:textSize="12dp" />
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
                                 </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/wine2_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/wine" />
-
-                                    <TextView
-                                        android:id="@+id/wine2_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="2잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/wine3_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/wine" />
-
-                                    <TextView
-                                        android:id="@+id/wine3_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="3잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/wine4_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/wine" />
-
-                                    <TextView
-                                        android:id="@+id/wine4_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="4잔"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/wine5_img"
-                                        android:layout_width="40dp"
-                                        android:layout_height="50dp"
-                                        android:layout_marginLeft="2dp"
-                                        app:srcCompat="@drawable/wine" />
-
-                                    <TextView
-                                        android:id="@+id/wine5_text"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="5잔↑"
-                                        android:textColor="#000000" />
-                                </LinearLayout>
-
                             </LinearLayout>
 
                         </LinearLayout>
@@ -1047,7 +1318,7 @@
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/checkButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1066,7 +1337,7 @@
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent">
 
-                </Button>
+                </android.widget.Button>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>

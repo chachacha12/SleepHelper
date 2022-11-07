@@ -15,12 +15,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         binding.btnLogin.setOnClickListener(){
             intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
-
 
         binding.btnJoin.setOnClickListener(){
             intent = Intent(this, Join::class.java)
