@@ -343,19 +343,20 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_gravity="center_vertical"
                                     android:orientation="horizontal">
 
                                     <LinearLayout
                                         android:id="@+id/coffeetag0"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/button2_round">
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/coffeetag0TextView"
@@ -363,6 +364,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -375,10 +377,11 @@
 
                                     <LinearLayout
                                         android:id="@+id/coffeetag1"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round">
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/coffeetag1TextView"
@@ -386,6 +389,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -398,10 +402,11 @@
 
                                     <LinearLayout
                                         android:id="@+id/coffeetag2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round">
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/coffeetag2TextView"
@@ -409,6 +414,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -419,12 +425,22 @@
 
                                     </LinearLayout>
 
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="7dp"
+                                    android:orientation="horizontal">
+
                                     <LinearLayout
                                         android:id="@+id/coffeetag3"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round">
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/coffeetag3TextView"
@@ -432,6 +448,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -444,10 +461,11 @@
 
                                     <LinearLayout
                                         android:id="@+id/coffeetag4"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round">
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/coffeetag4TextView"
@@ -455,6 +473,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -467,10 +486,11 @@
 
                                     <LinearLayout
                                         android:id="@+id/coffeetag5"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round">
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/coffeetag5TextView"
@@ -478,6 +498,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -515,7 +536,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -525,9 +546,10 @@
 
                                     <LinearLayout
                                         android:id="@+id/beertag0"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/button2_round">
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/beertag0TextView"
@@ -535,6 +557,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -547,10 +570,11 @@
 
                                     <LinearLayout
                                         android:id="@+id/beertag1"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round">
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/beertag1TextView"
@@ -558,6 +582,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -570,10 +595,11 @@
 
                                     <LinearLayout
                                         android:id="@+id/beertag2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round">
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/beertag2TextView"
@@ -581,6 +607,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -591,12 +618,22 @@
 
                                     </LinearLayout>
 
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginTop="7dp"
+                                    android:orientation="horizontal">
+
                                     <LinearLayout
                                         android:id="@+id/beertag3"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round">
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/beertag3TextView"
@@ -604,6 +641,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -616,10 +654,11 @@
 
                                     <LinearLayout
                                         android:id="@+id/beertag4"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round">
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/beertag4TextView"
@@ -627,6 +666,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -639,10 +679,11 @@
 
                                     <LinearLayout
                                         android:id="@+id/beertag5"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
+                                        android:layout_width="70dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round">
+                                        android:background="@drawable/button2_round"
+                                        android:gravity="center">
 
                                         <TextView
                                             android:id="@+id/beertag5TextView"
@@ -650,6 +691,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center_vertical"
                                             android:layout_weight="1"
+                                            android:gravity="center"
                                             android:paddingLeft="8dp"
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
@@ -691,7 +733,7 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -701,9 +743,10 @@
 
                                         <LinearLayout
                                             android:id="@+id/sojutag0"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:background="@drawable/button2_round">
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/sojutag0TextView"
@@ -711,6 +754,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -723,10 +767,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/sojutag1"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/sojutag1TextView"
@@ -734,6 +779,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -746,10 +792,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/sojutag2"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/sojutag2TextView"
@@ -757,6 +804,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -767,12 +815,22 @@
 
                                         </LinearLayout>
 
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginTop="7dp"
+                                        android:orientation="horizontal">
+
                                         <LinearLayout
                                             android:id="@+id/sojutag3"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/sojutag3TextView"
@@ -780,6 +838,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -792,10 +851,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/sojutag4"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/sojutag4TextView"
@@ -803,6 +863,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -815,10 +876,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/sojutag5"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/sojutag5TextView"
@@ -826,6 +888,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -879,7 +942,7 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -889,9 +952,10 @@
 
                                         <LinearLayout
                                             android:id="@+id/makgurlitag0"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:background="@drawable/button2_round">
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/makgurlitag0TextView"
@@ -899,6 +963,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -911,10 +976,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/makgurlitag1"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/makgurlitag1TextView"
@@ -922,6 +988,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -934,10 +1001,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/makgurlitag2"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/makgurlitag2TextView"
@@ -945,6 +1013,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -955,12 +1024,22 @@
 
                                         </LinearLayout>
 
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginTop="7dp"
+                                        android:orientation="horizontal">
+
                                         <LinearLayout
                                             android:id="@+id/makgurlitag3"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/makgurlitag3TextView"
@@ -968,6 +1047,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -980,10 +1060,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/makgurlitag4"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/makgurlitag4TextView"
@@ -991,6 +1072,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -1003,10 +1085,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/makgurlitag5"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/makgurlitag5TextView"
@@ -1014,6 +1097,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -1057,7 +1141,7 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -1067,9 +1151,10 @@
 
                                         <LinearLayout
                                             android:id="@+id/winetag0"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:background="@drawable/button2_round">
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/winetag0TextView"
@@ -1077,6 +1162,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -1089,10 +1175,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/winetag1"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/winetag1TextView"
@@ -1100,6 +1187,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -1112,10 +1200,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/winetag2"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/winetag2TextView"
@@ -1123,6 +1212,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -1133,12 +1223,22 @@
 
                                         </LinearLayout>
 
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginTop="7dp"
+                                        android:orientation="horizontal">
+
                                         <LinearLayout
                                             android:id="@+id/winetag3"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/winetag3TextView"
@@ -1146,6 +1246,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -1158,10 +1259,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/winetag4"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/winetag4TextView"
@@ -1169,6 +1271,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
@@ -1181,10 +1284,11 @@
 
                                         <LinearLayout
                                             android:id="@+id/winetag5"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="70dp"
+                                            android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round">
+                                            android:background="@drawable/button2_round"
+                                            android:gravity="center">
 
                                             <TextView
                                                 android:id="@+id/winetag5TextView"
@@ -1192,6 +1296,7 @@
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
                                                 android:layout_weight="1"
+                                                android:gravity="center"
                                                 android:paddingLeft="8dp"
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
