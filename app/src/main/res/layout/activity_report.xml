@@ -72,8 +72,6 @@
                     android:padding="10dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
-
                     <TextView
                         android:id="@+id/tvScore"
                         android:layout_width="wrap_content"
@@ -84,7 +82,6 @@
                         android:textSize="40sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -94,7 +91,6 @@
                         android:textSize="26sp"
                         app:layout_constraintBottom_toBottomOf="@id/tvScore"
                         app:layout_constraintLeft_toRightOf="@id/tvScore" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -103,8 +99,8 @@
                         android:textSize="@dimen/sub_text_size"
                         app:layout_constraintLeft_toLeftOf="@id/tvScore"
                         app:layout_constraintTop_toBottomOf="@id/tvScore" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clTimeInBed"
                     android:layout_width="wrap_content"
@@ -113,7 +109,6 @@
                     android:layout_marginTop="25dp"
                     app:layout_constraintLeft_toRightOf="@id/clScore"
                     app:layout_constraintTop_toTopOf="parent">
-
                     <TextView
                         android:id="@+id/tvTimeInBed"
                         android:layout_width="wrap_content"
@@ -123,7 +118,6 @@
                         android:textSize="@dimen/main_text_size"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -133,7 +127,9 @@
                         app:layout_constraintLeft_toLeftOf="@id/tvTimeInBed"
                         app:layout_constraintTop_toBottomOf="@id/tvTimeInBed" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:background="@drawable/report_selected_background"
                     android:id="@+id/clSleepTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -141,7 +137,6 @@
                     android:layout_marginTop="15dp"
                     app:layout_constraintLeft_toRightOf="@id/clScore"
                     app:layout_constraintTop_toBottomOf="@+id/clTimeInBed">
-
                     <TextView
                         android:id="@+id/tvSleepTime"
                         android:layout_width="wrap_content"
@@ -151,7 +146,6 @@
                         android:textSize="@dimen/main_text_size"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -161,7 +155,6 @@
                         app:layout_constraintLeft_toLeftOf="@id/tvSleepTime"
                         app:layout_constraintTop_toBottomOf="@id/tvSleepTime" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -4,4 +4,6 @@
     <dimen name="main_text_size">26sp</dimen>
     <dimen name="report_btn_radius">15dp</dimen>
     <dimen name="report_btn_width">180dp</dimen>
+    <dimen name="report_selected_padding_vertical">10dp</dimen>
+    <dimen name="report_selected_padding_horizontal">20dp</dimen>
 </resources>
