@@ -94,15 +94,15 @@ class Login : AppCompatActivity() {
                     val signInIntent: Intent = googleSignInClient.signInIntent
                     launcher.launch(signInIntent)
                 }
+
+
             }
         }
 
-        override fun updateUI(FirebaseUser user) { //update ui code here
-            if (user != null) {
-                Intent intent = new Intent(this, AfterActivity.class)
-                startActivity(intent)
-                finish()
-            }
+        intent = Intent(this, CalendarActivity::class.java) // CalendarActivity로 화면 이동
+        startActivity(intent)
+        finish()
+
 
     }
 }
