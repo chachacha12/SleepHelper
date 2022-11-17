@@ -36,6 +36,8 @@ class Login : AppCompatActivity() {
     private var email: String = ""
     private var tokenId: String? = null
 
+    private var flag : Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,22 +91,31 @@ class Login : AppCompatActivity() {
                         .requestIdToken(getString(R.string.default_web_client_id))
                         .requestEmail()
                         .build()
-                    println("hi gso") // 여기까지는 출력이 됨
+                    println("hi gso")
                     val googleSignInClient = GoogleSignIn.getClient(this@Login, gso)
                     val signInIntent: Intent = googleSignInClient.signInIntent
                     launcher.launch(signInIntent)
+                    println("after launcher") // 여기까지는 출력이 됨
+                  //  flag = 1
                 }
-
-
             }
         }
-
-        intent = Intent(this, CalendarActivity::class.java) // CalendarActivity로 화면 이동
-        startActivity(intent)
-        finish()
-
-
+//        if(flag == 1) {
+//            println("flag here")
+//            changeUI() // 로그인 성공했다면 다른 화면으로 이동
+//        }
     }
+
+
+
+//    private fun changeUI() {
+//        println("change UI 됨")
+//        // 위치 맞는지 한 번 더 확인
+//        // Login 이후 (첫 화면)CalendarActivity로 화면 이동
+//        intent = Intent(this, CalendarActivity::class.java)
+//        startActivity(intent)
+//    }
+
 }
 
 
