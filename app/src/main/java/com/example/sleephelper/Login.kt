@@ -1,28 +1,111 @@
 package com.example.sleephelper
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.util.Log
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.example.sleephelper.databinding.ActivityMainBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class Login : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+    private val TAG = this.javaClass.simpleName
+
+    private lateinit var launcher: ActivityResultLauncher<Intent>
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    private var email: String = ""
+    private var tokenId: String? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // setContentView(R.layout.activity_login)
+        // binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_login)
+        //   setContentView(binding.root)
 
+        firebaseAuth = FirebaseAuth.getInstance()
+        launcher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(), ActivityResultCallback { result ->
+                Log.e(TAG, "resultCode : ${result.resultCode}")
+                Log.e(TAG, "result : $result")
+                if (result.resultCode == RESULT_OK) {
+                    val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                    try {
+                        task.getResult(ApiException::class.java)?.let { account ->
+                            tokenId = account.idToken
+                            if (tokenId != null && tokenId != "") {
+                                val credential: AuthCredential = GoogleAuthProvider.getCredential(account.idToken, null)
+                                firebaseAuth.signInWithCredential(credential)
+                                    .addOnCompleteListener {
+                                        if (firebaseAuth.currentUser != null) {
+                                            val user: FirebaseUser = firebaseAuth.currentUser!!
+                                            email = user.email.toString()
+                                            Log.e(TAG, "email : $email")
+                                            val googleSignInToken = account.idToken ?: ""
+                                            if (googleSignInToken != "") {
+                                                Log.e(TAG, "googleSignInToken : $googleSignInToken")
+                                            } else {
+                                                Log.e(TAG, "googleSignInToken이 null")
+                                            }
+                                        }
+                                    }
+                            }
+                        } ?: throw Exception()
+                    }   catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            })
 
-//        // Google 연동이라 회원가입 기존 로그인 / 회원가입 버튼은 주석처리
-//        // 로그인
-//        val login : Button = findViewById(R.id.btn_login)
-//
-//
-//        // 회원가입
-//        val join : Button = findViewById(R.id.btn_join)
-//        join.setOnClickListener{
-//            setContentView(R.layout.activity_join)
-//        }
+        binding.run {
+            val googleLoginButton = findViewById<SignInButton>(R.id.signInButton) // 개인적으로 추가
+            googleLoginButton.setOnClickListener {
+                println("hi googleLoginButton")
+                CoroutineScope(Dispatchers.IO).launch {
+                    println("hi CoroutineScope")
+                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build()
+                    println("hi gso") // 여기까지는 출력이 됨
+                    val googleSignInClient = GoogleSignIn.getClient(this@Login, gso)
+                    val signInIntent: Intent = googleSignInClient.signInIntent
+                    launcher.launch(signInIntent)
+                }
+            }
+        }
+
+        override fun updateUI(FirebaseUser user) { //update ui code here
+            if (user != null) {
+                Intent intent = new Intent(this, AfterActivity.class)
+                startActivity(intent)
+                finish()
+            }
 
     }
-
 }
+
+
+
