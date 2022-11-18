@@ -44,7 +44,7 @@ class MypageActivity : AppCompatActivity() {
         }
 
             // 알림
-        println("로그아웃 됨~!")
+        println("로그아웃 됨")
 
 
     }
