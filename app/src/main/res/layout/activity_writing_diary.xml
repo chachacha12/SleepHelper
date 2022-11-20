@@ -45,9 +45,9 @@
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginStart="40dp"
                     android:layout_marginTop="50dp"
-                    android:text="내 수면 컨디션 선택 : "
+                    android:text="오늘의 수면 컨디션 : "
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -56,10 +56,10 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="38dp"
-                    android:layout_height="36dp"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="42dp"
+                    android:layout_marginTop="48dp"
                     app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintTop_toBottomOf="@+id/dateTextView"
                     app:srcCompat="@drawable/emoji_good" />
@@ -94,9 +94,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
                             android:gravity="center"
-                            android:text="갤럭시 워치에서 받아온 정보"
+                            android:text="미입력된 정보를 기입해주세요"
                             android:textColor="#FFFFFF"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -294,7 +295,8 @@
                             android:gravity="center"
                             android:text="해당사항만 입력해주세요"
                             android:textColor="#FFFFFF"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -369,7 +371,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  0잔  "
+                                            android:text="  1잔  "
                                             android:textColor="#000"
                                             android:textSize="12sp" />
 
@@ -394,7 +396,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  1잔  "
+                                            android:text="  2잔  "
                                             android:textColor="#000"
                                             android:textSize="12sp" />
 
@@ -419,7 +421,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  2잔  "
+                                            android:text="  3잔  "
                                             android:textColor="#000"
                                             android:textSize="12dp" />
 
@@ -453,7 +455,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  3잔  "
+                                            android:text="  4잔  "
                                             android:textColor="#000"
                                             android:textSize="12dp" />
 
@@ -478,7 +480,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  4잔  "
+                                            android:text="  5잔  "
                                             android:textColor="#000"
                                             android:textSize="12dp" />
 
@@ -503,7 +505,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  5잔 이상 "
+                                            android:text="  6잔 이상 "
                                             android:textColor="#000"
                                             android:textSize="12dp" />
 
@@ -562,7 +564,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  0잔  "
+                                            android:text="  1잔  "
                                             android:textColor="#000"
                                             android:textSize="12sp" />
 
@@ -587,7 +589,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  1잔  "
+                                            android:text="  2잔  "
                                             android:textColor="#000"
                                             android:textSize="12sp" />
 
@@ -612,7 +614,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  2잔  "
+                                            android:text="  3잔  "
                                             android:textColor="#000"
                                             android:textSize="12dp" />
 
@@ -646,7 +648,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  3잔  "
+                                            android:text="  4잔  "
                                             android:textColor="#000"
                                             android:textSize="12dp" />
 
@@ -671,7 +673,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  4잔  "
+                                            android:text="  5잔  "
                                             android:textColor="#000"
                                             android:textSize="12dp" />
 
@@ -696,7 +698,7 @@
                                             android:paddingTop="4dp"
                                             android:paddingRight="8dp"
                                             android:paddingBottom="4dp"
-                                            android:text="  5잔 이상 "
+                                            android:text="  6잔 이상 "
                                             android:textColor="#000"
                                             android:textSize="12dp" />
 
@@ -759,7 +761,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  0잔  "
+                                                android:text="  1잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -784,7 +786,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  1잔  "
+                                                android:text="  2잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -809,7 +811,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  2잔  "
+                                                android:text="  3잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -843,7 +845,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  3잔  "
+                                                android:text="  4잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -868,7 +870,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  4잔  "
+                                                android:text="  5잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -893,7 +895,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  5잔 이상 "
+                                                android:text="  6잔 이상 "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -937,7 +939,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal" >
+                                android:orientation="horizontal">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -968,7 +970,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  0잔  "
+                                                android:text="  1잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -993,7 +995,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  1잔  "
+                                                android:text="  2잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -1018,7 +1020,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  2잔  "
+                                                android:text="  3잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -1052,7 +1054,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  3잔  "
+                                                android:text="  4잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -1077,7 +1079,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  4잔  "
+                                                android:text="  5잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -1102,7 +1104,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  5잔 이상 "
+                                                android:text="  6잔 이상 "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -1136,7 +1138,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal" >
+                                android:orientation="horizontal">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -1167,7 +1169,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  0잔  "
+                                                android:text="  1잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -1192,7 +1194,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  1잔  "
+                                                android:text="  2잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -1217,7 +1219,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  2잔  "
+                                                android:text="  3잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -1251,7 +1253,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  3잔  "
+                                                android:text="  4잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -1276,7 +1278,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  4잔  "
+                                                android:text="  5잔  "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
@@ -1301,7 +1303,7 @@
                                                 android:paddingTop="4dp"
                                                 android:paddingRight="8dp"
                                                 android:paddingBottom="4dp"
-                                                android:text="  5잔 이상 "
+                                                android:text="  6잔 이상 "
                                                 android:textColor="#000"
                                                 android:textSize="12dp" />
 
