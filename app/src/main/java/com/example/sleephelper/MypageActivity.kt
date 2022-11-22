@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import com.example.sleephelper.databinding.ActivityMypageBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -17,10 +18,15 @@ class MypageActivity : AppCompatActivity() {
     var googleSignInClient : GoogleSignInClient?= null
 
 
+    private var binding: ActivityMypageBinding? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mypage)
-
+        binding = ActivityMypageBinding.inflate(layoutInflater)
+//        setContentView(R.layout.activity_mypage)
+        setContentView(binding?.root)
+        setBottomNavigation()
 
         // 구글 로그아웃을 위해 로그인 세션 가져오기
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -47,5 +53,25 @@ class MypageActivity : AppCompatActivity() {
         println("로그아웃 됨")
 
 
+    }
+
+    private fun setBottomNavigation() {
+        binding!!.bottomNavigation.setOnItemSelectedListener(){
+            when(it.itemId){
+                R.id.nav_calendar -> {
+                    intent = Intent(this, CalendarActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.nav_alarm -> {
+                    intent = Intent(this, RecommendTimeActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.nav_report -> {
+                    intent = Intent(this, ReportActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            true
+        }
     }
 }
