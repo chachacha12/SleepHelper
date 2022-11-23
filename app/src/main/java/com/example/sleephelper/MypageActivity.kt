@@ -44,6 +44,8 @@ class MypageActivity : AppCompatActivity() {
         setContentView(binding?.root)
         setBottomNavigation()
 
+
+
         // 구글 로그아웃을 위해 로그인 세션 가져오기
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
