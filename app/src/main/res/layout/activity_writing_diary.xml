@@ -94,7 +94,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
                             android:gravity="center"
-                            android:text="미입력된 정보를 기입해주세요"
+                            android:text="필수로 입력해야 하는 정보입니다"
                             android:textColor="#FFFFFF"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -120,6 +120,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
                                 android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
@@ -146,7 +147,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
-                                android:hint="0시 0분"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
                                 android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
@@ -173,7 +174,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
-                                android:hint="0시간 0분"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
                                 android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
@@ -200,7 +201,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
-                                android:hint="0시 0분"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
                                 android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
@@ -227,7 +228,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
-                                android:hint="0시 0분"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
                                 android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
@@ -320,7 +321,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
-                                android:hint="0시간 0분"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
                                 android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
@@ -358,7 +359,7 @@
                                         android:id="@+id/coffeetag0"
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -383,7 +384,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -408,7 +409,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -442,7 +443,7 @@
                                         android:id="@+id/coffeetag3"
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -467,7 +468,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -492,7 +493,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -551,7 +552,7 @@
                                         android:id="@+id/beertag0"
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -576,7 +577,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -601,7 +602,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -635,7 +636,7 @@
                                         android:id="@+id/beertag3"
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -660,7 +661,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -685,7 +686,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -748,7 +749,7 @@
                                             android:id="@+id/sojutag0"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -773,7 +774,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -798,7 +799,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -832,7 +833,7 @@
                                             android:id="@+id/sojutag3"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -857,7 +858,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -882,7 +883,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -957,7 +958,7 @@
                                             android:id="@+id/makgurlitag0"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -982,7 +983,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1007,7 +1008,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1041,7 +1042,7 @@
                                             android:id="@+id/makgurlitag3"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1066,7 +1067,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1091,7 +1092,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1156,7 +1157,7 @@
                                             android:id="@+id/winetag0"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1181,7 +1182,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1206,7 +1207,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1240,7 +1241,7 @@
                                             android:id="@+id/winetag3"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1265,7 +1266,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1290,7 +1291,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
