@@ -1,20 +1,26 @@
 package com.example.sleephelper
 
-import androidx.appcompat.app.AppCompatActivity
+// import com.google.firebase.auth.ktx.auth
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.sleephelper.databinding.ActivityWritingDiaryBinding
 import com.google.firebase.auth.FirebaseAuth
-// import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WritingDiaryActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityWritingDiaryBinding
     var firebaseAuth : FirebaseAuth? = null
     var firestore : FirebaseFirestore? = null
+
+    var showDate:String?=null //화면에 띄워줄 날짜 포멧 저장 변수
+    var sendDate:String?=null //DB에 보내줄 날짜 포멧 저장 변수
 
     //수면일기 입력값 13개
     var emoji=3
@@ -38,12 +44,54 @@ class WritingDiaryActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-
         Log.e("태그","현재 로그인한 유저 이메일:"+ firebaseAuth?.currentUser?.email)
 
+        //날짜값들 세팅
+        setDate()
         //태그값 선택시 처리
         ChooseTagEvent()
 
+        //이모지 선택할때 동작할 이벤트 처리
+        emoji_event()
+
+        //완료버튼 클릭시
+        binding.checkButton.setOnClickListener{
+            //로그인된 유저만 데이터 저장 가능
+            if(firebaseAuth?.currentUser?.email==null){
+                Toast.makeText(this, "로그인 해주세요",Toast.LENGTH_SHORT).show()
+            }else{
+                if(!binding.gotobedtimeEdittextView.text.isEmpty() && !binding.sleepclockEdittextView.text.isEmpty() && !binding.sleeptimeEdittextView.text.isEmpty()
+                    && !binding.waketimeEdittextView.text.isEmpty() && !binding.outtobedtimeEdittextView.text.isEmpty() ){
+                    Writediary() ////태그제외 입력한 수면일기값들 저장
+                    saveSleepData()
+                }else{
+                    Toast.makeText(this, "필수입력정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    //이모지 선택할때 동작할 이벤트 처리
+    fun emoji_event(){
+        binding.emojiTextView.setOnClickListener {
+            //다이얼로그 객체 생성
+            val dlg = EmojiDialog(this)
+            //이모지 선택 이벤트처리
+            dlg.setOnEmojiClickedListener {
+                binding.imageView.setImageResource(it)   //선택한 이모지 set해줌
+                //선택한 이모지에 따라 emoji변수에 다른 값 저장
+                if(it == R.drawable.emoji_good){
+                    emoji =3
+                }else if(it == R.drawable.emoji_normal){
+                    emoji =2
+                }else{
+                    emoji =1
+                }
+                binding.imageView.visibility = View.VISIBLE  //이모자 보여줌
+                binding.emojiTextView.visibility = View.GONE
+            }
+            dlg.show()
+        }
         //이모지클릭시
         binding.imageView.setOnClickListener {
             //다이얼로그 객체 생성
@@ -62,22 +110,25 @@ class WritingDiaryActivity : AppCompatActivity() {
             }
             dlg.show()
         }
+    }
 
-        //완료버튼 클릭시
-        binding.checkButton.setOnClickListener{
-            //로그인된 유저만 데이터 저장 가능
-            if(firebaseAuth?.currentUser?.email==null){
-                Toast.makeText(this, "로그인 해주세요",Toast.LENGTH_SHORT).show()
-            }else{
-                if(!binding.gotobedtimeEdittextView.text.isEmpty() && !binding.sleepclockEdittextView.text.isEmpty() && !binding.sleeptimeEdittextView.text.isEmpty()
-                    && !binding.waketimeEdittextView.text.isEmpty() && !binding.outtobedtimeEdittextView.text.isEmpty() ){
-                    Writediary() ////태그제외 입력한 수면일기값들 저장
-                    saveSleepData()
-                }else{
-                    Toast.makeText(this, "필수입력정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+    //날짜값들 세팅
+    @SuppressLint("SimpleDateFormat")
+    fun setDate(){
+        //현재날짜 가져오기
+        var Now: Long
+        var Date: Date
+        val Format1 = SimpleDateFormat("yyyyMMdd")
+        val Format2 = SimpleDateFormat("MM/dd")
+
+        Now = System.currentTimeMillis()
+        Date = Date(Now)
+        sendDate = Format1.format(Date)
+        showDate = Format2.format(Date)
+        Log.e("태그","sendDate:"+sendDate+" showDate:"+showDate)
+
+        //수면일기 제목 setText
+        binding.dateTextView.text = showDate+" 수면일기"
     }
 
     //파이어베이스에 수면일기 저장 작업
@@ -97,14 +148,12 @@ class WritingDiaryActivity : AppCompatActivity() {
             "makguli" to makguli,
             "wine" to wine,
         )
-
         //firestore에 수면일기 데이터 입력 작업
-        firestore?.collection("Data")?.document(firebaseAuth?.currentUser?.email!!)?.collection("sleepdata")?.document("20220101")?.set(sleepdata)
+        firestore?.collection("Data")?.document(firebaseAuth?.currentUser?.email!!)?.collection("sleepdata")?.document(sendDate!!)?.set(sleepdata)
             ?.addOnSuccessListener {
                 // 성공할 경우
                 Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
                 Log.e("태그", "sleepdata:"+sleepdata)
-
             }
             ?.addOnFailureListener {
                 // 실패할 경우

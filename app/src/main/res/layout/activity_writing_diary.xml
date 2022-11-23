@@ -60,6 +60,7 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="48dp"
+                    android:visibility="invisible"
                     app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintTop_toBottomOf="@+id/dateTextView"
                     app:srcCompat="@drawable/emoji_good" />
@@ -1342,6 +1343,19 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                 </android.widget.Button>
+
+                <TextView
+                    android:id="@+id/emojiTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="50dp"
+                    android:text="선택하기"
+                    android:textColor="@color/orange"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
