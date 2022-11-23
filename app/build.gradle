@@ -64,6 +64,7 @@ dependencies {
     implementation 'com.github.hannesa2:AndroidSlidingUpPanel:4.2.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.databinding:databinding-runtime:7.3.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.0'
     //implementation 'androidx.databinding:library:3.2.0-alpha11' // 위와 중복
 
     testImplementation 'junit:junit:4.13.2'
