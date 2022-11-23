@@ -2,6 +2,7 @@ package com.example.sleephelper
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.sleephelper.databinding.ActivityWritingDiaryBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +22,6 @@ class WritingDiaryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
         auth = Firebase.auth
         firestore = FirebaseFirestore.getInstance()
         auth!!.currentUser?.email
@@ -39,18 +39,23 @@ class WritingDiaryActivity : AppCompatActivity() {
 
         binding.checkButton.setOnClickListener{
 
-            var sleepdiary = Sleepdiary(3, "13:00", "13:00", "13:00", "13:00", "13:00",
-                5, "13:00", 2,2,2,2,2)
-
-
-
             val  data= hashMapOf(
                 "emoji" to 3,
-                "gotobed_time" to ""
+                "gotobed_time" to "13:00",
+                "sleep_time" to "13:00",
+                "sleep_peroid" to "13:00",
+                "wakeup_time" to "13:00",
+                "outtobedtime" to "13:00",
+                "wakeup_num" to 5,
+                "daysleep_peroid" to "13:00",
+                "coffee" to 5,
+                "beer" to 5,
+                "soju" to 5,
+                "makguli" to 5,
+                "wine" to 5,
             )
 
-
-            firestore?.collection("Data")?.document("konkukbhs@gmail.com")?.collection("sleepdata")?.document("20220102")?.set(sleepdiary)
+            firestore?.collection("Data")?.document(auth?.currentUser?.email!!)?.collection("sleepdata")?.document("20220101")?.set(data)
                 ?.addOnSuccessListener {
                     // 성공할 경우
                     Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
