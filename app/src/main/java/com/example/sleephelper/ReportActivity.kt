@@ -36,6 +36,8 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityReportBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        reportDataList = ReportModel.defaultReportDataList()
+
         setChart()
 
         setBottomNavigation()
@@ -175,7 +177,6 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener {
     private fun setUpWeeklyView(){
         binding?.btnWeekly?.background = getDrawable(R.drawable.report_selected_left_button_background)
         binding?.btnMonthly?.background = getDrawable(R.drawable.report_right_button_background)
-        reportDataList = ReportModel.defaultReportDataList()
         binding?.tvScore?.text = reportDataList?.get(0)?.weeklyAverage
         binding?.tvTimeInBed?.text = reportDataList?.get(1)?.weeklyAverage
         binding?.tvSleepTime?.text = reportDataList?.get(2)?.weeklyAverage
@@ -193,7 +194,6 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener {
     private fun setUpMonthlyView(){
         binding?.btnWeekly?.background = getDrawable(R.drawable.report_left_button_background)
         binding?.btnMonthly?.background = getDrawable(R.drawable.report_selected_right_button_background)
-        reportDataList = ReportModel.defaultReportDataList()
         binding?.tvScore?.text = reportDataList?.get(0)?.monthlyAverage
         binding?.tvTimeInBed?.text = reportDataList?.get(1)?.monthlyAverage
         binding?.tvSleepTime?.text = reportDataList?.get(2)?.monthlyAverage
