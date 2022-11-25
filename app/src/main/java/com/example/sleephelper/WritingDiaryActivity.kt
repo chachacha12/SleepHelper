@@ -45,6 +45,7 @@ class WritingDiaryActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         Log.e("태그","현재 로그인한 유저 이메일:"+ firebaseAuth?.currentUser?.email)
+
         //날짜값들 세팅
         setDate()
         //태그값 선택시 처리
