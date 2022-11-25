@@ -77,7 +77,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
 
 
-        setChart()
+        //setChart()
 
         setBottomNavigation()
 
@@ -122,36 +122,36 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         }
     }
 
-    private fun setChart() {
-        chart = binding?.sleepLineChart
-
-
-        val values = ArrayList<Entry>()
-
-        for (i in 1..100) {
-            var value: Float = Math.random().toFloat()
-            values.add(Entry(i.toFloat(), value))
-        }
-
-        val set1 = LineDataSet(values, "Sleep Chart")
-
-        val dataSets: ArrayList<ILineDataSet> = ArrayList()
-        dataSets.add(set1)
-
-        val data: LineData = LineData(dataSets)
-
-        chart?.legend?.textColor = Color.parseColor("#FCA311")
-        chart?.xAxis?.textColor = Color.parseColor("#E5E5E5")
-        chart?.axisLeft?.textColor = Color.parseColor("#E5E5E5")
-        chart?.axisRight?.textColor = Color.parseColor("#14213D")
-
-        set1.setColor(Color.parseColor("#FCA311"))
-        set1.setCircleColor(Color.parseColor("#FCA311"))
-        set1.setDrawCircles(false)
-        set1.setDrawValues(false)
-
-        chart?.setData(data)
-    }
+//    private fun setChart() {
+//        chart = binding?.sleepLineChart
+//
+//
+//        val values = ArrayList<Entry>()
+//
+//        for (i in 1..100) {
+//            var value: Float = Math.random().toFloat()
+//            values.add(Entry(i.toFloat(), value))
+//        }
+//
+//        val set1 = LineDataSet(values, "Sleep Chart")
+//
+//        val dataSets: ArrayList<ILineDataSet> = ArrayList()
+//        dataSets.add(set1)
+//
+//        val data: LineData = LineData(dataSets)
+//
+//        chart?.legend?.textColor = Color.parseColor("#FCA311")
+//        chart?.xAxis?.textColor = Color.parseColor("#E5E5E5")
+//        chart?.axisLeft?.textColor = Color.parseColor("#E5E5E5")
+//        chart?.axisRight?.textColor = Color.parseColor("#14213D")
+//
+//        set1.setColor(Color.parseColor("#FCA311"))
+//        set1.setCircleColor(Color.parseColor("#FCA311"))
+//        set1.setDrawCircles(false)
+//        set1.setDrawValues(false)
+//
+//        chart?.setData(data)
+//    }
 
 
     //수면효율
@@ -721,6 +721,18 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
                 setUpMonthlyView()
             }
             R.id.clScore -> {
+//                val week = reportDataList?.get(0)?.weeklyAverage
+//                reportDataList?.get(0)?.isChecked = !(reportDataList!!.get(0)!!.isChecked)
+//                for(i in 0..11){
+//                    if(i==0){
+//                        continue
+//                    }
+//                }
+            }
+            R.id.cl_bedtime->{
+
+            }
+            R.id.clSleepTime->{
 
             }
         }
