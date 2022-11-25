@@ -1,6 +1,8 @@
 package com.example.sleephelper
 
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sleephelper.databinding.EmojiDialogBinding
 
@@ -14,6 +16,7 @@ class EmojiDialog(private val context : AppCompatActivity) {
         binding = EmojiDialogBinding.inflate(context.layoutInflater)
 
         dlg.setContentView(binding.root)     //다이얼로그에 사용할 xml 파일을 불러옴
+        dlg!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))  //다이얼로그 테두리 둥글게 하기 위함
 
         binding.cancelbutton?.setOnClickListener {
             dlg?.dismiss() // 다이얼로그 닫기

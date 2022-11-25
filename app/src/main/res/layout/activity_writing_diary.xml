@@ -60,6 +60,7 @@
                     android:layout_height="25dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="48dp"
+                    android:visibility="invisible"
                     app:layout_constraintStart_toEndOf="@+id/textView2"
                     app:layout_constraintTop_toBottomOf="@+id/dateTextView"
                     app:srcCompat="@drawable/emoji_good" />
@@ -94,7 +95,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
                             android:gravity="center"
-                            android:text="미입력된 정보를 기입해주세요"
+                            android:text="필수로 입력해야 하는 정보입니다"
                             android:textColor="#FFFFFF"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -120,9 +121,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
-                                android:hint="0시간 0분"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo"
+                                android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
                         </LinearLayout>
 
@@ -147,36 +148,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
-                                android:hint="0시 0분"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo"
-                                android:textColorHint="@color/orange" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/sleeptimetextview"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="수면시간을 입력해주세요"
-                                android:textColor="#F4F4F4"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/sleeptimeEdittextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:ems="5"
-                                android:hint="0시간 0분"
-                                android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo"
+                                android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
                         </LinearLayout>
 
@@ -201,9 +175,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
-                                android:hint="0시 0분"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo"
+                                android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
                         </LinearLayout>
 
@@ -228,9 +202,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
-                                android:hint="0시간 0분"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo"
+                                android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
                         </LinearLayout>
 
@@ -257,7 +231,7 @@
                                 android:ems="5"
                                 android:hint="0"
                                 android:inputType="number"
-                                android:textColor="@color/dark_indigo"
+                                android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
                         </LinearLayout>
 
@@ -321,9 +295,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ems="5"
-                                android:hint="0시간 0분"
+                                android:hint="00:00"
                                 android:inputType="textPersonName"
-                                android:textColor="@color/dark_indigo"
+                                android:textColor="@color/orange"
                                 android:textColorHint="@color/orange" />
                         </LinearLayout>
 
@@ -359,7 +333,7 @@
                                         android:id="@+id/coffeetag0"
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -384,7 +358,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -409,7 +383,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -443,7 +417,7 @@
                                         android:id="@+id/coffeetag3"
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -468,7 +442,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -493,7 +467,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -552,7 +526,7 @@
                                         android:id="@+id/beertag0"
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -577,7 +551,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -602,7 +576,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -636,7 +610,7 @@
                                         android:id="@+id/beertag3"
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -661,7 +635,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -686,7 +660,7 @@
                                         android:layout_width="70dp"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
-                                        android:background="@drawable/button2_round"
+                                        android:background="@drawable/button3_round"
                                         android:gravity="center">
 
                                         <TextView
@@ -749,7 +723,7 @@
                                             android:id="@+id/sojutag0"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -774,7 +748,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -799,7 +773,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -833,7 +807,7 @@
                                             android:id="@+id/sojutag3"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -858,7 +832,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -883,7 +857,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -958,7 +932,7 @@
                                             android:id="@+id/makgurlitag0"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -983,7 +957,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1008,7 +982,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1042,7 +1016,7 @@
                                             android:id="@+id/makgurlitag3"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1067,7 +1041,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1092,7 +1066,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1157,7 +1131,7 @@
                                             android:id="@+id/winetag0"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1182,7 +1156,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1207,7 +1181,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1241,7 +1215,7 @@
                                             android:id="@+id/winetag3"
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1266,7 +1240,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1291,7 +1265,7 @@
                                             android:layout_width="70dp"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="5dp"
-                                            android:background="@drawable/button2_round"
+                                            android:background="@drawable/button3_round"
                                             android:gravity="center">
 
                                             <TextView
@@ -1342,6 +1316,19 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                 </android.widget.Button>
+
+                <TextView
+                    android:id="@+id/emojiTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="50dp"
+                    android:text="선택하기"
+                    android:textColor="@color/orange"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
