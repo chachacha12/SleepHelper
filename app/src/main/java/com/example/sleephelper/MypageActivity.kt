@@ -44,7 +44,9 @@ class MypageActivity : AppCompatActivity() {
         binding = ActivityMypageBinding.inflate(layoutInflater)
 //        setContentView(R.layout.activity_mypage)
         setContentView(binding?.root)
-        setBottomNavigation()
+
+        setFabAdd()
+        setBottomNavigation() // BottomNavigation 실행
 
 
 
@@ -116,7 +118,6 @@ class MypageActivity : AppCompatActivity() {
             ?.get()
             ?.addOnSuccessListener { result->
                 // 성공할 경우
-                println("성성")
                 val email = result["email"] as String // firestore에서 가져오기
                 val name = result["name"] as String
 
@@ -127,11 +128,17 @@ class MypageActivity : AppCompatActivity() {
             }
             ?.addOnFailureListener {
                 // 실패할 경우
-                println("실실")
                 Toast.makeText(this, "실패하였습니다", Toast.LENGTH_SHORT).show()
             }
 
+    }
 
+    // 수면일기
+    private fun setFabAdd(){
+        binding!!.fabAdd.setOnClickListener(){
+            intent = Intent(this, WritingDiaryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setBottomNavigation() {
