@@ -21,9 +21,7 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import java.text.DecimalFormat
 import java.time.LocalDate
@@ -48,7 +46,21 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     private var db = FirebaseFirestore.getInstance()
 
     //각 항목 들의 데이터를 30일 치 담는 리스트
-    // private var dbDataList: ArrayList<String>? = null
+    private var dbDataList: ArrayList<String>? = null
+
+    private var bedEndTimeList: kotlin.collections.ArrayList<String>? = null
+    private var bedStartTimeList: kotlin.collections.ArrayList<String>? = null
+    private var beerList: kotlin.collections.ArrayList<String>? = null
+    private var coffeeList: kotlin.collections.ArrayList<String>? = null
+    private var makgeolliList: kotlin.collections.ArrayList<String>? = null
+    private var napTimeList: kotlin.collections.ArrayList<String>? = null
+    private var sojuList: kotlin.collections.ArrayList<String>? = null
+    private var startSleepTimeList: kotlin.collections.ArrayList<String>? = null
+    private var wakeUpTimeList: kotlin.collections.ArrayList<String>? = null
+    private var wineList: kotlin.collections.ArrayList<String>? = null
+    private var wakeUpCountList: kotlin.collections.ArrayList<String>? = null
+    private var emojiList: kotlin.collections.ArrayList<String>? = null
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,9 +71,9 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
         reportDataList = ReportModel.defaultReportDataList()
 
-        CoroutineScope(Dispatchers.Default).launch {
-            calBedTimeAverage()
-        }
+
+
+
 
         setChart()
 
@@ -148,8 +160,9 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         wakeUpTime: String
     ): Int {
         val score =
-            calSleepTime(startSleepTime, wakeUpTime) / calBedTime(bedStartTime, bedEndTime) * 100
-        return score
+            (calSleepTime(startSleepTime, wakeUpTime).toDouble() / calBedTime(bedStartTime, bedEndTime).toDouble()) * 100.0
+        Log.d("score",score.toString())
+        return score.toInt()
     }
 
     //침상시간
@@ -212,7 +225,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         return "$hour:$minute"
     }
 
-    //오늘 날짜에서 1일 씩 빼기
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDaysAgo(day: Long): String {
         val dayAgo = LocalDate.now().minusDays(day)
@@ -266,7 +279,8 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
                     else {
                         dbDataList?.set(i, "null")
                     }
-                    //Log.d("dbDataList",dbDataList?.get(i)!!)
+                    //
+                // Log.d("dbDataList", dbDataList?.get(i)!!)
                 }.await()
         }
         return dbDataList!!
@@ -274,20 +288,16 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
     @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun calBedTimeAverage() {
-        val weeklyBedStartTimeList = getWeeklyDbDataList("bedStartTime")
-        val monthlyBedStartTimeList = getMonthlyDbDataList("bedStartTime")
-        val weeklyBedEndTimeList = getWeeklyDbDataList("bedEndTime")
-        val monthlyBedEndTimeList = getMonthlyDbDataList("bedEndTime")
 
         var sum = 0
         var count = 0
 
         for (i in 0..6) {
-            if (weeklyBedEndTimeList?.get(i) != "null" &&
-                weeklyBedStartTimeList?.get(i) != "null"
+            if (bedEndTimeList?.get(i) != "null" &&
+                bedStartTimeList?.get(i) != "null"
             ) {
                 count++
-                sum += calBedTime(weeklyBedStartTimeList?.get(i)!!, weeklyBedEndTimeList?.get(i)!!)
+                sum += calBedTime(bedStartTimeList?.get(i)!!, bedEndTimeList?.get(i)!!)
             }
         }
         val weeklyAverage = sum / count
@@ -297,13 +307,13 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         count = 0
 
         for (i in 0..29) {
-            if (monthlyBedEndTimeList?.get(i) != "null" &&
-                monthlyBedStartTimeList?.get(i) != "null"
+            if (bedEndTimeList?.get(i) != "null" &&
+                bedStartTimeList?.get(i) != "null"
             ) {
                 count++
                 sum += calBedTime(
-                    monthlyBedStartTimeList?.get(i)!!,
-                    monthlyBedEndTimeList?.get(i)!!
+                    bedStartTimeList?.get(i)!!,
+                    bedEndTimeList?.get(i)!!
                 )
             }
         }
@@ -315,18 +325,14 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     }
 
     private suspend fun calSleepTimeAverage() {
-        val weeklyStartSleepTimeList = getWeeklyDbDataList("startSleepTime")
-        val weeklyWakeUpTimeList = getWeeklyDbDataList("wakeUpTime")
-        val monthlyStartSleepTimeList = getMonthlyDbDataList("startSleepTime")
-        val monthlyWakeUpTimeList = getMonthlyDbDataList("wakeUpTime")
 
         var sum = 0
         var count = 0
 
         for (i in 0..6) {
-            if (weeklyStartSleepTimeList.get(i) != "null" && weeklyWakeUpTimeList.get(i) != "null") {
+            if (startSleepTimeList?.get(i) != "null" && wakeUpTimeList?.get(i) != "null") {
                 count++
-                sum += calSleepTime(weeklyStartSleepTimeList.get(i), weeklyWakeUpTimeList.get(i))
+                sum += calSleepTime(startSleepTimeList!!.get(i), wakeUpTimeList!!.get(i))
             }
         }
         val weeklyAverage = sum / count
@@ -336,9 +342,9 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         count = 0
 
         for (i in 0..29) {
-            if (monthlyStartSleepTimeList.get(i) != "null" && monthlyWakeUpTimeList.get(i) != "null") {
+            if (startSleepTimeList?.get(i) != "null" && wakeUpTimeList?.get(i) != "null") {
                 count++
-                sum += calSleepTime(monthlyStartSleepTimeList.get(i), monthlyWakeUpTimeList.get(i))
+                sum += calSleepTime(startSleepTimeList!!.get(i), wakeUpTimeList!!.get(i))
             }
         }
         val monthlyAverage = sum / count
@@ -347,6 +353,67 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         reportDataList?.set(2, ReportData(weeklyAverageFormat, monthlyAverageFormat, false))
     }
 
+    private suspend fun calBIAverage() {
+
+        var sum = 0
+        var count = 0
+
+        for (i in 0..6) {
+            if (bedStartTimeList?.get(i) != "null" && startSleepTimeList?.get(i) != "null") {
+                count++
+                sum += calBI(bedStartTimeList!!.get(i), startSleepTimeList!!.get(i))
+            }
+        }
+        //Log.d("Bi Sum",sum.toString())
+        val weeklyAverage = (sum / count).toString()
+
+        sum = 0
+        count = 0
+
+        for (i in 0..29) {
+            if (bedStartTimeList?.get(i) != "null" && startSleepTimeList?.get(i) != "null") {
+                count++
+                sum += calBI(bedStartTimeList!!.get(i), startSleepTimeList!!.get(i))
+            }
+        }
+        val monthlyAverage = (sum / count).toString()
+
+        reportDataList?.set(3, ReportData(weeklyAverage, monthlyAverage, false))
+
+    }
+
+    private fun calScoreAverage(){
+        var sum = 0
+        var count = 0
+
+        for(i in 0..6){
+            if(bedStartTimeList?.get(i)!="null"&&bedEndTimeList?.get(i)!="null"
+                && startSleepTimeList?.get(i)!="null" && wakeUpTimeList?.get(i)!="null"){
+                count++
+                sum+=calScore(bedStartTimeList!!.get(i),bedEndTimeList!!.get(i),
+                startSleepTimeList!!.get(i),wakeUpTimeList!!.get(i))
+            }
+
+        }
+        val weeklyAverage = (sum/count).toString()
+
+        sum = 0
+        count = 0
+
+        for(i in 0..29){
+            if(bedStartTimeList?.get(i)!="null"&&bedEndTimeList?.get(i)!="null"
+                && startSleepTimeList?.get(i)!="null" && wakeUpTimeList?.get(i)!="null"){
+                count++
+                sum+=calScore(bedStartTimeList!!.get(i),bedEndTimeList!!.get(i),
+                    startSleepTimeList!!.get(i),wakeUpTimeList!!.get(i))
+            }
+
+        }
+
+        val monthlyAverage = (sum/count).toString()
+
+        reportDataList?.set(0,ReportData(weeklyAverage, monthlyAverage,false))
+    }
 
     private fun setUpWeeklyView() {
         binding?.btnWeekly?.background =
@@ -388,8 +455,24 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         when (v?.id) {
             R.id.fab_load -> {
                 CoroutineScope(Dispatchers.Default).launch {
+
+                    bedEndTimeList = getMonthlyDbDataList("bedEndTime")
+                    bedStartTimeList = getMonthlyDbDataList("bedStartTime")
+                    beerList = getMonthlyDbDataList("beer")
+                    coffeeList = getMonthlyDbDataList("coffee")
+                    emojiList = getMonthlyDbDataList("emoji")
+                    makgeolliList = getMonthlyDbDataList("makgeolli")
+                    napTimeList = getMonthlyDbDataList("napTime")
+                    sojuList = getMonthlyDbDataList("soju")
+                    startSleepTimeList = getMonthlyDbDataList("startSleepTime")
+                    wakeUpCountList = getMonthlyDbDataList("wakeUpCount")
+                    wakeUpTimeList = getMonthlyDbDataList("wakeUpTime")
+                    wineList = getMonthlyDbDataList("wine")
+
+                    calScoreAverage()
                     calBedTimeAverage()
                     calSleepTimeAverage()
+                    calBIAverage()
 
                     runOnUiThread {
                         Toast.makeText(
@@ -412,12 +495,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         }
     }
 
-//    init {
-//        Log.d("init","----------------------------------------")
-//        CoroutineScope(Dispatchers.Default).launch {
-//            calBedTimeAverage()
-//        }
-//    }
+
 
     override fun onDestroy() {
         super.onDestroy()
