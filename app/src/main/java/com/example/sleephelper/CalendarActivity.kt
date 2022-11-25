@@ -16,7 +16,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import java.util.*
 
@@ -40,18 +39,19 @@ class CalendarActivity : AppCompatActivity() {
     var wakeup_time:String?=null // 기상 시각
     var gotobed_time:String?=null // 침대에 누운 시각
     var outtobed_time:String?=null // 침대에서 벗어난 시각
+    var emoji:String?=null // 수면 이모지
 
     var time_to_sleep:String?=null // 잠들 때까지 걸린 시간
     var time_in_bed:String?=null // 침대에서 머문 시간
     var sleeptime:String?=null // 총 수면 시간
 
-    lateinit var time0:String
     lateinit var time1:String
     lateinit var time2: String
     lateinit var time3:String
     lateinit var time4:String
     lateinit var time5:String
     lateinit var time6:String
+    var sleepLevel:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +66,7 @@ class CalendarActivity : AppCompatActivity() {
         firestore!!.collection("Data")
             .document(firebaseAuth?.currentUser?.email!!)
             .collection("sleepdata").document(
-                "20220102").get()      // 문서 가져오기
+                "20221126").get()      // 문서 가져오기
             .addOnSuccessListener { result ->
                 // 성공할 경우
                 Log.e("로그", result.get("beer").toString())
@@ -74,21 +74,21 @@ class CalendarActivity : AppCompatActivity() {
                 // 수면일기에 입력된 정보 변수에 넣기
                 wine = result.get("wine").toString() + "잔"
                 beer = result.get("beer").toString() + "잔"
-                makguli = result.get("makguli").toString() + "잔"
+                makguli = result.get("makgeolli").toString() + "잔"
                 soju = result.get("soju").toString() + "잔"
                 coffee = result.get("coffee").toString() + "잔"
-                nap_time = result.get("daysleep_peroid").toString()
-                sleep_time = result.get("sleep_time").toString()
-                wakeup_time = result.get("wakeup_time").toString()
-                gotobed_time = result.get("gotobed_time").toString()
-                outtobed_time = result.get("outtobedtime").toString()
+                nap_time = result.get("napTime").toString()
+                sleep_time = result.get("startSleepTime").toString()
+                wakeup_time = result.get("wakeUpTime").toString()
+                gotobed_time = result.get("bedStartTime").toString()
+                outtobed_time = result.get("bedEndTime").toString()
+                emoji = result.get("emoji").toString()
 
                 time1 = sleep_time.toString()
                 time2 = gotobed_time.toString()
                 calTimeToSleep(time2, time1)
 
                 time3 = outtobed_time.toString()
-                //calTimeinBed(time2, time3)
                 time4 = calTimeinBed(time2,time3).toString()
                 time_in_bed = minToTime(time4)
 
@@ -96,18 +96,33 @@ class CalendarActivity : AppCompatActivity() {
                 time6 = calTimeinBed(time1,time5).toString()
                 sleeptime = minToTime(time6)
 
+                sleepLevel = emoji.toString()
+
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
                 Log.w("MainActivity", "Error getting documents: $exception")
             }
 
-        setCalendar()
+        //setCalendar()
 
         binding.calendarView.setOnDayClickListener(OnDayClickListener { eventDay ->
-            val clickedDayCalendar = eventDay.calendar
+            //val clickedDayCalendar = eventDay.calendar
 
             binding.slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
+
+            // 캘린더 페이지에 넣어주기
+            binding.tvWine.text = wine
+            binding.tvBeer.text = beer
+            binding.tvMakgurli.text = makguli
+            binding.tvSoju.text = soju
+            binding.tvCoffee.text = coffee
+            binding.tvNapTime.text = nap_time
+            binding.tvBedTime.text = sleep_time
+            binding.tvWakeUpTime.text = wakeup_time
+            binding.tvBI.text = time_to_sleep
+            binding.tvTimeInBed.text = time_in_bed
+            binding.tvSleepTime.text = sleeptime
 
         })
 
@@ -115,6 +130,8 @@ class CalendarActivity : AppCompatActivity() {
 
         setBottomNavigation()
         setFabAdd()
+
+        setCalendar()
     }
 
 
@@ -234,16 +251,58 @@ class CalendarActivity : AppCompatActivity() {
         }
     }
 
+    //private fun returnPath(level:Int) : Int{
+    //    var filepath:Int = 0
+    //    if(level.equals("1")){
+    //        filepath = R.drawable.emoji_bad
+    //    }
+    //    else if(level.equals("2")){
+    //        filepath = R.drawable.emoji_normal
+    //    }
+    //    else if(level.equals("3")){
+    //        filepath = R.drawable.emoji_good
+    //    }
+    //    return filepath
+    //}
+
     private fun setCalendar(){
         val events: MutableList<EventDay> = ArrayList()
 
-
-
         val calendar: Calendar = Calendar.getInstance()
-        events.add(EventDay(calendar, R.drawable.emoji_good))
 
+        var str:String = sleepLevel.toString()
 
         val calendarView: CalendarView = binding.calendarView as CalendarView
+        events.add(EventDay(calendar, R.drawable.emoji_bad))
+        //events.add(EventDay(calendar, filename(str)))
+
+        /*
+        val day = calendar.get(Calendar.DATE)
+        val month = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
+
+        date = year.toString() + month.toString() + day.toString()
+         */
+
         calendarView.setEvents(events)
     }
+
+    /*
+    private fun filename(test: String):Int{
+        var num:Int = 0
+
+
+        if(test.toString()=="1"){
+            num = R.drawable.emoji_bad
+        }
+        else if(test.toString()=="2"){
+            num = R.drawable.emoji_normal
+        }
+        else if(test.toString()=="3"){
+            num = R.drawable.emoji_good
+        }
+
+        return num
+    }
+    */
 }
