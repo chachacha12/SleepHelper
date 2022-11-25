@@ -24,6 +24,7 @@ class MypageActivity : AppCompatActivity() {
     // 로그아웃 구현을 위한 변수
     var auth : FirebaseAuth ?= null
     var googleSignInClient : GoogleSignInClient?= null
+
     // firestore
     //  var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore? = null
@@ -79,28 +80,26 @@ class MypageActivity : AppCompatActivity() {
 
 
 
-        // 사용자의 이메일, 이름 추가하기
-        // 각자 이름("name")에 해당되는 이름만 바꿔서 실행
+        // 사용자의 이메일, 이름 설정하기
         println("구글 이메일 : " + auth?.currentUser?.email!!)
+        println("사용자 이름 : " + auth?.currentUser?.displayName!!)
         val  data= hashMapOf(
             "email" to auth?.currentUser?.email!!,
-            "name" to "허정인",
+            "name" to auth?.currentUser?.displayName!!,
         )
 
         // 여긴 아직 error부분
-        // (auth?.currentUser?.email!!)로 시도한 이메일 그대로 들어가는지 확인
+        // document(auth?.currentUser?.email!!) 혹은 document("eon7500@gmail.com") 둘 다 가능
         // firestore 컬렉션-도큐먼트 데이터 추가
         // 1분 정도 걸림 
         db?.collection("User")?.document(auth?.currentUser?.email!!)
             ?.set(data)
             ?.addOnSuccessListener {
                 // 성공할 경우
-                println("데추")
                 Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
             }
             ?.addOnFailureListener {
                 // 실패할 경우
-                println("데추실")
                 Toast.makeText(this, "데이터가 추가에 실패하였습니다", Toast.LENGTH_SHORT).show()
             }
 
@@ -132,8 +131,6 @@ class MypageActivity : AppCompatActivity() {
                 Toast.makeText(this, "실패하였습니다", Toast.LENGTH_SHORT).show()
             }
 
-
-      //  println("동작 되는중")
 
     }
 
