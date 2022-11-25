@@ -8,7 +8,7 @@ object ReportModel {
         val score = ReportData("85","79")
         reportDataList.add(score)
 
-        val timeInBed = ReportData("8:15","8:04")
+        var timeInBed = ReportData("8:15","8:04")
         reportDataList.add(timeInBed)
 
         val sleepTime = ReportData("7:42", "7:50")

@@ -7,6 +7,16 @@
     android:background="@color/dark_indigo"
     tools:context=".ReportActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_load"
+        app:layout_constraintBottom_toTopOf="@+id/cdl_bottom"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/light_gray"
+        app:tint="@color/dark_indigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/load"/>
 
     <ScrollView
         app:layout_constraintTop_toTopOf="parent"
