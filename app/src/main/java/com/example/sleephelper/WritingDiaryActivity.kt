@@ -6,14 +6,14 @@ import android.util.Log
 import android.widget.Toast
 import com.example.sleephelper.databinding.ActivityWritingDiaryBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+// import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class WritingDiaryActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityWritingDiaryBinding
-    var auth : FirebaseAuth? = null
+    var firebaseAuth : FirebaseAuth? = null
     var firestore : FirebaseFirestore? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,9 +22,9 @@ class WritingDiaryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        auth = Firebase.auth
+        firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-        auth!!.currentUser?.email
+        firebaseAuth!!.currentUser?.email
 
         binding.imageView.setOnClickListener {
             //다이얼로그 객체 생성
@@ -55,7 +55,7 @@ class WritingDiaryActivity : AppCompatActivity() {
                 "wine" to 5,
             )
 
-            firestore?.collection("Data")?.document(auth?.currentUser?.email!!)?.collection("sleepdata")?.document("20220101")?.set(data)
+            firestore?.collection("Data")?.document(firebaseAuth?.currentUser?.email!!)?.collection("sleepdata")?.document("20220101")?.set(data)
                 ?.addOnSuccessListener {
                     // 성공할 경우
                     Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
@@ -66,6 +66,7 @@ class WritingDiaryActivity : AppCompatActivity() {
                     Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
             }
         }
+
 
     }
 

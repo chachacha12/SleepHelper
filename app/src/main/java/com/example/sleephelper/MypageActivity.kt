@@ -1,5 +1,6 @@
 package com.example.sleephelper
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ListAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sleephelper.databinding.ActivityMypageBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -33,8 +35,7 @@ class MypageActivity : AppCompatActivity() {
 
    // private lateinit var binding : ActivityMainBinding    // 뷰 바인딩
     val db = FirebaseFirestore.getInstance()    // Firestore 인스턴스 선언
-    val itemList = arrayListOf<ListLayout>()    // 리스트 아이템 배열
-    // val adapter = ListAdapter(itemList)         // 리사이클러 뷰 어댑터
+   // val itemList = arrayListOf<ListLayout>()    // 리스트 아이템 배열
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,65 +68,72 @@ class MypageActivity : AppCompatActivity() {
             startActivity(logoutIntent)
         }
 
-            // 알림
-        println("로그아웃 됨")
 
 
         // 계정 정보 보여주기
-        // auth = Firebase.auth
-        // auth = FirebaseAuth.getInstance()
+        // auth = Firebase.auth : auth 부분 빨간줄 에러 떠서 auth = FirebaseAuth.getInstance() 로 변경
+        auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
+        auth!!.currentUser?.email
 
 
 
 
-        // binding.rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-       // binding.rvList.adapter = adapter
+        // 사용자의 이메일, 이름 추가하기
+        // 각자 이름("name")에 해당되는 이름만 바꿔서 실행
+        println("구글 이메일 : " + auth?.currentUser?.email!!)
+        val  data= hashMapOf(
+            "email" to auth?.currentUser?.email!!,
+            "name" to "허정인",
+        )
+
+        // 여긴 아직 error부분
+        // (auth?.currentUser?.email!!)로 시도한 이메일 그대로 들어가는지 확인
+        // firestore 컬렉션-도큐먼트 데이터 추가
+        // 1분 정도 걸림 
+        db?.collection("User")?.document(auth?.currentUser?.email!!)
+            ?.set(data)
+            ?.addOnSuccessListener {
+                // 성공할 경우
+                println("데추")
+                Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
+            }
+            ?.addOnFailureListener {
+                // 실패할 경우
+                println("데추실")
+                Toast.makeText(this, "데이터가 추가에 실패하였습니다", Toast.LENGTH_SHORT).show()
+            }
 
 
         var text_Name : TextView = findViewById (R.id.nameTextView);
-        text_Name.setText("ㅇㅇ");
+        var text_Email : TextView = findViewById (R.id.EmailTextView);
 
-        println("동작 안 된다")
-        // 로그인 계정 넣기
-        firestore!!.collection("User")   // 작업할 컬렉션
-            .get()      // 문서 가져오기
-            .addOnSuccessListener { result ->
+
+         // 코드로 추가 안 하고 콘솔에서 버튼 추가시 get할 때 에러
+        // document(auth?.currentUser?.email!!) : 로그인된 구글 계정으로 매칭시켜서 데이터 가져옴
+        // 이름, 이메일 변경하는데 10초 정도 걸림
+        // document(auth?.currentUser?.email!!) or document("eon7500@gmail.com") 둘 다 가능
+        db.collection("User")?.document(auth?.currentUser?.email!!)
+            ?.get()
+            ?.addOnSuccessListener { result->
                 // 성공할 경우
-                println("itemlist 되는가")
-               // itemList.clear()
-                // for문부터 안 돌아감
-                for (document in result) {  // 가져온 문서들은 result에 들어감
-                   // val item = arrayListOf<String>(document["email"] as String, document["name"] as String)
-                    println("동작되는가요")
-                    val email = document["email"] as String
-                    val name = document["name"] as String
+                println("성성")
+                val email = result["email"] as String // firestore에서 가져오기
+                val name = result["name"] as String
 
-                    println("동작")
-                    println(email)
-                    println(name)
-                }
+                text_Name.setText(name);
+                text_Email.setText(email);
 
-
-                // adapter.notifyDataSetChanged()  // 리사이클러 뷰 갱신
+                Toast.makeText(this, "성공했습니다", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener{
-                exception ->
-            // 실패할 경우
-            Log.w("MainActivity", "Error getting documents: $exception")
-        }
+            ?.addOnFailureListener {
+                // 실패할 경우
+                println("실실")
+                Toast.makeText(this, "실패하였습니다", Toast.LENGTH_SHORT).show()
+            }
 
-//        firestore!!.collection("User").document("konkukbhs@gmail.com").get()      // 문서 가져오기
-//            .addOnSuccessListener { result ->
-//                // 성공할 경우
-//                Log.e("로그", result.get("email").toString())
-//                Log.e("로그", result.get("name").toString())
-//            }
-//            .addOnFailureListener { exception ->
-//                // 실패할 경우
-//                Log.w("MainActivity", "Error getting documents: $exception")
-//            }
 
+      //  println("동작 되는중")
 
     }
 
@@ -148,13 +156,6 @@ class MypageActivity : AppCompatActivity() {
             true
         }
     }
-
-
-
-
-
-
-
 
 
 }
