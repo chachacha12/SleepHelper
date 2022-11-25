@@ -23,19 +23,19 @@ class WritingDiaryActivity : AppCompatActivity() {
     var sendDate:String?=null //DB에 보내줄 날짜 포멧 저장 변수
 
     //수면일기 입력값 13개
-    var emoji="0"  //1-3까지 이모지 있음. 0이면 아무것도 선택x
+    var emoji=3
     var gotobed_time =""
     var sleep_time =""
     var sleep_peroid =""
     var wakeup_time =""
     var outtobedtime =""
-    var wakeup_num ="0"
+    var wakeup_num =0
     var daysleep_peroid =""
-    var coffee ="0"
-    var beer ="0"
-    var soju ="0"
-    var makguli ="0"
-    var wine ="0"
+    var coffee =0
+    var beer =0
+    var soju =0
+    var makguli =0
+    var wine =0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,20 +58,14 @@ class WritingDiaryActivity : AppCompatActivity() {
         binding.checkButton.setOnClickListener{
             //로그인된 유저만 데이터 저장 가능
             if(firebaseAuth?.currentUser?.email==null){
-                Toast.makeText(this, "로그인 해주세요.",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "로그인 해주세요",Toast.LENGTH_SHORT).show()
             }else{
-                //필수입력값들 다 입력되었는지 (깬횟수는 빈칸이면 자동 0입력)
-                if(!binding.gotobedtimeEdittextView.text.isEmpty() && !binding.sleepclockEdittextView.text.isEmpty()
+                if(!binding.gotobedtimeEdittextView.text.isEmpty() && !binding.sleepclockEdittextView.text.isEmpty() && !binding.sleeptimeEdittextView.text.isEmpty()
                     && !binding.waketimeEdittextView.text.isEmpty() && !binding.outtobedtimeEdittextView.text.isEmpty() ){
-                    //이모지 수면컨디션이 작성되엇다면
-                    if(emoji !="0"){
-                        Writediary() ////태그제외 입력한 수면일기값들 저장
-                        saveSleepData()
-                    }else{
-                        Toast.makeText(this, "수면컨디션을 선택해주세요.",Toast.LENGTH_SHORT).show()
-                    }
+                    Writediary() ////태그제외 입력한 수면일기값들 저장
+                    saveSleepData()
                 }else{
-                    Toast.makeText(this, "필수입력정보를 모두 입력해주세요.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "필수입력정보를 모두 입력해주세요",Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -87,11 +81,11 @@ class WritingDiaryActivity : AppCompatActivity() {
                 binding.imageView.setImageResource(it)   //선택한 이모지 set해줌
                 //선택한 이모지에 따라 emoji변수에 다른 값 저장
                 if(it == R.drawable.emoji_good){
-                    emoji ="3"
+                    emoji =3
                 }else if(it == R.drawable.emoji_normal){
-                    emoji ="2"
+                    emoji =2
                 }else{
-                    emoji ="1"
+                    emoji =1
                 }
                 binding.imageView.visibility = View.VISIBLE  //이모자 보여줌
                 binding.emojiTextView.visibility = View.GONE
@@ -107,11 +101,11 @@ class WritingDiaryActivity : AppCompatActivity() {
                 binding.imageView.setImageResource(it)   //선택한 이모지 set해줌
                 //선택한 이모지에 따라 emoji변수에 다른 값 저장
                 if(it == R.drawable.emoji_good){
-                    emoji ="3"
+                    emoji =3
                 }else if(it == R.drawable.emoji_normal){
-                    emoji ="2"
+                    emoji =2
                 }else{
-                    emoji ="1"
+                    emoji =1
                 }
             }
             dlg.show()
@@ -137,27 +131,28 @@ class WritingDiaryActivity : AppCompatActivity() {
         binding.dateTextView.text = showDate+" 수면일기"
     }
 
-    //파이어베이스에 수면일기 저장 작업 12개 데이터
+    //파이어베이스에 수면일기 저장 작업
     fun saveSleepData(){
         val sleepdata= hashMapOf(
             "emoji" to emoji,
-            "bedStartTime" to gotobed_time,
-            "startSleepTime" to sleep_time,
-            "wakeUpTime" to wakeup_time,
-            "bedEndTime" to outtobedtime,
-            "wakeUpCount" to wakeup_num,
-            "napTime" to daysleep_peroid,
+            "gotobed_time" to gotobed_time,
+            "sleep_time" to sleep_time,
+            "sleep_peroid" to sleep_peroid,
+            "wakeup_time" to wakeup_time,
+            "outtobedtime" to outtobedtime,
+            "wakeup_num" to wakeup_num,
+            "daysleep_peroid" to daysleep_peroid,
             "coffee" to coffee,
             "beer" to beer,
             "soju" to soju,
-            "makgeolli" to makguli,
+            "makguli" to makguli,
             "wine" to wine,
         )
         //firestore에 수면일기 데이터 입력 작업
         firestore?.collection("Data")?.document(firebaseAuth?.currentUser?.email!!)?.collection("sleepdata")?.document(sendDate!!)?.set(sleepdata)
             ?.addOnSuccessListener {
                 // 성공할 경우
-                Toast.makeText(this, showDate+" 수면일기 작성 완료!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
                 Log.e("태그", "sleepdata:"+sleepdata)
             }
             ?.addOnFailureListener {
@@ -171,14 +166,21 @@ class WritingDiaryActivity : AppCompatActivity() {
     fun Writediary(){
         gotobed_time = binding.gotobedtimeEdittextView.text.toString()
         sleep_time =binding.sleepclockEdittextView.text.toString()
+        sleep_peroid = binding.sleeptimeEdittextView.text.toString()
         wakeup_time = binding.waketimeEdittextView.text.toString()
         outtobedtime =binding.outtobedtimeEdittextView.text.toString()
 
         if(binding.wakenumberEdittextView.text.isEmpty()){
-            wakeup_num = "0"
+            wakeup_num = 0
         }else{
-            wakeup_num = binding.wakenumberEdittextView.text.toString()
+            wakeup_num = binding.wakenumberEdittextView.text.toString().toInt()
         }
+        daysleep_peroid =binding.afternoonsleepEdittextView.text.toString()
+
+        Log.e("태그", "gotobed_time:"+gotobed_time + "sleep_time:"+sleep_time+"sleep_peroid:"+sleep_peroid+
+        "wakeup_time:"+wakeup_time+" outtobedtime:"+outtobedtime+" wakeup_num: "+wakeup_num
+        +"daysleep_peroid:"+daysleep_peroid)
+
     }
 
     //태그선택시 색상변경 작업
@@ -191,7 +193,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.coffeetag3.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag4.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag5.setBackgroundResource(R.drawable.button3_round)
-            coffee = "1"    //coffee변수에 1저장
+            coffee = 1    //coffee변수에 1저장
         }
         binding.coffeetag1.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -200,7 +202,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.coffeetag3.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag4.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag5.setBackgroundResource(R.drawable.button3_round)
-            coffee = "2"
+            coffee = 2
         }
         binding.coffeetag2.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -209,7 +211,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.coffeetag3.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag4.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag5.setBackgroundResource(R.drawable.button3_round)
-            coffee = "3"
+            coffee = 3
         }
         binding.coffeetag3.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -218,7 +220,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.coffeetag1.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag4.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag5.setBackgroundResource(R.drawable.button3_round)
-            coffee = "4"
+            coffee = 4
         }
         binding.coffeetag4.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -227,7 +229,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.coffeetag3.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag1.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag5.setBackgroundResource(R.drawable.button3_round)
-            coffee = "5"
+            coffee = 5
         }
         binding.coffeetag5.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -236,7 +238,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.coffeetag3.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag4.setBackgroundResource(R.drawable.button3_round)
             binding.coffeetag1.setBackgroundResource(R.drawable.button3_round)
-            coffee = "6"
+            coffee = 6
         }
 
         //맥주
@@ -247,7 +249,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.beertag3.setBackgroundResource(R.drawable.button3_round)
             binding.beertag4.setBackgroundResource(R.drawable.button3_round)
             binding.beertag5.setBackgroundResource(R.drawable.button3_round)
-            beer = "1"
+            beer = 1
         }
         binding.beertag1.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -256,7 +258,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.beertag3.setBackgroundResource(R.drawable.button3_round)
             binding.beertag4.setBackgroundResource(R.drawable.button3_round)
             binding.beertag5.setBackgroundResource(R.drawable.button3_round)
-            beer = "2"
+            beer = 2
         }
         binding.beertag2.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -265,7 +267,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.beertag3.setBackgroundResource(R.drawable.button3_round)
             binding.beertag4.setBackgroundResource(R.drawable.button3_round)
             binding.beertag5.setBackgroundResource(R.drawable.button3_round)
-            beer ="3"
+            beer =3
         }
         binding.beertag3.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -274,7 +276,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.beertag0.setBackgroundResource(R.drawable.button3_round)
             binding.beertag4.setBackgroundResource(R.drawable.button3_round)
             binding.beertag5.setBackgroundResource(R.drawable.button3_round)
-            beer = "4"
+            beer = 4
         }
         binding.beertag4.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -283,7 +285,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.beertag3.setBackgroundResource(R.drawable.button3_round)
             binding.beertag0.setBackgroundResource(R.drawable.button3_round)
             binding.beertag5.setBackgroundResource(R.drawable.button3_round)
-            beer = "5"
+            beer = 5
         }
         binding.beertag5.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -292,7 +294,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.beertag3.setBackgroundResource(R.drawable.button3_round)
             binding.beertag4.setBackgroundResource(R.drawable.button3_round)
             binding.beertag0.setBackgroundResource(R.drawable.button3_round)
-            beer = "6"
+            beer = 6
         }
 
 
@@ -304,7 +306,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.sojutag3.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag4.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag5.setBackgroundResource(R.drawable.button3_round)
-            soju = "1"
+            soju = 1
         }
         binding.sojutag1.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -313,7 +315,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.sojutag3.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag4.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag5.setBackgroundResource(R.drawable.button3_round)
-            soju = "2"
+            soju = 2
         }
         binding.sojutag2.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -322,7 +324,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.sojutag3.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag4.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag5.setBackgroundResource(R.drawable.button3_round)
-            soju ="3"
+            soju =3
         }
         binding.sojutag3.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -331,7 +333,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.sojutag0.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag4.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag5.setBackgroundResource(R.drawable.button3_round)
-            soju = "4"
+            soju = 4
         }
         binding.sojutag4.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -340,7 +342,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.sojutag3.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag0.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag5.setBackgroundResource(R.drawable.button3_round)
-            soju = "5"
+            soju = 5
         }
         binding.sojutag5.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -349,7 +351,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.sojutag3.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag4.setBackgroundResource(R.drawable.button3_round)
             binding.sojutag0.setBackgroundResource(R.drawable.button3_round)
-            soju = "6"
+            soju = 6
         }
 
         //탁주
@@ -360,7 +362,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.makgurlitag3.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag4.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag5.setBackgroundResource(R.drawable.button3_round)
-            makguli = "1"
+            makguli = 1
         }
         binding.makgurlitag1.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -369,7 +371,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.makgurlitag3.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag4.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag5.setBackgroundResource(R.drawable.button3_round)
-            makguli = "2"
+            makguli = 2
         }
         binding.makgurlitag2.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -378,7 +380,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.makgurlitag3.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag4.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag5.setBackgroundResource(R.drawable.button3_round)
-            makguli = "3"
+            makguli = 3
         }
         binding.makgurlitag3.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -387,7 +389,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.makgurlitag0.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag4.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag5.setBackgroundResource(R.drawable.button3_round)
-            makguli = "4"
+            makguli = 4
         }
         binding.makgurlitag4.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -396,7 +398,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.makgurlitag3.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag0.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag5.setBackgroundResource(R.drawable.button3_round)
-            makguli ="5"
+            makguli =5
         }
         binding.makgurlitag5.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -405,7 +407,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.makgurlitag3.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag4.setBackgroundResource(R.drawable.button3_round)
             binding.makgurlitag0.setBackgroundResource(R.drawable.button3_round)
-            makguli = "6"
+            makguli = 6
         }
 
         //와인
@@ -416,7 +418,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.winetag3.setBackgroundResource(R.drawable.button3_round)
             binding.winetag4.setBackgroundResource(R.drawable.button3_round)
             binding.winetag5.setBackgroundResource(R.drawable.button3_round)
-            wine ="1"
+            wine =1
         }
         binding.winetag1.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -425,7 +427,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.winetag3.setBackgroundResource(R.drawable.button3_round)
             binding.winetag4.setBackgroundResource(R.drawable.button3_round)
             binding.winetag5.setBackgroundResource(R.drawable.button3_round)
-            wine ="2"
+            wine =2
         }
         binding.winetag2.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -434,7 +436,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.winetag3.setBackgroundResource(R.drawable.button3_round)
             binding.winetag4.setBackgroundResource(R.drawable.button3_round)
             binding.winetag5.setBackgroundResource(R.drawable.button3_round)
-            wine ="3"
+            wine =3
         }
         binding.winetag3.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -443,7 +445,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.winetag0.setBackgroundResource(R.drawable.button3_round)
             binding.winetag4.setBackgroundResource(R.drawable.button3_round)
             binding.winetag5.setBackgroundResource(R.drawable.button3_round)
-            wine = "4"
+            wine = 4
         }
         binding.winetag4.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -452,7 +454,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.winetag3.setBackgroundResource(R.drawable.button3_round)
             binding.winetag0.setBackgroundResource(R.drawable.button3_round)
             binding.winetag5.setBackgroundResource(R.drawable.button3_round)
-            wine = "5"
+            wine = 5
         }
         binding.winetag5.setOnClickListener {
             it.setBackgroundResource(R.drawable.button2_round)
@@ -461,7 +463,7 @@ class WritingDiaryActivity : AppCompatActivity() {
             binding.winetag3.setBackgroundResource(R.drawable.button3_round)
             binding.winetag4.setBackgroundResource(R.drawable.button3_round)
             binding.winetag0.setBackgroundResource(R.drawable.button3_round)
-            wine ="6"
+            wine =6
         }
 
 
