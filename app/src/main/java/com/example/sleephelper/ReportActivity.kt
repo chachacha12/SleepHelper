@@ -23,12 +23,14 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.roundToInt
 
 const val dayInMins = 1440
 const val week = 7
@@ -415,6 +417,226 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         reportDataList?.set(0,ReportData(weeklyAverage, monthlyAverage,false))
     }
 
+    private fun calStartSleepTimeAverage(){
+        var sum =0
+        var count = 0
+
+        for(i in 0..6){
+            if(startSleepTimeList?.get(i)!="null"){
+                count++
+                sum += calTimeInMins(startSleepTimeList!!.get(i))
+            }
+        }
+        val weeklyAverage = changeTimeFormat(sum/count)
+
+        sum =0
+        count = 0
+
+        for(i in 0..29){
+            if(startSleepTimeList?.get(i)!="null"){
+                count++
+                sum += calTimeInMins(startSleepTimeList!!.get(i))
+            }
+        }
+        val monthlyAverage = changeTimeFormat(sum/count)
+
+        reportDataList?.set(4, ReportData(weeklyAverage, monthlyAverage,false))
+    }
+
+    private fun calWakeUpTimeAverage(){
+        var sum =0
+        var count = 0
+
+        for(i in 0..6){
+            if(wakeUpTimeList?.get(i)!="null"){
+                count++
+                sum += calTimeInMins(wakeUpTimeList!!.get(i))
+            }
+        }
+        val weeklyAverage = changeTimeFormat(sum/count)
+
+        sum =0
+        count = 0
+
+        for(i in 0..29){
+            if(wakeUpTimeList?.get(i)!="null"){
+                count++
+                sum += calTimeInMins(wakeUpTimeList!!.get(i))
+            }
+        }
+        val monthlyAverage = changeTimeFormat(sum/count)
+
+        reportDataList?.set(5, ReportData(weeklyAverage, monthlyAverage,false))
+    }
+
+    private fun calNapTimeAverage(){
+        var sum =0
+        var count = 0
+
+        for(i in 0..6){
+            if(napTimeList?.get(i)!="null"){
+                count++
+                sum += calTimeInMins(napTimeList!!.get(i))
+            }
+        }
+        val weeklyAverage = changeTimeFormat(sum/count)
+
+        sum =0
+        count = 0
+
+        for(i in 0..29){
+            if(napTimeList?.get(i)!="null"){
+                count++
+                sum += calTimeInMins(napTimeList!!.get(i))
+            }
+        }
+        val monthlyAverage = changeTimeFormat(sum/count)
+
+        reportDataList?.set(6, ReportData(weeklyAverage, monthlyAverage,false))
+    }
+
+    private fun calCoffeeAverage(){
+        var sum = 0.0
+        var count =0.0
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.DOWN
+
+        for(i in 0..6){
+            if(coffeeList?.get(i)!="null"){
+                count++
+                sum+=  coffeeList!!.get(i).removeSurrounding("\"").toDouble()
+            }
+        }
+        val weeklyAverage = df.format(sum/count)
+
+        sum = 0.0
+        count =0.0
+
+        for(i in 0..29){
+            if(coffeeList?.get(i)!="null"){
+                count++
+                sum+= coffeeList!!.get(i).removeSurrounding("\"").toDouble()
+            }
+        }
+        val monthlyAverage = df.format(sum/count)
+
+        reportDataList?.set(7, ReportData(weeklyAverage + "잔", monthlyAverage+"잔",false))
+    }
+
+    private fun calBeerAverage(){
+        var sum = 0.0
+        var count =0.0
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.DOWN
+
+        for(i in 0..6){
+            if(beerList?.get(i)!="null"){
+                count++
+                sum+=  beerList!!.get(i).removeSurrounding("\"").toDouble()
+            }
+        }
+        val weeklyAverage = df.format(sum/count)
+
+        sum = 0.0
+        count =0.0
+
+        for(i in 0..29){
+            if(beerList?.get(i)!="null"){
+                count++
+                sum+= beerList!!.get(i).removeSurrounding("\"").toDouble()
+            }
+        }
+        val monthlyAverage = df.format(sum/count)
+
+        reportDataList?.set(8, ReportData(weeklyAverage + "잔", monthlyAverage+"잔",false))
+
+    }
+
+    private fun calSojuAverage(){
+        var sum = 0.0
+        var count =0.0
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.DOWN
+
+        for(i in 0..6){
+            if(sojuList?.get(i)!="null"){
+                count++
+                sum+=  sojuList!!.get(i).removeSurrounding("\"").toDouble()
+            }
+        }
+        val weeklyAverage = df.format(sum/count)
+
+        sum = 0.0
+        count =0.0
+
+        for(i in 0..29){
+            if(sojuList?.get(i)!="null"){
+                count++
+                sum+= sojuList!!.get(i).removeSurrounding("\"").toDouble()
+            }
+        }
+        val monthlyAverage = df.format(sum/count)
+
+        reportDataList?.set(9, ReportData(weeklyAverage + "잔", monthlyAverage+"잔",false))
+
+    }
+    private fun calMakgeolliAverage(){
+        var sum = 0.0
+        var count =0.0
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.DOWN
+
+        for(i in 0..6){
+            if(makgeolliList?.get(i)!="null"){
+                count++
+                sum+=  makgeolliList!!.get(i).removeSurrounding("\"").toDouble()
+            }
+        }
+        val weeklyAverage = df.format(sum/count)
+
+        sum = 0.0
+        count =0.0
+
+        for(i in 0..29){
+            if(makgeolliList?.get(i)!="null"){
+                count++
+                sum+= makgeolliList!!.get(i).removeSurrounding("\"").toDouble()
+            }
+        }
+        val monthlyAverage = df.format(sum/count)
+
+        reportDataList?.set(10, ReportData(weeklyAverage + "잔", monthlyAverage+"잔",false))
+
+    }
+    private fun calWineAverage(){
+        var sum = 0.0
+        var count =0.0
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.DOWN
+
+        for(i in 0..6){
+            if(wineList?.get(i)!="null"){
+                count++
+                sum+=  wineList!!.get(i).removeSurrounding("\"").toDouble()
+            }
+        }
+        val weeklyAverage = df.format(sum/count)
+
+        sum = 0.0
+        count =0.0
+
+        for(i in 0..29){
+            if(wineList?.get(i)!="null"){
+                count++
+                sum+= wineList!!.get(i).removeSurrounding("\"").toDouble()
+            }
+        }
+        val monthlyAverage = df.format(sum/count)
+
+        reportDataList?.set(11, ReportData(weeklyAverage + "잔", monthlyAverage+"잔",false))
+
+    }
+
     private fun setUpWeeklyView() {
         binding?.btnWeekly?.background =
             getDrawable(R.drawable.report_selected_left_button_background)
@@ -473,6 +695,14 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
                     calBedTimeAverage()
                     calSleepTimeAverage()
                     calBIAverage()
+                    calStartSleepTimeAverage()
+                    calWakeUpTimeAverage()
+                    calNapTimeAverage()
+                    calCoffeeAverage()
+                    calBeerAverage()
+                    calSojuAverage()
+                    calMakgeolliAverage()
+                    calWineAverage()
 
                     runOnUiThread {
                         Toast.makeText(
@@ -480,6 +710,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
                             "데이터 로딩을 완료했습니다",
                             Toast.LENGTH_SHORT
                         ).show()
+                        setUpWeeklyView()
                     }
                 }
             }
