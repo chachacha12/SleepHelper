@@ -66,7 +66,7 @@ class CalendarActivity : AppCompatActivity() {
         firestore!!.collection("Data")
             .document(firebaseAuth?.currentUser?.email!!)
             .collection("sleepdata").document(
-            "20220101").get()      // 문서 가져오기
+                "20220102").get()      // 문서 가져오기
             .addOnSuccessListener { result ->
                 // 성공할 경우
                 Log.e("로그", result.get("beer").toString())
@@ -109,18 +109,6 @@ class CalendarActivity : AppCompatActivity() {
 
             binding.slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
 
-            // 캘린더 페이지에 넣어주기
-            binding.tvWine.text = wine
-            binding.tvBeer.text = beer
-            binding.tvMakgurli.text = makguli
-            binding.tvSoju.text = soju
-            binding.tvCoffee.text = coffee
-            binding.tvNapTime.text = nap_time
-            binding.tvBedTime.text = sleep_time
-            binding.tvWakeUpTime.text = wakeup_time
-            binding.tvBI.text = time_to_sleep
-            binding.tvTimeInBed.text = time_in_bed
-            binding.tvSleepTime.text = sleeptime
         })
 
         setChart()
@@ -152,12 +140,21 @@ class CalendarActivity : AppCompatActivity() {
         return result
     }
 
+    private fun isTrue(test: String) : Int{
+        var token = test.split(":")
+        var hour : Int = token[0].toInt()
+
+        return hour
+    }
+
     // 침대에서 머문 시간 계산 메소드
     private fun calTimeinBed(gotobedtime: String, outtobedtime: String): Int {
         var timeinbed = 0
-        if (timeToMin(gotobedtime) > 1440) {
-            timeinbed = timeToMin(outtobedtime) - timeToMin(gotobedtime)
-        } else {
+
+        if (isTrue(outtobedtime) - isTrue(gotobedtime) < 0){
+            timeinbed = 1440 - timeToMin(gotobedtime) + timeToMin(outtobedtime)
+        }
+        else {
             //timeinbed = 1440 - timeToMin(gotobedtime) + timeToMin(outtobedtime)
             timeinbed = timeToMin(outtobedtime) - timeToMin(gotobedtime)
         }
