@@ -29,6 +29,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
 import kotlin.coroutines.CoroutineContext
 import kotlin.math.roundToInt
 
@@ -70,26 +71,18 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         binding = ActivityReportBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-
         reportDataList = ReportModel.defaultReportDataList()
 
-
-
+        init()
 
 
         //setChart()
 
         setBottomNavigation()
-
         setFabAdd()
 
-
-
-        setUpWeeklyView()
-
-
         //리스너 달기
-        binding?.fabLoad?.setOnClickListener(this)
+        //binding?.fabLoad?.setOnClickListener(this)
         binding?.btnWeekly?.setOnClickListener(this)
         binding?.btnMonthly?.setOnClickListener(this)
         binding?.clScore?.setOnClickListener(this)
@@ -122,6 +115,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         }
     }
 
+    // 차트 그리기
 //    private fun setChart() {
 //        chart = binding?.sleepLineChart
 //
@@ -162,8 +156,10 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         wakeUpTime: String
     ): Int {
         val score =
-            (calSleepTime(startSleepTime, wakeUpTime).toDouble() / calBedTime(bedStartTime, bedEndTime).toDouble()) * 100.0
-        Log.d("score",score.toString())
+            (calSleepTime(startSleepTime, wakeUpTime).toDouble() / calBedTime(
+                bedStartTime,
+                bedEndTime
+            ).toDouble()) * 100.0
         return score.toInt()
     }
 
@@ -218,7 +214,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         return hour * 60 + minute
     }
 
-    //분단위 시간을 hh:mm 으로 바꾸기
+    //분단위 시간을 "hh:mm" 으로 바꾸기
     private fun changeTimeFormat(time: Int): String {
         val df = DecimalFormat("00")
         val hour = df.format(time / 60).toString()
@@ -227,6 +223,14 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         return "$hour:$minute"
     }
 
+    //분단위 시간을 "hh시간 mm분"으로 바꾸기
+    private fun changeTimeFormat2(time: Int): String {
+        val df = DecimalFormat("00")
+        val hour = df.format(time / 60).toString()
+        val minute = df.format(time % 60).toString()
+
+        return "$hour"+"시간 "+"$minute"+"분"
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDaysAgo(day: Long): String {
@@ -237,32 +241,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         return formatted
     }
 
-
     //firestore에서 데이터가져와서 로컬 db에 저장
-    @RequiresApi(Build.VERSION_CODES.O)
-    private suspend fun getWeeklyDbDataList(key: String): ArrayList<String> {
-        val dbDataList = ArrayList<String>()
-        for (i in 0..6) {
-            dbDataList?.add(i.toString())
-        }
-        for (i in 0..6) {
-            var date = getDaysAgo(i.toLong())
-            db.collection("Data").document("catree42@gmail.com").collection("sleepData")
-                .document(date)
-                .get()
-                .addOnSuccessListener { result ->
-                    var data = result[key]
-                    if (data != null)
-                        dbDataList?.set(i, data as String)
-                    else {
-                        dbDataList?.set(i, "null")
-                    }
-                    //Log.d("dbDataList",dbDataList?.get(i)!!)
-                }.await()
-        }
-        return dbDataList!!
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun getMonthlyDbDataList(key: String): ArrayList<String> {
         val dbDataList = ArrayList<String>()
@@ -282,7 +261,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
                         dbDataList?.set(i, "null")
                     }
                     //
-                // Log.d("dbDataList", dbDataList?.get(i)!!)
+                    // Log.d("dbDataList", dbDataList?.get(i)!!)
                 }.await()
         }
         return dbDataList!!
@@ -303,7 +282,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
             }
         }
         val weeklyAverage = sum / count
-        val weeklyAverageFormat = changeTimeFormat(weeklyAverage)
+        val weeklyAverageFormat = changeTimeFormat2(weeklyAverage)
 
         sum = 0
         count = 0
@@ -320,7 +299,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
             }
         }
         val monthlyAverage = sum / count
-        val monthlyAverageFormat = changeTimeFormat(monthlyAverage)
+        val monthlyAverageFormat = changeTimeFormat2(monthlyAverage)
         reportDataList?.set(1, ReportData(weeklyAverageFormat, monthlyAverageFormat, false))
 
 
@@ -338,7 +317,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
             }
         }
         val weeklyAverage = sum / count
-        val weeklyAverageFormat = changeTimeFormat(weeklyAverage)
+        val weeklyAverageFormat = changeTimeFormat2(weeklyAverage)
 
         sum = 0
         count = 0
@@ -350,7 +329,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
             }
         }
         val monthlyAverage = sum / count
-        val monthlyAverageFormat = changeTimeFormat(monthlyAverage)
+        val monthlyAverageFormat = changeTimeFormat2(monthlyAverage)
 
         reportDataList?.set(2, ReportData(weeklyAverageFormat, monthlyAverageFormat, false))
     }
@@ -384,256 +363,264 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
     }
 
-    private fun calScoreAverage(){
+    private fun calScoreAverage() {
         var sum = 0
         var count = 0
 
-        for(i in 0..6){
-            if(bedStartTimeList?.get(i)!="null"&&bedEndTimeList?.get(i)!="null"
-                && startSleepTimeList?.get(i)!="null" && wakeUpTimeList?.get(i)!="null"){
+        for (i in 0..6) {
+            if (bedStartTimeList?.get(i) != "null" && bedEndTimeList?.get(i) != "null"
+                && startSleepTimeList?.get(i) != "null" && wakeUpTimeList?.get(i) != "null"
+            ) {
                 count++
-                sum+=calScore(bedStartTimeList!!.get(i),bedEndTimeList!!.get(i),
-                startSleepTimeList!!.get(i),wakeUpTimeList!!.get(i))
+                sum += calScore(
+                    bedStartTimeList!!.get(i), bedEndTimeList!!.get(i),
+                    startSleepTimeList!!.get(i), wakeUpTimeList!!.get(i)
+                )
             }
 
         }
-        val weeklyAverage = (sum/count).toString()
+        val weeklyAverage = (sum / count).toString()
 
         sum = 0
         count = 0
 
-        for(i in 0..29){
-            if(bedStartTimeList?.get(i)!="null"&&bedEndTimeList?.get(i)!="null"
-                && startSleepTimeList?.get(i)!="null" && wakeUpTimeList?.get(i)!="null"){
+        for (i in 0..29) {
+            if (bedStartTimeList?.get(i) != "null" && bedEndTimeList?.get(i) != "null"
+                && startSleepTimeList?.get(i) != "null" && wakeUpTimeList?.get(i) != "null"
+            ) {
                 count++
-                sum+=calScore(bedStartTimeList!!.get(i),bedEndTimeList!!.get(i),
-                    startSleepTimeList!!.get(i),wakeUpTimeList!!.get(i))
+                sum += calScore(
+                    bedStartTimeList!!.get(i), bedEndTimeList!!.get(i),
+                    startSleepTimeList!!.get(i), wakeUpTimeList!!.get(i)
+                )
             }
 
         }
 
-        val monthlyAverage = (sum/count).toString()
+        val monthlyAverage = (sum / count).toString()
 
-        reportDataList?.set(0,ReportData(weeklyAverage, monthlyAverage,false))
+        reportDataList?.set(0, ReportData(weeklyAverage, monthlyAverage, false))
     }
 
-    private fun calStartSleepTimeAverage(){
-        var sum =0
+    private fun calStartSleepTimeAverage() {
+        var sum = 0
         var count = 0
 
-        for(i in 0..6){
-            if(startSleepTimeList?.get(i)!="null"){
+        for (i in 0..6) {
+            if (startSleepTimeList?.get(i) != "null") {
                 count++
                 sum += calTimeInMins(startSleepTimeList!!.get(i))
             }
         }
-        val weeklyAverage = changeTimeFormat(sum/count)
+        val weeklyAverage = changeTimeFormat(sum / count)
 
-        sum =0
+        sum = 0
         count = 0
 
-        for(i in 0..29){
-            if(startSleepTimeList?.get(i)!="null"){
+        for (i in 0..29) {
+            if (startSleepTimeList?.get(i) != "null") {
                 count++
                 sum += calTimeInMins(startSleepTimeList!!.get(i))
             }
         }
-        val monthlyAverage = changeTimeFormat(sum/count)
+        val monthlyAverage = changeTimeFormat(sum / count)
 
-        reportDataList?.set(4, ReportData(weeklyAverage, monthlyAverage,false))
+        reportDataList?.set(4, ReportData(weeklyAverage, monthlyAverage, false))
     }
 
-    private fun calWakeUpTimeAverage(){
-        var sum =0
+    private fun calWakeUpTimeAverage() {
+        var sum = 0
         var count = 0
 
-        for(i in 0..6){
-            if(wakeUpTimeList?.get(i)!="null"){
+        for (i in 0..6) {
+            if (wakeUpTimeList?.get(i) != "null") {
                 count++
                 sum += calTimeInMins(wakeUpTimeList!!.get(i))
             }
         }
-        val weeklyAverage = changeTimeFormat(sum/count)
+        val weeklyAverage = changeTimeFormat(sum / count)
 
-        sum =0
+        sum = 0
         count = 0
 
-        for(i in 0..29){
-            if(wakeUpTimeList?.get(i)!="null"){
+        for (i in 0..29) {
+            if (wakeUpTimeList?.get(i) != "null") {
                 count++
                 sum += calTimeInMins(wakeUpTimeList!!.get(i))
             }
         }
-        val monthlyAverage = changeTimeFormat(sum/count)
+        val monthlyAverage = changeTimeFormat(sum / count)
 
-        reportDataList?.set(5, ReportData(weeklyAverage, monthlyAverage,false))
+        reportDataList?.set(5, ReportData(weeklyAverage, monthlyAverage, false))
     }
 
-    private fun calNapTimeAverage(){
-        var sum =0
+    private fun calNapTimeAverage() {
+        var sum = 0
         var count = 0
 
-        for(i in 0..6){
-            if(napTimeList?.get(i)!="null"){
+        for (i in 0..6) {
+            if (napTimeList?.get(i) != "null") {
                 count++
                 sum += calTimeInMins(napTimeList!!.get(i))
             }
         }
-        val weeklyAverage = changeTimeFormat(sum/count)
+        val weeklyAverage = changeTimeFormat(sum / count)
 
-        sum =0
+        sum = 0
         count = 0
 
-        for(i in 0..29){
-            if(napTimeList?.get(i)!="null"){
+        for (i in 0..29) {
+            if (napTimeList?.get(i) != "null") {
                 count++
                 sum += calTimeInMins(napTimeList!!.get(i))
             }
         }
-        val monthlyAverage = changeTimeFormat(sum/count)
+        val monthlyAverage = changeTimeFormat(sum / count)
 
-        reportDataList?.set(6, ReportData(weeklyAverage, monthlyAverage,false))
+        reportDataList?.set(6, ReportData(weeklyAverage, monthlyAverage, false))
     }
 
-    private fun calCoffeeAverage(){
+    private fun calCoffeeAverage() {
         var sum = 0.0
-        var count =0.0
+        var count = 0.0
         val df = DecimalFormat("#.#")
         df.roundingMode = RoundingMode.DOWN
 
-        for(i in 0..6){
-            if(coffeeList?.get(i)!="null"){
+        for (i in 0..6) {
+            if (coffeeList?.get(i) != "null") {
                 count++
-                sum+=  coffeeList!!.get(i).removeSurrounding("\"").toDouble()
+                sum += coffeeList!!.get(i).removeSurrounding("\"").toDouble()
             }
         }
-        val weeklyAverage = df.format(sum/count)
+        val weeklyAverage = df.format(sum / count)
 
         sum = 0.0
-        count =0.0
+        count = 0.0
 
-        for(i in 0..29){
-            if(coffeeList?.get(i)!="null"){
+        for (i in 0..29) {
+            if (coffeeList?.get(i) != "null") {
                 count++
-                sum+= coffeeList!!.get(i).removeSurrounding("\"").toDouble()
+                sum += coffeeList!!.get(i).removeSurrounding("\"").toDouble()
             }
         }
-        val monthlyAverage = df.format(sum/count)
+        val monthlyAverage = df.format(sum / count)
 
-        reportDataList?.set(7, ReportData(weeklyAverage + "잔", monthlyAverage+"잔",false))
+        reportDataList?.set(7, ReportData(weeklyAverage + "잔", monthlyAverage + "잔", false))
     }
 
-    private fun calBeerAverage(){
+    private fun calBeerAverage() {
         var sum = 0.0
-        var count =0.0
+        var count = 0.0
         val df = DecimalFormat("#.#")
         df.roundingMode = RoundingMode.DOWN
 
-        for(i in 0..6){
-            if(beerList?.get(i)!="null"){
+        for (i in 0..6) {
+            if (beerList?.get(i) != "null") {
                 count++
-                sum+=  beerList!!.get(i).removeSurrounding("\"").toDouble()
+                sum += beerList!!.get(i).removeSurrounding("\"").toDouble()
             }
         }
-        val weeklyAverage = df.format(sum/count)
+        val weeklyAverage = df.format(sum / count)
 
         sum = 0.0
-        count =0.0
+        count = 0.0
 
-        for(i in 0..29){
-            if(beerList?.get(i)!="null"){
+        for (i in 0..29) {
+            if (beerList?.get(i) != "null") {
                 count++
-                sum+= beerList!!.get(i).removeSurrounding("\"").toDouble()
+                sum += beerList!!.get(i).removeSurrounding("\"").toDouble()
             }
         }
-        val monthlyAverage = df.format(sum/count)
+        val monthlyAverage = df.format(sum / count)
 
-        reportDataList?.set(8, ReportData(weeklyAverage + "잔", monthlyAverage+"잔",false))
+        reportDataList?.set(8, ReportData(weeklyAverage + "잔", monthlyAverage + "잔", false))
 
     }
 
-    private fun calSojuAverage(){
+    private fun calSojuAverage() {
         var sum = 0.0
-        var count =0.0
+        var count = 0.0
         val df = DecimalFormat("#.#")
         df.roundingMode = RoundingMode.DOWN
 
-        for(i in 0..6){
-            if(sojuList?.get(i)!="null"){
+        for (i in 0..6) {
+            if (sojuList?.get(i) != "null") {
                 count++
-                sum+=  sojuList!!.get(i).removeSurrounding("\"").toDouble()
+                sum += sojuList!!.get(i).removeSurrounding("\"").toDouble()
             }
         }
-        val weeklyAverage = df.format(sum/count)
+        val weeklyAverage = df.format(sum / count)
 
         sum = 0.0
-        count =0.0
+        count = 0.0
 
-        for(i in 0..29){
-            if(sojuList?.get(i)!="null"){
+        for (i in 0..29) {
+            if (sojuList?.get(i) != "null") {
                 count++
-                sum+= sojuList!!.get(i).removeSurrounding("\"").toDouble()
+                sum += sojuList!!.get(i).removeSurrounding("\"").toDouble()
             }
         }
-        val monthlyAverage = df.format(sum/count)
+        val monthlyAverage = df.format(sum / count)
 
-        reportDataList?.set(9, ReportData(weeklyAverage + "잔", monthlyAverage+"잔",false))
+        reportDataList?.set(9, ReportData(weeklyAverage + "잔", monthlyAverage + "잔", false))
 
     }
-    private fun calMakgeolliAverage(){
+
+    private fun calMakgeolliAverage() {
         var sum = 0.0
-        var count =0.0
+        var count = 0.0
         val df = DecimalFormat("#.#")
         df.roundingMode = RoundingMode.DOWN
 
-        for(i in 0..6){
-            if(makgeolliList?.get(i)!="null"){
+        for (i in 0..6) {
+            if (makgeolliList?.get(i) != "null") {
                 count++
-                sum+=  makgeolliList!!.get(i).removeSurrounding("\"").toDouble()
+                sum += makgeolliList!!.get(i).removeSurrounding("\"").toDouble()
             }
         }
-        val weeklyAverage = df.format(sum/count)
+        val weeklyAverage = df.format(sum / count)
 
         sum = 0.0
-        count =0.0
+        count = 0.0
 
-        for(i in 0..29){
-            if(makgeolliList?.get(i)!="null"){
+        for (i in 0..29) {
+            if (makgeolliList?.get(i) != "null") {
                 count++
-                sum+= makgeolliList!!.get(i).removeSurrounding("\"").toDouble()
+                sum += makgeolliList!!.get(i).removeSurrounding("\"").toDouble()
             }
         }
-        val monthlyAverage = df.format(sum/count)
+        val monthlyAverage = df.format(sum / count)
 
-        reportDataList?.set(10, ReportData(weeklyAverage + "잔", monthlyAverage+"잔",false))
+        reportDataList?.set(10, ReportData(weeklyAverage + "잔", monthlyAverage + "잔", false))
 
     }
-    private fun calWineAverage(){
+
+    private fun calWineAverage() {
         var sum = 0.0
-        var count =0.0
+        var count = 0.0
         val df = DecimalFormat("#.#")
         df.roundingMode = RoundingMode.DOWN
 
-        for(i in 0..6){
-            if(wineList?.get(i)!="null"){
+        for (i in 0..6) {
+            if (wineList?.get(i) != "null") {
                 count++
-                sum+=  wineList!!.get(i).removeSurrounding("\"").toDouble()
+                sum += wineList!!.get(i).removeSurrounding("\"").toDouble()
             }
         }
-        val weeklyAverage = df.format(sum/count)
+        val weeklyAverage = df.format(sum / count)
 
         sum = 0.0
-        count =0.0
+        count = 0.0
 
-        for(i in 0..29){
-            if(wineList?.get(i)!="null"){
+        for (i in 0..29) {
+            if (wineList?.get(i) != "null") {
                 count++
-                sum+= wineList!!.get(i).removeSurrounding("\"").toDouble()
+                sum += wineList!!.get(i).removeSurrounding("\"").toDouble()
             }
         }
-        val monthlyAverage = df.format(sum/count)
+        val monthlyAverage = df.format(sum / count)
 
-        reportDataList?.set(11, ReportData(weeklyAverage + "잔", monthlyAverage+"잔",false))
+        reportDataList?.set(11, ReportData(weeklyAverage + "잔", monthlyAverage + "잔", false))
 
     }
 
@@ -675,45 +662,6 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.fab_load -> {
-                CoroutineScope(Dispatchers.Default).launch {
-
-                    bedEndTimeList = getMonthlyDbDataList("bedEndTime")
-                    bedStartTimeList = getMonthlyDbDataList("bedStartTime")
-                    beerList = getMonthlyDbDataList("beer")
-                    coffeeList = getMonthlyDbDataList("coffee")
-                    emojiList = getMonthlyDbDataList("emoji")
-                    makgeolliList = getMonthlyDbDataList("makgeolli")
-                    napTimeList = getMonthlyDbDataList("napTime")
-                    sojuList = getMonthlyDbDataList("soju")
-                    startSleepTimeList = getMonthlyDbDataList("startSleepTime")
-                    wakeUpCountList = getMonthlyDbDataList("wakeUpCount")
-                    wakeUpTimeList = getMonthlyDbDataList("wakeUpTime")
-                    wineList = getMonthlyDbDataList("wine")
-
-                    calScoreAverage()
-                    calBedTimeAverage()
-                    calSleepTimeAverage()
-                    calBIAverage()
-                    calStartSleepTimeAverage()
-                    calWakeUpTimeAverage()
-                    calNapTimeAverage()
-                    calCoffeeAverage()
-                    calBeerAverage()
-                    calSojuAverage()
-                    calMakgeolliAverage()
-                    calWineAverage()
-
-                    runOnUiThread {
-                        Toast.makeText(
-                            this@ReportActivity,
-                            "데이터 로딩을 완료했습니다",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        setUpWeeklyView()
-                    }
-                }
-            }
             R.id.btn_weekly -> {
                 setUpWeeklyView()
             }
@@ -729,15 +677,67 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 //                    }
 //                }
             }
-            R.id.cl_bedtime->{
+            R.id.cl_bedtime -> {
 
             }
-            R.id.clSleepTime->{
+            R.id.clSleepTime -> {
 
             }
         }
     }
 
+    private fun showProgress(isShow: Boolean) {
+        if (isShow) binding?.llProgress?.visibility = View.VISIBLE
+        else binding?.llProgress?.visibility = View.GONE
+    }
+
+    private fun init() {
+        binding?.cdlParent?.visibility = View.GONE
+        showProgress(true)
+
+        CoroutineScope(Dispatchers.Default).launch {
+
+            bedEndTimeList = getMonthlyDbDataList("bedEndTime")
+            bedStartTimeList = getMonthlyDbDataList("bedStartTime")
+            beerList = getMonthlyDbDataList("beer")
+            coffeeList = getMonthlyDbDataList("coffee")
+            emojiList = getMonthlyDbDataList("emoji")
+            makgeolliList = getMonthlyDbDataList("makgeolli")
+            napTimeList = getMonthlyDbDataList("napTime")
+            sojuList = getMonthlyDbDataList("soju")
+            startSleepTimeList = getMonthlyDbDataList("startSleepTime")
+            wakeUpCountList = getMonthlyDbDataList("wakeUpCount")
+            wakeUpTimeList = getMonthlyDbDataList("wakeUpTime")
+            wineList = getMonthlyDbDataList("wine")
+
+            calScoreAverage()
+            calBedTimeAverage()
+            calSleepTimeAverage()
+            calBIAverage()
+            calStartSleepTimeAverage()
+            calWakeUpTimeAverage()
+            calNapTimeAverage()
+            calCoffeeAverage()
+            calBeerAverage()
+            calSojuAverage()
+            calMakgeolliAverage()
+            calWineAverage()
+
+            runOnUiThread {
+                showProgress(false)
+                Toast.makeText(
+                    this@ReportActivity,
+                    "데이터 로딩을 완료했습니다",
+                    Toast.LENGTH_SHORT
+                ).show()
+                setUpWeeklyView()
+                binding?.cdlParent?.visibility = View.VISIBLE
+
+            }
+        }
+
+
+    }
 
 
     override fun onDestroy() {

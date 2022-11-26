@@ -7,593 +7,618 @@
     android:background="@color/dark_indigo"
     tools:context=".ReportActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_load"
-        app:layout_constraintBottom_toTopOf="@+id/cdl_bottom"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_margin="10dp"
-        android:backgroundTint="@color/light_gray"
-        app:tint="@color/dark_indigo"
+    <LinearLayout
+        android:id="@+id/llProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/load"/>
-
-    <ScrollView
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/cdl_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:id="@+id/ll_topBar"
-                android:layout_marginTop="15dp"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_weekly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/report_left_button_background"
-                    android:text="주간"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_monthly"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@null"
-                    android:background="@drawable/report_right_button_background"
-                    android:text="월간"
-                    android:textColor="@color/light_gray"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    />
-
-            </LinearLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_top"
-                app:layout_constraintTop_toBottomOf="@id/ll_topBar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="16dp"
-                    android:padding="10dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
-                        android:id="@+id/tvScore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        android:text="85"
-                        android:textColor="@color/orange"
-                        android:textSize="40sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="%"
-                        android:textColor="@color/white"
-                        android:textSize="26sp"
-                        app:layout_constraintBottom_toBottomOf="@id/tvScore"
-                        app:layout_constraintLeft_toRightOf="@id/tvScore" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="수면 효율"
-                        android:textColor="@color/light_gray"
-                        android:textSize="@dimen/sub_text_size"
-                        app:layout_constraintLeft_toLeftOf="@id/tvScore"
-                        app:layout_constraintTop_toBottomOf="@id/tvScore" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clTimeInBed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="25dp"
-                    app:layout_constraintLeft_toRightOf="@id/clScore"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
-                        android:id="@+id/tvTimeInBed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="8시간 14분"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="침대에서 보낸 시간"
-                        android:textColor="@color/light_gray"
-                        android:textSize="@dimen/sub_text_size"
-                        app:layout_constraintLeft_toLeftOf="@id/tvTimeInBed"
-                        app:layout_constraintTop_toBottomOf="@id/tvTimeInBed" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clSleepTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintLeft_toRightOf="@id/clScore"
-                    app:layout_constraintTop_toBottomOf="@+id/clTimeInBed">
-                    <TextView
-                        android:id="@+id/tvSleepTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="6시간 58분"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="수면 시간"
-                        android:textColor="@color/light_gray"
-                        android:textSize="@dimen/sub_text_size"
-                        app:layout_constraintLeft_toLeftOf="@id/tvSleepTime"
-                        app:layout_constraintTop_toBottomOf="@id/tvSleepTime" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <View
-                android:id="@+id/line1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/light_gray"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_top" />
-
-<!--            <com.github.mikephil.charting.charts.LineChart-->
-<!--                android:id="@+id/sleepLineChart"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="300dp"-->
-<!--                android:layout_margin="20dp"-->
-<!--                android:backgroundTint="@color/dark_indigo"-->
-<!--                app:layout_constraintHorizontal_bias="1.0"-->
-<!--                app:layout_constraintLeft_toLeftOf="parent"-->
-<!--                app:layout_constraintRight_toRightOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/line1" />-->
-
-<!--            <View-->
-<!--                android:id="@+id/line2"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="2dp"-->
-<!--                android:layout_marginHorizontal="20dp"-->
-<!--                android:background="@color/light_gray"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/sleepLineChart" />-->
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                app:layout_constraintTop_toBottomOf="@id/line1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_BI"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/iv_BI"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@drawable/ic_baseline_bed_24"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_BI"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="46"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toRightOf="@id/iv_BI"
-                        app:layout_constraintTop_toTopOf="@id/iv_BI" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="mins"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/sub_text_size"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_BI"
-                        app:layout_constraintLeft_toRightOf="@id/tv_BI" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="잠들기까지 걸린 시간"
-                        android:textColor="@color/light_gray"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_BI"
-                        app:layout_constraintTop_toBottomOf="@id/tv_BI" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_bedtime"
-                    app:layout_constraintTop_toBottomOf="@id/cl_BI"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/iv_moon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@drawable/ic_baseline_nights_stay_24"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_bed_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="23:05"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toRightOf="@id/iv_moon"
-                        app:layout_constraintTop_toTopOf="@id/iv_moon" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="취침 시간"
-                        android:textColor="@color/light_gray"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_bed_time"
-                        app:layout_constraintTop_toBottomOf="@id/tv_bed_time" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_wake_up_time"
-                    app:layout_constraintTop_toBottomOf="@id/cl_bedtime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/iv_alarm"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@drawable/ic_alarm_24"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_wake_up_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="07:20"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toRightOf="@id/iv_alarm"
-                        app:layout_constraintTop_toTopOf="@id/iv_alarm" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="기상 시간"
-                        android:textColor="@color/light_gray"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_wake_up_time"
-                        app:layout_constraintTop_toBottomOf="@id/tv_wake_up_time"
-                        />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_nap"
-                    app:layout_constraintTop_toBottomOf="@id/cl_wake_up_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/iv_nap"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@drawable/nap"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_nap_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="00:35"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toRightOf="@id/iv_nap"
-                        app:layout_constraintTop_toTopOf="@id/iv_nap" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="낮잠 시간"
-                        android:textColor="@color/light_gray"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_nap_time"
-                        app:layout_constraintTop_toBottomOf="@id/tv_nap_time" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_coffee"
-                    app:layout_constraintTop_toBottomOf="@id/cl_nap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/iv_coffee"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@drawable/coffee"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_coffee"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="3잔"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toRightOf="@id/iv_coffee"
-                        app:layout_constraintTop_toTopOf="@id/iv_coffee" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="커피 섭취량"
-                        android:textColor="@color/light_gray"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_coffee"
-                        app:layout_constraintTop_toBottomOf="@id/tv_coffee" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_beer"
-                    app:layout_constraintTop_toBottomOf="@id/cl_coffee"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/iv_beer"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@drawable/beer"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_beer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="2잔"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toRightOf="@id/iv_beer"
-                        app:layout_constraintTop_toTopOf="@id/iv_beer" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="커피 섭취량"
-                        android:textColor="@color/light_gray"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_beer"
-                        app:layout_constraintTop_toBottomOf="@id/tv_beer" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_soju"
-                    app:layout_constraintTop_toBottomOf="@id/cl_beer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/iv_soju"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@drawable/soju"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_soju"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="3잔"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toRightOf="@id/iv_soju"
-                        app:layout_constraintTop_toTopOf="@id/iv_soju" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="소주 섭취량"
-                        android:textColor="@color/light_gray"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_soju"
-                        app:layout_constraintTop_toBottomOf="@id/tv_soju" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_makgurli"
-                    app:layout_constraintTop_toBottomOf="@id/cl_soju"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/iv_makgurli"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@drawable/makgurli"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_makgurli"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="3잔"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toRightOf="@id/iv_makgurli"
-                        app:layout_constraintTop_toTopOf="@id/iv_makgurli" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="탁주 섭취량"
-                        android:textColor="@color/light_gray"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_makgurli"
-                        app:layout_constraintTop_toBottomOf="@id/tv_makgurli" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cl_wine"
-                    app:layout_constraintTop_toBottomOf="@id/cl_makgurli"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/iv_wine"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@drawable/wine"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_wine"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="0잔"
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/main_text_size"
-                        app:layout_constraintLeft_toRightOf="@id/iv_wine"
-                        app:layout_constraintTop_toTopOf="@id/iv_wine" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="와인 섭취량"
-                        android:textColor="@color/light_gray"
-                        app:layout_constraintLeft_toLeftOf="@id/tv_wine"
-                        app:layout_constraintTop_toBottomOf="@id/tv_wine" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-
-
-
-
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/cdl_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bab"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom">
-
-
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@color/light_gray"
-                android:elevation="2dp"
-                app:itemIconSize="22dp"
-                app:itemIconTint="@color/dark_indigo"
-                app:itemRippleColor="@android:color/transparent"
-                app:labelVisibilityMode="unlabeled"
-                app:menu="@menu/item_menu" />
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_add"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            style="@android:style/Widget.Holo.ProgressBar.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/orange"
-            android:src="@drawable/ic_baseline_add_24"
-            app:layout_anchor="@id/bab"
-            app:tint="@color/white" />
+            android:progressTint="@color/orange" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading..."
+            android:textColor="@color/orange"
+            android:textSize="@dimen/main_text_size" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cdl_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/cdl_bottom"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/ll_topBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_weekly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/report_left_button_background"
+                        android:text="주간"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_monthly"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/report_right_button_background"
+                        android:backgroundTint="@null"
+                        android:text="월간"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toBottomOf="@id/ll_topBar">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clScore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="16dp"
+                        android:padding="10dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tvScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:text="85"
+                            android:textColor="@color/orange"
+                            android:textSize="40sp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="%"
+                            android:textColor="@color/white"
+                            android:textSize="26sp"
+                            app:layout_constraintBottom_toBottomOf="@id/tvScore"
+                            app:layout_constraintLeft_toRightOf="@id/tvScore" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="수면 효율"
+                            android:textColor="@color/light_gray"
+                            android:textSize="@dimen/sub_text_size"
+                            app:layout_constraintLeft_toLeftOf="@id/tvScore"
+                            app:layout_constraintTop_toBottomOf="@id/tvScore" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clTimeInBed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="25dp"
+                        app:layout_constraintLeft_toRightOf="@id/clScore"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tvTimeInBed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="8시간 14분"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="침대에서 보낸 시간"
+                            android:textColor="@color/light_gray"
+                            android:textSize="@dimen/sub_text_size"
+                            app:layout_constraintLeft_toLeftOf="@id/tvTimeInBed"
+                            app:layout_constraintTop_toBottomOf="@id/tvTimeInBed" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clSleepTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintLeft_toRightOf="@id/clScore"
+                        app:layout_constraintTop_toBottomOf="@+id/clTimeInBed">
+
+                        <TextView
+                            android:id="@+id/tvSleepTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6시간 58분"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="수면 시간"
+                            android:textColor="@color/light_gray"
+                            android:textSize="@dimen/sub_text_size"
+                            app:layout_constraintLeft_toLeftOf="@id/tvSleepTime"
+                            app:layout_constraintTop_toBottomOf="@id/tvSleepTime" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/light_gray"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cl_top" />
+
+                <!--            <com.github.mikephil.charting.charts.LineChart-->
+                <!--                android:id="@+id/sleepLineChart"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="300dp"-->
+                <!--                android:layout_margin="20dp"-->
+                <!--                android:backgroundTint="@color/dark_indigo"-->
+                <!--                app:layout_constraintHorizontal_bias="1.0"-->
+                <!--                app:layout_constraintLeft_toLeftOf="parent"-->
+                <!--                app:layout_constraintRight_toRightOf="parent"-->
+                <!--                app:layout_constraintTop_toBottomOf="@id/line1" />-->
+
+                <!--            <View-->
+                <!--                android:id="@+id/line2"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="2dp"-->
+                <!--                android:layout_marginHorizontal="20dp"-->
+                <!--                android:background="@color/light_gray"-->
+                <!--                app:layout_constraintTop_toBottomOf="@id/sleepLineChart" />-->
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/line1">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_BI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/iv_BI"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/ic_baseline_bed_24"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_BI"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="46"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toRightOf="@id/iv_BI"
+                            app:layout_constraintTop_toTopOf="@id/iv_BI" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="mins"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/sub_text_size"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_BI"
+                            app:layout_constraintLeft_toRightOf="@id/tv_BI" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="잠들기까지 걸린 시간"
+                            android:textColor="@color/light_gray"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_BI"
+                            app:layout_constraintTop_toBottomOf="@id/tv_BI" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_bedtime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/cl_BI">
+
+                        <ImageView
+                            android:id="@+id/iv_moon"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/ic_baseline_nights_stay_24"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_bed_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="23:05"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toRightOf="@id/iv_moon"
+                            app:layout_constraintTop_toTopOf="@id/iv_moon" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="취침 시간"
+                            android:textColor="@color/light_gray"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_bed_time"
+                            app:layout_constraintTop_toBottomOf="@id/tv_bed_time" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_wake_up_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/cl_bedtime">
+
+                        <ImageView
+                            android:id="@+id/iv_alarm"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/ic_alarm_24"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_wake_up_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="07:20"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toRightOf="@id/iv_alarm"
+                            app:layout_constraintTop_toTopOf="@id/iv_alarm" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="기상 시간"
+                            android:textColor="@color/light_gray"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_wake_up_time"
+                            app:layout_constraintTop_toBottomOf="@id/tv_wake_up_time" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_nap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/cl_wake_up_time">
+
+                        <ImageView
+                            android:id="@+id/iv_nap"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/nap"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_nap_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="00:35"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toRightOf="@id/iv_nap"
+                            app:layout_constraintTop_toTopOf="@id/iv_nap" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="낮잠 시간"
+                            android:textColor="@color/light_gray"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_nap_time"
+                            app:layout_constraintTop_toBottomOf="@id/tv_nap_time" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_coffee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/cl_nap">
+
+                        <ImageView
+                            android:id="@+id/iv_coffee"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/coffee"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_coffee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="3잔"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toRightOf="@id/iv_coffee"
+                            app:layout_constraintTop_toTopOf="@id/iv_coffee" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="커피 섭취량"
+                            android:textColor="@color/light_gray"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_coffee"
+                            app:layout_constraintTop_toBottomOf="@id/tv_coffee" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_beer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/cl_coffee">
+
+                        <ImageView
+                            android:id="@+id/iv_beer"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/beer"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_beer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="2잔"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toRightOf="@id/iv_beer"
+                            app:layout_constraintTop_toTopOf="@id/iv_beer" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="커피 섭취량"
+                            android:textColor="@color/light_gray"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_beer"
+                            app:layout_constraintTop_toBottomOf="@id/tv_beer" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_soju"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/cl_beer">
+
+                        <ImageView
+                            android:id="@+id/iv_soju"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/soju"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_soju"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="3잔"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toRightOf="@id/iv_soju"
+                            app:layout_constraintTop_toTopOf="@id/iv_soju" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="소주 섭취량"
+                            android:textColor="@color/light_gray"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_soju"
+                            app:layout_constraintTop_toBottomOf="@id/tv_soju" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_makgurli"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/cl_soju">
+
+                        <ImageView
+                            android:id="@+id/iv_makgurli"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/makgurli"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_makgurli"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="3잔"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toRightOf="@id/iv_makgurli"
+                            app:layout_constraintTop_toTopOf="@id/iv_makgurli" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="탁주 섭취량"
+                            android:textColor="@color/light_gray"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_makgurli"
+                            app:layout_constraintTop_toBottomOf="@id/tv_makgurli" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_wine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/cl_makgurli">
+
+                        <ImageView
+                            android:id="@+id/iv_wine"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/wine"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_wine"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:text="0잔"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/main_text_size"
+                            app:layout_constraintLeft_toRightOf="@id/iv_wine"
+                            app:layout_constraintTop_toTopOf="@id/iv_wine" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="와인 섭취량"
+                            android:textColor="@color/light_gray"
+                            app:layout_constraintLeft_toLeftOf="@id/tv_wine"
+                            app:layout_constraintTop_toBottomOf="@id/tv_wine" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/cdl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.bottomappbar.BottomAppBar
+                android:id="@+id/bab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom">
+
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottom_navigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/light_gray"
+                    android:elevation="2dp"
+                    app:itemIconSize="22dp"
+                    app:itemIconTint="@color/dark_indigo"
+                    app:itemRippleColor="@android:color/transparent"
+                    app:labelVisibilityMode="unlabeled"
+                    app:menu="@menu/item_menu" />
+
+            </com.google.android.material.bottomappbar.BottomAppBar>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/orange"
+                android:src="@drawable/ic_baseline_add_24"
+                app:layout_anchor="@id/bab"
+                app:tint="@color/white" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
