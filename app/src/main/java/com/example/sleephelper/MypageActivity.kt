@@ -1,15 +1,23 @@
 package com.example.sleephelper
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.ListAdapter
 import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sleephelper.databinding.ActivityMypageBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+
 
 class MypageActivity : AppCompatActivity() {
 
@@ -17,8 +25,18 @@ class MypageActivity : AppCompatActivity() {
     var auth : FirebaseAuth ?= null
     var googleSignInClient : GoogleSignInClient?= null
 
+    // firestore
+    //  var auth : FirebaseAuth? = null
+    var firestore : FirebaseFirestore? = null
+
+
+
 
     private var binding: ActivityMypageBinding? = null
+
+   // private lateinit var binding : ActivityMainBinding    // 뷰 바인딩
+    val db = FirebaseFirestore.getInstance()    // Firestore 인스턴스 선언
+   // val itemList = arrayListOf<ListLayout>()    // 리스트 아이템 배열
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +44,11 @@ class MypageActivity : AppCompatActivity() {
         binding = ActivityMypageBinding.inflate(layoutInflater)
 //        setContentView(R.layout.activity_mypage)
         setContentView(binding?.root)
-        setBottomNavigation()
+
+        setFabAdd()
+        setBottomNavigation() // BottomNavigation 실행
+
+
 
         // 구글 로그아웃을 위해 로그인 세션 가져오기
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -49,10 +71,74 @@ class MypageActivity : AppCompatActivity() {
             startActivity(logoutIntent)
         }
 
-            // 알림
-        println("로그아웃 됨")
 
 
+        // 계정 정보 보여주기
+        // auth = Firebase.auth : auth 부분 빨간줄 에러 떠서 auth = FirebaseAuth.getInstance() 로 변경
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+        auth!!.currentUser?.email
+
+
+
+
+        // 사용자의 이메일, 이름 설정하기
+        println("구글 이메일 : " + auth?.currentUser?.email!!)
+        println("사용자 이름 : " + auth?.currentUser?.displayName!!)
+        val  data= hashMapOf(
+            "email" to auth?.currentUser?.email!!,
+            "name" to auth?.currentUser?.displayName!!,
+        )
+
+        // 여긴 아직 error부분
+        // document(auth?.currentUser?.email!!) 혹은 document("eon7500@gmail.com") 둘 다 가능
+        // firestore 컬렉션-도큐먼트 데이터 추가
+        // 1분 정도 걸림 
+        db?.collection("User")?.document(auth?.currentUser?.email!!)
+            ?.set(data)
+            ?.addOnSuccessListener {
+                // 성공할 경우
+                Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
+            }
+            ?.addOnFailureListener {
+                // 실패할 경우
+                Toast.makeText(this, "데이터가 추가에 실패하였습니다", Toast.LENGTH_SHORT).show()
+            }
+
+
+        var text_Name : TextView = findViewById (R.id.nameTextView);
+        var text_Email : TextView = findViewById (R.id.EmailTextView);
+
+
+         // 코드로 추가 안 하고 콘솔에서 버튼 추가시 get할 때 에러
+        // document(auth?.currentUser?.email!!) : 로그인된 구글 계정으로 매칭시켜서 데이터 가져옴
+        // 이름, 이메일 변경하는데 10초 정도 걸림
+        // document(auth?.currentUser?.email!!) or document("eon7500@gmail.com") 둘 다 가능
+        db.collection("User")?.document(auth?.currentUser?.email!!)
+            ?.get()
+            ?.addOnSuccessListener { result->
+                // 성공할 경우
+                val email = result["email"] as String // firestore에서 가져오기
+                val name = result["name"] as String
+
+                text_Name.setText(name);
+                text_Email.setText(email);
+
+                Toast.makeText(this, "성공했습니다", Toast.LENGTH_SHORT).show()
+            }
+            ?.addOnFailureListener {
+                // 실패할 경우
+                Toast.makeText(this, "실패하였습니다", Toast.LENGTH_SHORT).show()
+            }
+
+    }
+
+    // 수면일기
+    private fun setFabAdd(){
+        binding!!.fabAdd.setOnClickListener(){
+            intent = Intent(this, WritingDiaryActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setBottomNavigation() {
@@ -74,4 +160,6 @@ class MypageActivity : AppCompatActivity() {
             true
         }
     }
+
+
 }
