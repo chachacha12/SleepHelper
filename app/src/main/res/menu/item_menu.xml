@@ -3,20 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/nav_calendar"
         android:title="calendar"
-        android:icon="@drawable/ic_calendar_24"
-        android:iconTint="@color/orange"/>
+        android:icon="@drawable/ic_calendar_24"/>
     <item android:id="@+id/nav_report"
         android:title="report"
-        android:icon="@drawable/ic_outline_assessment_24"
-        android:iconTint="@color/light_gray"/>
+        android:icon="@drawable/ic_outline_assessment_24"/>
     <item android:id="@+id/placeholder"
         android:title="" />
     <item android:id="@+id/nav_alarm"
         android:title="alarm"
-        android:icon="@drawable/ic_alarm_24"
-        android:iconTint="@color/light_gray"/>
+        android:icon="@drawable/ic_alarm_24"/>
     <item android:id="@+id/nav_myPage"
         android:title="myPage"
-        android:icon="@drawable/ic_account_24"
-        android:iconTint="@color/light_gray"/>
+        android:icon="@drawable/ic_account_24"/>
 </menu>
