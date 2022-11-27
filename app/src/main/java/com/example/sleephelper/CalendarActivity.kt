@@ -2,8 +2,10 @@ package com.example.sleephelper
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.EventDay
@@ -51,8 +53,11 @@ class CalendarActivity : AppCompatActivity() {
     lateinit var time4:String
     lateinit var time5:String
     lateinit var time6:String
-    var sleepLevel:String?=null
+    lateinit var sleepLevel:String
 
+    var emojiPath:Int = 0 // 사용자가 선택한 이모지를 캘린더에 나타내기 한 변수
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCalendarBinding.inflate(layoutInflater)
@@ -98,13 +103,24 @@ class CalendarActivity : AppCompatActivity() {
 
                 sleepLevel = emoji.toString()
 
+                // 사용자가 선택한 수면 이모지에 따라 다른 경로 설정
+                if(sleepLevel.toInt()==1){
+                    emojiPath = R.drawable.emoji_good
+                }
+                else if(sleepLevel.toInt()==2){
+                    emojiPath = R.drawable.emoji_normal
+                }
+                else if(sleepLevel.toInt()==3){
+                    emojiPath = R.drawable.emoji_good
+                }
+
+                setCalendar()
+
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
                 Log.w("MainActivity", "Error getting documents: $exception")
             }
-
-        //setCalendar()
 
         binding.calendarView.setOnDayClickListener(OnDayClickListener { eventDay ->
             //val clickedDayCalendar = eventDay.calendar
@@ -131,7 +147,6 @@ class CalendarActivity : AppCompatActivity() {
         setBottomNavigation()
         setFabAdd()
 
-        setCalendar()
     }
 
 
@@ -231,6 +246,7 @@ class CalendarActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setBottomNavigation(){
         binding!!.bottomNavigation.setOnItemSelectedListener(){
             when(it.itemId){
@@ -251,30 +267,15 @@ class CalendarActivity : AppCompatActivity() {
         }
     }
 
-    //private fun returnPath(level:Int) : Int{
-    //    var filepath:Int = 0
-    //    if(level.equals("1")){
-    //        filepath = R.drawable.emoji_bad
-    //    }
-    //    else if(level.equals("2")){
-    //        filepath = R.drawable.emoji_normal
-    //    }
-    //    else if(level.equals("3")){
-    //        filepath = R.drawable.emoji_good
-    //    }
-    //    return filepath
-    //}
 
     private fun setCalendar(){
         val events: MutableList<EventDay> = ArrayList()
 
         val calendar: Calendar = Calendar.getInstance()
 
-        var str:String = sleepLevel.toString()
-
         val calendarView: CalendarView = binding.calendarView as CalendarView
-        events.add(EventDay(calendar, R.drawable.emoji_bad))
-        //events.add(EventDay(calendar, filename(str)))
+        //events.add(EventDay(calendar, R.drawable.emoji_bad))
+        events.add(EventDay(calendar, emojiPath))
 
         /*
         val day = calendar.get(Calendar.DATE)
@@ -287,22 +288,4 @@ class CalendarActivity : AppCompatActivity() {
         calendarView.setEvents(events)
     }
 
-    /*
-    private fun filename(test: String):Int{
-        var num:Int = 0
-
-
-        if(test.toString()=="1"){
-            num = R.drawable.emoji_bad
-        }
-        else if(test.toString()=="2"){
-            num = R.drawable.emoji_normal
-        }
-        else if(test.toString()=="3"){
-            num = R.drawable.emoji_good
-        }
-
-        return num
-    }
-    */
 }
