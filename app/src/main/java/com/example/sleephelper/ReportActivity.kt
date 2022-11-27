@@ -765,6 +765,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
             }
             R.id.clScore -> {
                 setChart("수면 효율")
+                binding?.chart?.visibility = View.VISIBLE
                 v!!.background = ContextCompat.getDrawable(this,R.drawable.report_selected_background)
                 binding?.clTimeInBed?.background = null
                 binding?.clSleepTime?.background = null
@@ -775,6 +776,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
             }
             R.id.clTimeInBed -> {
                 setChart("침대에서 보낸 시간")
+                binding?.chart?.visibility = View.VISIBLE
                 v!!.background = ContextCompat.getDrawable(this,R.drawable.report_selected_background)
                 binding?.clScore?.background = null
                 binding?.clSleepTime?.background = null
@@ -785,6 +787,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
             }
             R.id.clSleepTime -> {
                 setChart("수면 시간")
+                binding?.chart?.visibility = View.VISIBLE
                 v!!.background = ContextCompat.getDrawable(this,R.drawable.report_selected_background)
                 binding?.clTimeInBed?.background = null
                 binding?.clScore?.background = null
