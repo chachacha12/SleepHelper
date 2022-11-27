@@ -10,12 +10,13 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.example.sleephelper.databinding.ActivityReportBinding
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.gms.tasks.Task
@@ -42,7 +43,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
 
     private var binding: ActivityReportBinding? = null
-    private var chart: LineChart? = null
+    private var chart: BarChart? = null
 
 
     private var reportDataList: ArrayList<ReportData>? = null
@@ -64,6 +65,9 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     private var wakeUpCountList: kotlin.collections.ArrayList<String>? = null
     private var emojiList: kotlin.collections.ArrayList<String>? = null
 
+    private var scoreList : kotlin.collections.ArrayList<Int>? = null
+    private var bedTimeList : ArrayList<Int>? = null
+    private var sleepTimeList : kotlin.collections.ArrayList<Int>? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +80,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         init()
 
 
-        //setChart()
+        //setChart("")
 
         setBottomNavigation()
         setFabAdd()
@@ -86,6 +90,8 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         binding?.btnWeekly?.setOnClickListener(this)
         binding?.btnMonthly?.setOnClickListener(this)
         binding?.clScore?.setOnClickListener(this)
+        binding?.clTimeInBed?.setOnClickListener(this)
+        binding?.clSleepTime?.setOnClickListener(this)
     }
 
     private fun setFabAdd() {
@@ -146,6 +152,81 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 //
 //        chart?.setData(data)
 //    }
+
+    private fun changeChartData(dataList:kotlin.collections.ArrayList<Int>):ArrayList<BarEntry>{
+        var value = 0
+        val values = ArrayList<BarEntry>()
+        dataList?.reverse()
+        for(i in 0..29){
+            value = dataList?.get(i)!!
+            //Log.d("score",value.toString())
+            values.add(BarEntry(i.toFloat(),value.toFloat()))
+            chart?.notifyDataSetChanged();
+            chart?.invalidate();
+        }
+        return values
+    }
+
+    private fun setChart(label: String) {
+        var values = ArrayList<BarEntry>()
+        //var value = 0
+        chart = binding?.chart
+        when(label){
+            "수면 효율" ->{
+                values = changeChartData(scoreList!!)
+//                scoreList?.reverse()
+//                for(i in 0..29){
+//                    value = scoreList?.get(i)!!
+//                    //Log.d("score",value.toString())
+//                    values.add(BarEntry(i.toFloat(),value.toFloat()))
+//                    chart?.notifyDataSetChanged();
+//                    chart?.invalidate();
+//                }
+            }
+            "침대에서 보낸 시간"->{
+                values = changeChartData(bedTimeList!!)
+            }
+            "수면 시간"->{
+                values = changeChartData(sleepTimeList!!)
+            }
+//            else -> {
+//                for (i in 1..100) {
+//                    var value: Float = Math.random().toFloat()
+//                    values.add(BarEntry(i.toFloat(), value))
+//                }
+//            }
+        }
+
+       // Log.d("label",label)
+
+        val set1 = BarDataSet(values, label)
+
+        val dataSets: ArrayList<IBarDataSet> = ArrayList()
+        dataSets.add(set1)
+
+        val data: BarData = BarData(dataSets)
+
+        chart?.legend?.textColor = Color.parseColor("#FCA311")
+        chart?.xAxis?.textColor = Color.parseColor("#E5E5E5")
+        chart?.axisLeft?.textColor = Color.parseColor("#E5E5E5")
+        chart?.axisRight?.textColor = Color.parseColor("#14213D")
+        chart?.animateY(500)
+        chart?.description?.isEnabled = false
+        chart?.setDrawGridBackground(false)
+        chart?.legend?.textSize = 14f
+
+
+        set1.setColor(Color.parseColor("#FCA311"))
+//        set1.setCircleColor(Color.parseColor("#FCA311"))
+//        set1.setDrawCircles(false)
+        set1.setDrawValues(false)
+
+        chart?.setData(data)
+    }
+
+    private fun showChart(label: String) {
+        setChart(label)
+    }
 
 
     //수면효율
@@ -229,7 +310,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         val hour = df.format(time / 60).toString()
         val minute = df.format(time % 60).toString()
 
-        return "$hour"+"시간 "+"$minute"+"분"
+        return "$hour" + "시간 " + "$minute" + "분"
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -269,7 +350,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
     @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun calBedTimeAverage() {
-
+        bedTimeList = ArrayList<Int>()
         var sum = 0
         var count = 0
 
@@ -286,16 +367,21 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
         sum = 0
         count = 0
-
+        var bedTime = 0
         for (i in 0..29) {
             if (bedEndTimeList?.get(i) != "null" &&
                 bedStartTimeList?.get(i) != "null"
             ) {
                 count++
-                sum += calBedTime(
+                bedTime = calBedTime(
                     bedStartTimeList?.get(i)!!,
                     bedEndTimeList?.get(i)!!
                 )
+                bedTimeList?.add(bedTime)
+                sum += bedTime
+            }
+            else{
+                bedTimeList?.add(0)
             }
         }
         val monthlyAverage = sum / count
@@ -306,7 +392,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     }
 
     private suspend fun calSleepTimeAverage() {
-
+        sleepTimeList = ArrayList<Int>()
         var sum = 0
         var count = 0
 
@@ -321,11 +407,16 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
         sum = 0
         count = 0
+        var sleepTime = 0
 
         for (i in 0..29) {
             if (startSleepTimeList?.get(i) != "null" && wakeUpTimeList?.get(i) != "null") {
                 count++
-                sum += calSleepTime(startSleepTimeList!!.get(i), wakeUpTimeList!!.get(i))
+                sleepTime = calSleepTime(startSleepTimeList!!.get(i), wakeUpTimeList!!.get(i))
+                sleepTimeList?.add(sleepTime)
+                sum += sleepTime
+            }else{
+                sleepTimeList?.add(0)
             }
         }
         val monthlyAverage = sum / count
@@ -364,6 +455,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     }
 
     private fun calScoreAverage() {
+        scoreList = kotlin.collections.ArrayList<Int>()
         var sum = 0
         var count = 0
 
@@ -383,16 +475,19 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
         sum = 0
         count = 0
+        var score = 0
 
         for (i in 0..29) {
             if (bedStartTimeList?.get(i) != "null" && bedEndTimeList?.get(i) != "null"
                 && startSleepTimeList?.get(i) != "null" && wakeUpTimeList?.get(i) != "null"
             ) {
                 count++
-                sum += calScore(
-                    bedStartTimeList!!.get(i), bedEndTimeList!!.get(i),
-                    startSleepTimeList!!.get(i), wakeUpTimeList!!.get(i)
-                )
+                score = calScore(bedStartTimeList!!.get(i), bedEndTimeList!!.get(i),
+                    startSleepTimeList!!.get(i), wakeUpTimeList!!.get(i))
+                scoreList?.add(score)
+                sum += score
+            }else{
+                scoreList?.add(0)
             }
 
         }
@@ -669,18 +764,34 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
                 setUpMonthlyView()
             }
             R.id.clScore -> {
-//                val week = reportDataList?.get(0)?.weeklyAverage
-//                reportDataList?.get(0)?.isChecked = !(reportDataList!!.get(0)!!.isChecked)
-//                for(i in 0..11){
-//                    if(i==0){
-//                        continue
-//                    }
-//                }
+                setChart("수면 효율")
+                v!!.background = ContextCompat.getDrawable(this,R.drawable.report_selected_background)
+                binding?.clTimeInBed?.background = null
+                binding?.clSleepTime?.background = null
+                binding?.tvScore?.setTextColor(Color.WHITE)
+                binding?.tvTimeInBed?.setTextColor(ContextCompat.getColor(this,R.color.orange))
+                binding?.tvSleepTime?.setTextColor(ContextCompat.getColor(this,R.color.orange))
+
             }
-            R.id.cl_bedtime -> {
+            R.id.clTimeInBed -> {
+                setChart("침대에서 보낸 시간")
+                v!!.background = ContextCompat.getDrawable(this,R.drawable.report_selected_background)
+                binding?.clScore?.background = null
+                binding?.clSleepTime?.background = null
+                binding?.tvTimeInBed?.setTextColor(Color.WHITE)
+                binding?.tvScore?.setTextColor(ContextCompat.getColor(this,R.color.orange))
+                binding?.tvSleepTime?.setTextColor(ContextCompat.getColor(this,R.color.orange))
 
             }
             R.id.clSleepTime -> {
+                setChart("수면 시간")
+                v!!.background = ContextCompat.getDrawable(this,R.drawable.report_selected_background)
+                binding?.clTimeInBed?.background = null
+                binding?.clScore?.background = null
+                binding?.tvSleepTime?.setTextColor(Color.WHITE)
+                binding?.tvScore?.setTextColor(ContextCompat.getColor(this,R.color.orange))
+                binding?.tvTimeInBed?.setTextColor(ContextCompat.getColor(this,R.color.orange))
+
 
             }
         }
@@ -723,6 +834,8 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
             calMakgeolliAverage()
             calWineAverage()
 
+
+
             runOnUiThread {
                 showProgress(false)
                 Toast.makeText(
@@ -731,6 +844,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
                     Toast.LENGTH_SHORT
                 ).show()
                 setUpWeeklyView()
+                setChart("")
                 binding?.cdlParent?.visibility = View.VISIBLE
 
             }
