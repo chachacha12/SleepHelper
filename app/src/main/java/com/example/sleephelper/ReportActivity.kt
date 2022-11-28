@@ -38,10 +38,15 @@ const val dayInMins = 1440
 const val week = 7
 const val month = 30
 
+enum class Duration(val duration : Int){
+    WEEK(6),
+    MONTH(29)
+}
+
 @RequiresApi(Build.VERSION_CODES.O)
 class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope {
 
-
+    private var duration : Int? = null
     private var binding: ActivityReportBinding? = null
     private var chart: BarChart? = null
 
@@ -79,14 +84,10 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
         init()
 
-
-        //setChart("")
-
         setBottomNavigation()
         setFabAdd()
 
         //리스너 달기
-        //binding?.fabLoad?.setOnClickListener(this)
         binding?.btnWeekly?.setOnClickListener(this)
         binding?.btnMonthly?.setOnClickListener(this)
         binding?.clScore?.setOnClickListener(this)
@@ -121,83 +122,54 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         }
     }
 
-    // 차트 그리기
-//    private fun setChart() {
-//        chart = binding?.sleepLineChart
-//
-//
-//        val values = ArrayList<Entry>()
-//
-//        for (i in 1..100) {
-//            var value: Float = Math.random().toFloat()
-//            values.add(Entry(i.toFloat(), value))
-//        }
-//
-//        val set1 = LineDataSet(values, "Sleep Chart")
-//
-//        val dataSets: ArrayList<ILineDataSet> = ArrayList()
-//        dataSets.add(set1)
-//
-//        val data: LineData = LineData(dataSets)
-//
-//        chart?.legend?.textColor = Color.parseColor("#FCA311")
-//        chart?.xAxis?.textColor = Color.parseColor("#E5E5E5")
-//        chart?.axisLeft?.textColor = Color.parseColor("#E5E5E5")
-//        chart?.axisRight?.textColor = Color.parseColor("#14213D")
-//
-//        set1.setColor(Color.parseColor("#FCA311"))
-//        set1.setCircleColor(Color.parseColor("#FCA311"))
-//        set1.setDrawCircles(false)
-//        set1.setDrawValues(false)
-//
-//        chart?.setData(data)
-//    }
-
-    private fun changeChartData(dataList:kotlin.collections.ArrayList<Int>):ArrayList<BarEntry>{
+    //차트 데이터 바꾸기
+    private fun changeChartData(dataList:kotlin.collections.ArrayList<Int>, duration : Int):ArrayList<BarEntry>{
         var value = 0
         val values = ArrayList<BarEntry>()
-        dataList?.reverse()
-        for(i in 0..29){
-            value = dataList?.get(i)!!
-            //Log.d("score",value.toString())
-            values.add(BarEntry(i.toFloat(),value.toFloat()))
-            chart?.notifyDataSetChanged();
-            chart?.invalidate();
+       // dataList?.reverse()
+        if(duration == Duration.WEEK.duration){
+            for(i in 0..Duration.WEEK.duration){
+                value = dataList?.get(i)!!
+                //Log.d("score",value.toString())
+                values.add(BarEntry(i.toFloat(),value.toFloat()))
+                chart?.notifyDataSetChanged();
+                chart?.invalidate();
+            }
+        }else if(duration == Duration.MONTH.duration){
+            for(i in 0..Duration.MONTH.duration){
+                value = dataList?.get(i)!!
+                //Log.d("score",value.toString())
+                values.add(BarEntry(i.toFloat(),value.toFloat()))
+                chart?.notifyDataSetChanged();
+                chart?.invalidate();
+            }
         }
+//        for(i in 0..29){
+//            value = dataList?.get(i)!!
+//            //Log.d("score",value.toString())
+//            values.add(BarEntry(i.toFloat(),value.toFloat()))
+//            chart?.notifyDataSetChanged();
+//            chart?.invalidate();
+//        }
         return values
     }
 
-    private fun setChart(label: String) {
+    //차트 그리기
+    private fun setChart(label: String, duration: Int) {
         var values = ArrayList<BarEntry>()
         //var value = 0
         chart = binding?.chart
         when(label){
             "수면 효율" ->{
-                values = changeChartData(scoreList!!)
-//                scoreList?.reverse()
-//                for(i in 0..29){
-//                    value = scoreList?.get(i)!!
-//                    //Log.d("score",value.toString())
-//                    values.add(BarEntry(i.toFloat(),value.toFloat()))
-//                    chart?.notifyDataSetChanged();
-//                    chart?.invalidate();
-//                }
+                values = changeChartData(scoreList!!,duration)
             }
             "침대에서 보낸 시간"->{
-                values = changeChartData(bedTimeList!!)
+                values = changeChartData(bedTimeList!!,duration)
             }
             "수면 시간"->{
-                values = changeChartData(sleepTimeList!!)
+                values = changeChartData(sleepTimeList!!,duration)
             }
-//            else -> {
-//                for (i in 1..100) {
-//                    var value: Float = Math.random().toFloat()
-//                    values.add(BarEntry(i.toFloat(), value))
-//                }
-//            }
         }
-
-       // Log.d("label",label)
 
         val set1 = BarDataSet(values, label)
 
@@ -224,9 +196,9 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         chart?.setData(data)
     }
 
-    private fun showChart(label: String) {
-        setChart(label)
-    }
+//    private fun showChart(label: String) {
+//        setChart(label)
+//    }
 
 
     //수면효율
@@ -720,6 +692,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     }
 
     private fun setUpWeeklyView() {
+        duration = Duration.WEEK.duration
         binding?.btnWeekly?.background =
             getDrawable(R.drawable.report_selected_left_button_background)
         binding?.btnMonthly?.background = getDrawable(R.drawable.report_right_button_background)
@@ -738,6 +711,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     }
 
     private fun setUpMonthlyView() {
+        duration = Duration.MONTH.duration
         binding?.btnWeekly?.background = getDrawable(R.drawable.report_left_button_background)
         binding?.btnMonthly?.background =
             getDrawable(R.drawable.report_selected_right_button_background)
@@ -764,7 +738,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
                 setUpMonthlyView()
             }
             R.id.clScore -> {
-                setChart("수면 효율")
+                setChart("수면 효율",duration!!)
                 binding?.chart?.visibility = View.VISIBLE
                 v!!.background = ContextCompat.getDrawable(this,R.drawable.report_selected_background)
                 binding?.clTimeInBed?.background = null
@@ -775,7 +749,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
             }
             R.id.clTimeInBed -> {
-                setChart("침대에서 보낸 시간")
+                setChart("침대에서 보낸 시간",duration!!)
                 binding?.chart?.visibility = View.VISIBLE
                 v!!.background = ContextCompat.getDrawable(this,R.drawable.report_selected_background)
                 binding?.clScore?.background = null
@@ -786,7 +760,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
             }
             R.id.clSleepTime -> {
-                setChart("수면 시간")
+                setChart("수면 시간",duration!!)
                 binding?.chart?.visibility = View.VISIBLE
                 v!!.background = ContextCompat.getDrawable(this,R.drawable.report_selected_background)
                 binding?.clTimeInBed?.background = null
@@ -847,7 +821,6 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
                     Toast.LENGTH_SHORT
                 ).show()
                 setUpWeeklyView()
-                setChart("")
                 binding?.cdlParent?.visibility = View.VISIBLE
 
             }
