@@ -54,8 +54,10 @@ class CalendarActivity : AppCompatActivity() {
     lateinit var time5:String
     lateinit var time6:String
     lateinit var sleepLevel:String
+    lateinit var filePath:String
 
     var emojiPath:Int = 0 // 사용자가 선택한 이모지를 캘린더에 나타내기 한 변수
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,10 +70,12 @@ class CalendarActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         firebaseAuth!!.currentUser?.email
 
+        filePath = "20221128"
+
         firestore!!.collection("Data")
             .document(firebaseAuth?.currentUser?.email!!)
             .collection("sleepdata").document(
-                "20221126").get()      // 문서 가져오기
+                filePath).get()      // 문서 가져오기
             .addOnSuccessListener { result ->
                 // 성공할 경우
                 Log.e("로그", result.get("beer").toString())
@@ -105,7 +109,7 @@ class CalendarActivity : AppCompatActivity() {
 
                 // 사용자가 선택한 수면 이모지에 따라 다른 경로 설정
                 if(sleepLevel.toInt()==1){
-                    emojiPath = R.drawable.emoji_good
+                    emojiPath = R.drawable.emoji_bad
                 }
                 else if(sleepLevel.toInt()==2){
                     emojiPath = R.drawable.emoji_normal
@@ -139,7 +143,7 @@ class CalendarActivity : AppCompatActivity() {
             binding.tvBI.text = time_to_sleep
             binding.tvTimeInBed.text = time_in_bed
             binding.tvSleepTime.text = sleeptime
-
+            binding.tvScore.text = calScore().toString()
         })
 
         setChart()
@@ -239,6 +243,20 @@ class CalendarActivity : AppCompatActivity() {
         chart?.setData(data)
     }
 
+    //수면효율 계산
+    private fun calScore(
+        //bedStartTime: String,
+        //bedEndTime: String,
+        //startSleepTime: String,
+        //wakeUpTime: String
+    ): Int {
+        val score =
+            (calTimeinBed(sleep_time.toString(), wakeup_time.toString()).toDouble() / calTimeinBed(
+                gotobed_time.toString(), outtobed_time.toString()
+            ).toDouble()) * 100.0
+        return score.toInt()
+    }
+
     private fun setFabAdd(){
         binding!!.fabAdd.setOnClickListener(){
             intent = Intent(this, WritingDiaryActivity::class.java)
@@ -268,22 +286,15 @@ class CalendarActivity : AppCompatActivity() {
     }
 
 
-    private fun setCalendar(){
+    private fun setCalendar() {
         val events: MutableList<EventDay> = ArrayList()
 
         val calendar: Calendar = Calendar.getInstance()
 
         val calendarView: CalendarView = binding.calendarView as CalendarView
-        //events.add(EventDay(calendar, R.drawable.emoji_bad))
         events.add(EventDay(calendar, emojiPath))
 
-        /*
-        val day = calendar.get(Calendar.DATE)
-        val month = calendar.get(Calendar.MONTH)
-        val year = calendar.get(Calendar.YEAR)
 
-        date = year.toString() + month.toString() + day.toString()
-         */
 
         calendarView.setEvents(events)
     }
