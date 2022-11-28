@@ -103,7 +103,7 @@ class Login : AppCompatActivity() {
          if (user != null) {
             intent = Intent(this, CalendarActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
          }
     }
 
