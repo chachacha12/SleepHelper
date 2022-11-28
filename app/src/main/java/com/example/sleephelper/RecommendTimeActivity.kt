@@ -18,6 +18,14 @@ class RecommendTimeActivity : AppCompatActivity() {
 
     }
 
+    // 수면일기 (+) 버튼
+    private fun setFabAdd(){
+        binding!!.fabAdd.setOnClickListener(){
+            intent = Intent(this, WritingDiaryActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
     private fun setBottomNavigation() {
         binding!!.bottomNavigation.setOnItemSelectedListener(){
             when(it.itemId){

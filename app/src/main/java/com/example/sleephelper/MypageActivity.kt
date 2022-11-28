@@ -90,7 +90,7 @@ class MypageActivity : AppCompatActivity() {
             "name" to auth?.currentUser?.displayName!!,
         )
 
-        // 여긴 아직 error부분
+
         // document(auth?.currentUser?.email!!) 혹은 document("eon7500@gmail.com") 둘 다 가능
         // firestore 컬렉션-도큐먼트 데이터 추가
         // 1분 정도 걸림 
@@ -112,7 +112,6 @@ class MypageActivity : AppCompatActivity() {
 
          // 코드로 추가 안 하고 콘솔에서 버튼 추가시 get할 때 에러
         // document(auth?.currentUser?.email!!) : 로그인된 구글 계정으로 매칭시켜서 데이터 가져옴
-        // 이름, 이메일 변경하는데 10초 정도 걸림
         // document(auth?.currentUser?.email!!) or document("eon7500@gmail.com") 둘 다 가능
         db.collection("User")?.document(auth?.currentUser?.email!!)
             ?.get()
@@ -133,7 +132,7 @@ class MypageActivity : AppCompatActivity() {
 
     }
 
-    // 수면일기
+    // 수면일기 (+) 버튼
     private fun setFabAdd(){
         binding!!.fabAdd.setOnClickListener(){
             intent = Intent(this, WritingDiaryActivity::class.java)
