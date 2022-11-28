@@ -75,11 +75,7 @@ class CalendarActivity : AppCompatActivity() {
         firestore!!.collection("Data")
             .document(firebaseAuth?.currentUser?.email!!)
             .collection("sleepdata").document(
-<<<<<<< HEAD
-                "20221125").get()      // 문서 가져오기
-=======
                 filePath).get()      // 문서 가져오기
->>>>>>> 8a1f2060cb1597c720990894c54e890db5c15a98
             .addOnSuccessListener { result ->
                 // 성공할 경우
                 Log.e("로그", result.get("beer").toString())
