@@ -11,11 +11,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import com.example.sleephelper.ChartData
 import com.example.sleephelper.databinding.ActivityReportBinding
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
@@ -70,9 +75,9 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     private var wakeUpCountList: kotlin.collections.ArrayList<String>? = null
     private var emojiList: kotlin.collections.ArrayList<String>? = null
 
-    private var scoreList : kotlin.collections.ArrayList<Int>? = null
-    private var bedTimeList : ArrayList<Int>? = null
-    private var sleepTimeList : kotlin.collections.ArrayList<Int>? = null
+    private var scoreList : kotlin.collections.ArrayList<com.example.sleephelper.ChartData>? = null
+    private var bedTimeList : ArrayList<com.example.sleephelper.ChartData>? = null
+    private var sleepTimeList : kotlin.collections.ArrayList<com.example.sleephelper.ChartData>? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,14 +127,47 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         }
     }
 
+    inner class WeeklyValueFormatter:ValueFormatter(){
+        val dateList = kotlin.collections.ArrayList<String>()
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            for(i in 0..Duration.WEEK.duration){
+                if(bedTimeList?.get(i)?.date != "") {
+                    dateList.add(changeDateFormat(bedTimeList?.get(i)?.date!!))
+                }else{
+                    dateList.add("")
+                }
+            }
+            return dateList.getOrNull(value.toInt()-1)?:value.toString()
+        }
+    }
+
+    inner class MonthlyValueFormatter:ValueFormatter(){
+        val dateList = kotlin.collections.ArrayList<String>()
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            for(i in 0..Duration.MONTH.duration){
+                if(bedTimeList?.get(i)?.date != "") {
+                    dateList.add(changeDateFormat(bedTimeList?.get(i)?.date!!))
+                }else{
+                    dateList.add("")
+                }
+            }
+            return dateList.getOrNull(value.toInt()-1)?:value.toString()
+        }
+    }
+
     //차트 데이터 바꾸기
-    private fun changeChartData(dataList:kotlin.collections.ArrayList<Int>, duration : Int):ArrayList<BarEntry>{
+    private fun changeChartData(dataList:kotlin.collections.ArrayList<com.example.sleephelper.ChartData>, duration : Int):ArrayList<BarEntry>{
         var value = 0
+        var date :String? = null
         val values = ArrayList<BarEntry>()
        // dataList?.reverse()
         if(duration == Duration.WEEK.duration){
             for(i in 0..Duration.WEEK.duration){
-                value = dataList?.get(i)!!
+                value = dataList?.get(i)?.value!!
+                //date = dataList?.get(i)?.date
+                chart?.xAxis?.valueFormatter = WeeklyValueFormatter()
                 //Log.d("score",value.toString())
                 values.add(BarEntry(i.toFloat(),value.toFloat()))
                 chart?.notifyDataSetChanged();
@@ -137,7 +175,9 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
             }
         }else if(duration == Duration.MONTH.duration){
             for(i in 0..Duration.MONTH.duration){
-                value = dataList?.get(i)!!
+                value = dataList?.get(i)?.value!!
+                //date = dataList?.get(i)?.date
+                chart?.xAxis?.valueFormatter = MonthlyValueFormatter()
                 //Log.d("score",value.toString())
                 values.add(BarEntry(i.toFloat(),value.toFloat()))
                 chart?.notifyDataSetChanged();
@@ -285,6 +325,15 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         return "$hour" + "시간 " + "$minute" + "분"
     }
 
+    private fun changeDateFormat(date:String):String{
+        var date = date
+        val day = date.drop(6)
+        date = date.drop(4)
+        val month = date.dropLast(2)
+
+        return "$month/$day"
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDaysAgo(day: Long): String {
         val dayAgo = LocalDate.now().minusDays(day)
@@ -303,7 +352,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         }
         for (i in 0..29) {
             var date = getDaysAgo(i.toLong())
-            db.collection("Data").document("catree42@gmail.com").collection("sleepData")
+            db.collection("Data").document("catree42@gmail.com").collection("sleepdata")
                 .document(date)
                 .get()
                 .addOnSuccessListener { result ->
@@ -322,7 +371,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
     @RequiresApi(Build.VERSION_CODES.O)
     private suspend fun calBedTimeAverage() {
-        bedTimeList = ArrayList<Int>()
+        bedTimeList = ArrayList<com.example.sleephelper.ChartData>()
         var sum = 0
         var count = 0
 
@@ -340,6 +389,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         sum = 0
         count = 0
         var bedTime = 0
+        var date :String? = null
         for (i in 0..29) {
             if (bedEndTimeList?.get(i) != "null" &&
                 bedStartTimeList?.get(i) != "null"
@@ -349,11 +399,12 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
                     bedStartTimeList?.get(i)!!,
                     bedEndTimeList?.get(i)!!
                 )
-                bedTimeList?.add(bedTime)
+                date = getDaysAgo(i.toLong())
+                bedTimeList?.add(com.example.sleephelper.ChartData(bedTime,date))
                 sum += bedTime
             }
             else{
-                bedTimeList?.add(0)
+                bedTimeList?.add(com.example.sleephelper.ChartData(0,""))
             }
         }
         val monthlyAverage = sum / count
@@ -364,7 +415,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     }
 
     private suspend fun calSleepTimeAverage() {
-        sleepTimeList = ArrayList<Int>()
+        sleepTimeList = ArrayList<ChartData>()
         var sum = 0
         var count = 0
 
@@ -380,15 +431,16 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         sum = 0
         count = 0
         var sleepTime = 0
-
+        var date : String? = null
         for (i in 0..29) {
             if (startSleepTimeList?.get(i) != "null" && wakeUpTimeList?.get(i) != "null") {
                 count++
                 sleepTime = calSleepTime(startSleepTimeList!!.get(i), wakeUpTimeList!!.get(i))
-                sleepTimeList?.add(sleepTime)
+               date = getDaysAgo(i.toLong())
+                sleepTimeList?.add(com.example.sleephelper.ChartData(sleepTime,date))
                 sum += sleepTime
             }else{
-                sleepTimeList?.add(0)
+                sleepTimeList?.add(com.example.sleephelper.ChartData(0,""))
             }
         }
         val monthlyAverage = sum / count
@@ -427,7 +479,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     }
 
     private fun calScoreAverage() {
-        scoreList = kotlin.collections.ArrayList<Int>()
+        scoreList = kotlin.collections.ArrayList<com.example.sleephelper.ChartData>()
         var sum = 0
         var count = 0
 
@@ -448,18 +500,19 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         sum = 0
         count = 0
         var score = 0
-
+        var date :String? = null
         for (i in 0..29) {
             if (bedStartTimeList?.get(i) != "null" && bedEndTimeList?.get(i) != "null"
                 && startSleepTimeList?.get(i) != "null" && wakeUpTimeList?.get(i) != "null"
             ) {
                 count++
+                date = getDaysAgo(i.toLong())
                 score = calScore(bedStartTimeList!!.get(i), bedEndTimeList!!.get(i),
                     startSleepTimeList!!.get(i), wakeUpTimeList!!.get(i))
-                scoreList?.add(score)
+                scoreList?.add(com.example.sleephelper.ChartData(score,date))
                 sum += score
             }else{
-                scoreList?.add(0)
+                scoreList?.add(com.example.sleephelper.ChartData(0,""))
             }
 
         }
