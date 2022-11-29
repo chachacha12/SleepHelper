@@ -25,13 +25,12 @@ class WritingDiaryActivity : AppCompatActivity() {
 
     //수면일기 입력값 13개
     var emoji="0"  //1-3까지 이모지 있음. 0이면 아무것도 선택x
-    var gotobed_time =""
-    var sleep_time =""
-    var sleep_peroid =""
-    var wakeup_time =""
-    var outtobedtime =""
+    var gotobed_time ="0:0"
+    var sleep_time ="0:0"
+    var wakeup_time ="0:0"
+    var outtobedtime ="0:0"
     var wakeup_num ="0"
-    var daysleep_peroid =""
+    var daysleep_peroid ="0:0"
     var coffee ="0"
     var beer ="0"
     var soju ="0"
@@ -181,11 +180,15 @@ class WritingDiaryActivity : AppCompatActivity() {
         wakeup_time = binding.waketimeEdittextView.text.toString()
         outtobedtime =binding.outtobedtimeEdittextView.text.toString()
 
-        if(binding.wakenumberEdittextView.text.isEmpty()){
-            wakeup_num = "0"
-        }else{
+        //잠에서 깬 횟수 입력시 처리
+        if(!binding.wakenumberEdittextView.text.isEmpty()){
             wakeup_num = binding.wakenumberEdittextView.text.toString()
         }
+        //낮잠시간 입력시 처리
+        if(!binding.afternoonsleepEdittextView.text.isEmpty()){
+            daysleep_peroid = binding.afternoonsleepEdittextView.text.toString()
+        }
+
     }
 
     //태그선택시 색상변경 작업
