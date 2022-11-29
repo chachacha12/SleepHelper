@@ -2,6 +2,7 @@ package com.example.sleephelper
 
 // import com.google.firebase.auth.ktx.auth
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -67,6 +68,7 @@ class WritingDiaryActivity : AppCompatActivity() {
                     if(emoji !="0"){
                         Writediary() ////태그제외 입력한 수면일기값들 저장
                         saveSleepData()
+
                     }else{
                         Toast.makeText(this, "수면컨디션을 선택해주세요.",Toast.LENGTH_SHORT).show()
                     }
@@ -159,6 +161,11 @@ class WritingDiaryActivity : AppCompatActivity() {
                 // 성공할 경우
                 Toast.makeText(this, showDate+" 수면일기 작성 완료!", Toast.LENGTH_SHORT).show()
                 Log.e("태그", "sleepdata:"+sleepdata)
+
+                //캘린더페이지 이동
+                intent = Intent(this, CalendarActivity::class.java)
+                startActivity(intent)
+
             }
             ?.addOnFailureListener {
                 // 실패할 경우

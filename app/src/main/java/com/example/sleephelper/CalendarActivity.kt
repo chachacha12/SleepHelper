@@ -1,5 +1,6 @@
 package com.example.sleephelper
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -59,6 +61,7 @@ class CalendarActivity : AppCompatActivity() {
     var emojiPath:Int = 0 // 사용자가 선택한 이모지를 캘린더에 나타내기 한 변수
 
 
+    @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +72,7 @@ class CalendarActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         firebaseAuth!!.currentUser?.email
+
 
         filePath = "20221128"
 
@@ -126,11 +130,12 @@ class CalendarActivity : AppCompatActivity() {
                 Log.w("MainActivity", "Error getting documents: $exception")
             }
 
+
         binding.calendarView.setOnDayClickListener(OnDayClickListener { eventDay ->
             //val clickedDayCalendar = eventDay.calendar
 
             binding.slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
-
+            
             // 캘린더 페이지에 넣어주기
             binding.tvWine.text = wine
             binding.tvBeer.text = beer
