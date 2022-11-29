@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.applandeo.materialcalendarview.CalendarView
@@ -21,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 
@@ -38,12 +40,12 @@ class CalendarActivity : AppCompatActivity() {
     var makguli:String?=null // 탁주 섭취량
     var soju:String?=null // 소주 섭취량
     var coffee:String?=null // 커피 섭취량
-    var nap_time:String?=null // 낮잠 시간
-    var sleep_time:String?=null // 취침 시각
-    var wakeup_time:String?=null // 기상 시각
-    var gotobed_time:String?=null // 침대에 누운 시각
-    var outtobed_time:String?=null // 침대에서 벗어난 시각
-    var emoji:String?=null // 수면 이모지
+    var nap_time:String = "12:00"// 낮잠 시간
+    var sleep_time:String= "12:00"// 취침 시각
+    var wakeup_time:String= "12:00" // 기상 시각
+    var gotobed_time:String= "12:00" // 침대에 누운 시각
+    var outtobed_time:String= "12:00"// 침대에서 벗어난 시각
+    var emoji:String= "1" // 수면 이모지
 
     var time_to_sleep:String?=null // 잠들 때까지 걸린 시간
     var time_in_bed:String?=null // 침대에서 머문 시간
@@ -75,68 +77,106 @@ class CalendarActivity : AppCompatActivity() {
 
 
         filePath = "20221128"
+        initDate()
+        setChart()
 
-        firestore!!.collection("Data")
-            .document(firebaseAuth?.currentUser?.email!!)
-            .collection("sleepdata").document(
-                filePath).get()      // 문서 가져오기
-            .addOnSuccessListener { result ->
-                // 성공할 경우
-                Log.e("로그", result.get("beer").toString())
+        setBottomNavigation()
+        setFabAdd()
+    }
 
-                // 수면일기에 입력된 정보 변수에 넣기
-                wine = result.get("wine").toString() + "잔"
-                beer = result.get("beer").toString() + "잔"
-                makguli = result.get("makgeolli").toString() + "잔"
-                soju = result.get("soju").toString() + "잔"
-                coffee = result.get("coffee").toString() + "잔"
-                nap_time = result.get("napTime").toString()
-                sleep_time = result.get("startSleepTime").toString()
-                wakeup_time = result.get("wakeUpTime").toString()
-                gotobed_time = result.get("bedStartTime").toString()
-                outtobed_time = result.get("bedEndTime").toString()
-                emoji = result.get("emoji").toString()
-
-                time1 = sleep_time.toString()
-                time2 = gotobed_time.toString()
-                calTimeToSleep(time2, time1)
-
-                time3 = outtobed_time.toString()
-                time4 = calTimeinBed(time2,time3).toString()
-                time_in_bed = minToTime(time4)
-
-                time5 = wakeup_time.toString()
-                time6 = calTimeinBed(time1,time5).toString()
-                sleeptime = minToTime(time6)
-
-                sleepLevel = emoji.toString()
-
-                // 사용자가 선택한 수면 이모지에 따라 다른 경로 설정
-                if(sleepLevel.toInt()==1){
-                    emojiPath = R.drawable.emoji_bad
-                }
-                else if(sleepLevel.toInt()==2){
-                    emojiPath = R.drawable.emoji_normal
-                }
-                else if(sleepLevel.toInt()==3){
-                    emojiPath = R.drawable.emoji_good
-                }
-
-                setCalendar()
-
-            }
-            .addOnFailureListener { exception ->
-                // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
-            }
-
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun initDate(){
+        val calendar: Calendar = Calendar.getInstance()
+        val calendarView: CalendarView = binding.calendarView as CalendarView
+        val events: MutableList<EventDay> = ArrayList()
 
         binding.calendarView.setOnDayClickListener(OnDayClickListener { eventDay ->
-            //val clickedDayCalendar = eventDay.calendar
 
-            binding.slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
-            
-            // 캘린더 페이지에 넣어주기
+            ///////////
+            val simpleDateFormat = SimpleDateFormat("yyyyMMdd")
+            val date = simpleDateFormat.format(eventDay.calendar.time)
+
+            /*
+            val today : LocalDate = LocalDate.now()
+            val todaydate : String = today.toString().replace("-","")
+            Log.e("now", todaydate)
+
+            if(date.toString() == todaydate){
+                val setdate = date.toInt() + 2
+                filePath = setdate.toString()
+            }
+            else{
+                val setdate = date.toInt() - 1
+                filePath = setdate.toString()
+            }
+
+             */
+
+
+            filePath = date.toString()
+            Log.e("date", date)
+            Log.e("filePath", filePath)
+
+            firestore!!.collection("Data")
+                .document(firebaseAuth?.currentUser?.email!!)
+                .collection("sleepdata").document(
+                    filePath).get()      // 문서 가져오기
+                .addOnSuccessListener { result ->
+                    // 성공할 경우
+                    Log.e("log",filePath)
+                    Log.e("로그", result.get("beer").toString())
+
+                    Toast.makeText(this@CalendarActivity, filePath + " 수면 일기", Toast.LENGTH_SHORT)
+
+                    // 수면일기에 입력된 정보 변수에 넣기
+                    wine = result.get("wine").toString() + "잔"
+                    beer = result.get("beer").toString() + "잔"
+                    Log.e("log", beer!!)
+                    makguli = result.get("makgeolli").toString() + "잔"
+                    soju = result.get("soju").toString() + "잔"
+                    coffee = result.get("coffee").toString() + "잔"
+                    nap_time = result.get("napTime").toString()
+                    sleep_time = result.get("startSleepTime").toString()
+                    wakeup_time = result.get("wakeUpTime").toString()
+                    gotobed_time = result.get("bedStartTime").toString()
+                    outtobed_time = result.get("bedEndTime").toString()
+                    emoji = result.get("emoji").toString()
+
+                    time1 = sleep_time.toString()
+                    time2 = gotobed_time.toString()
+                    calTimeToSleep(time2, time1)
+
+                    time3 = outtobed_time.toString()
+                    time4 = calTimeinBed(time2, time3).toString()
+                    time_in_bed = minToTime(time4!!)
+
+                    time5 = wakeup_time.toString()
+                    time6 = calTimeinBed(time1, time5).toString()
+                    sleeptime = minToTime(time6)
+
+                    sleepLevel = emoji.toString()
+
+                    // 사용자가 선택한 수면 이모지에 따라 다른 경로 설정
+                    if(sleepLevel!!.toInt()==1){
+                        emojiPath = R.drawable.emoji_bad
+                    }
+                    else if(sleepLevel!!.toInt()==2){
+                        emojiPath = R.drawable.emoji_normal
+                    }
+                    else if(sleepLevel!!.toInt()==3){
+                        emojiPath = R.drawable.emoji_good
+                    }
+
+                    events.add(EventDay(calendar, emojiPath))
+                    calendarView.setEvents(events)
+
+                }
+                .addOnFailureListener { exception ->
+                    // 실패할 경우
+                    Log.w("MainActivity", "Error getting documents: $exception")
+                    Toast.makeText(this@CalendarActivity, "해당 날짜에 작성된 수면 일기가 없습니다.", Toast.LENGTH_SHORT)
+                }
+
             binding.tvWine.text = wine
             binding.tvBeer.text = beer
             binding.tvMakgurli.text = makguli
@@ -149,15 +189,11 @@ class CalendarActivity : AppCompatActivity() {
             binding.tvTimeInBed.text = time_in_bed
             binding.tvSleepTime.text = sleeptime
             binding.tvScore.text = calScore().toString()
+            binding.slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
+
         })
 
-        setChart()
-
-        setBottomNavigation()
-        setFabAdd()
-
     }
-
 
     // 잠들 때까지 걸린 시간 계산 메소드
     private fun calTimeToSleep(test: String, test2:String){
@@ -207,6 +243,7 @@ class CalendarActivity : AppCompatActivity() {
         return timeinbed
     }
 
+    // 분 -> 시
     private fun minToTime(test: String) : String {
         var input = test.toInt()
         var hour = input/60
@@ -249,12 +286,7 @@ class CalendarActivity : AppCompatActivity() {
     }
 
     //수면효율 계산
-    private fun calScore(
-        //bedStartTime: String,
-        //bedEndTime: String,
-        //startSleepTime: String,
-        //wakeUpTime: String
-    ): Int {
+    private fun calScore(): Int {
         val score =
             (calTimeinBed(sleep_time.toString(), wakeup_time.toString()).toDouble() / calTimeinBed(
                 gotobed_time.toString(), outtobed_time.toString()
@@ -290,18 +322,5 @@ class CalendarActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun setCalendar() {
-        val events: MutableList<EventDay> = ArrayList()
-
-        val calendar: Calendar = Calendar.getInstance()
-
-        val calendarView: CalendarView = binding.calendarView as CalendarView
-        events.add(EventDay(calendar, emojiPath))
-
-
-
-        calendarView.setEvents(events)
-    }
 
 }
