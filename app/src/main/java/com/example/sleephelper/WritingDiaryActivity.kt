@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.applandeo.materialcalendarview.EventDay
 import com.example.sleephelper.databinding.ActivityWritingDiaryBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

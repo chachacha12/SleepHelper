@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import java.text.SimpleDateFormat
@@ -35,16 +36,16 @@ class CalendarActivity : AppCompatActivity() {
     var firestore : FirebaseFirestore? = null
 
     // firebase에서 받아온 정보를 저장할 변수 선언
-    var wine:String?=null // 와인 섭취량
-    var beer:String?=null // 맥주 섭취량
-    var makguli:String?=null // 탁주 섭취량
-    var soju:String?=null // 소주 섭취량
-    var coffee:String?=null // 커피 섭취량
-    var nap_time:String = "12:00"// 낮잠 시간
-    var sleep_time:String= "12:00"// 취침 시각
-    var wakeup_time:String= "12:00" // 기상 시각
-    var gotobed_time:String= "12:00" // 침대에 누운 시각
-    var outtobed_time:String= "12:00"// 침대에서 벗어난 시각
+    var wine:String?="1" // 와인 섭취량
+    var beer:String?="1" // 맥주 섭취량
+    var makguli:String?="1" // 탁주 섭취량
+    var soju:String?="1" // 소주 섭취량
+    var coffee:String?="1" // 커피 섭취량
+    var nap_time:String = "1:00"// 낮잠 시간
+    var sleep_time:String= "23:30"// 취침 시각
+    var wakeup_time:String= "09:00" // 기상 시각
+    var gotobed_time:String= "23:00" // 침대에 누운 시각
+    var outtobed_time:String= "10:00"// 침대에서 벗어난 시각
     var emoji:String= "1" // 수면 이모지
 
     var time_to_sleep:String?=null // 잠들 때까지 걸린 시간
@@ -59,6 +60,7 @@ class CalendarActivity : AppCompatActivity() {
     lateinit var time6:String
     lateinit var sleepLevel:String
     lateinit var filePath:String
+    lateinit var sleepDataPath: CollectionReference
 
     var emojiPath:Int = 0 // 사용자가 선택한 이모지를 캘린더에 나타내기 한 변수
 
@@ -75,8 +77,7 @@ class CalendarActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         firebaseAuth!!.currentUser?.email
 
-
-        filePath = "20221128"
+        //filePath = "20221128"
         initDate()
         setChart()
 
@@ -90,28 +91,17 @@ class CalendarActivity : AppCompatActivity() {
         val calendarView: CalendarView = binding.calendarView as CalendarView
         val events: MutableList<EventDay> = ArrayList()
 
+        //sleepDataPath = firestore!!.collection("Data")
+        //    .document(firebaseAuth?.currentUser?.email!!)
+        //    .collection("sleepdata")
+
+        //sleepDataPath.get()
+
         binding.calendarView.setOnDayClickListener(OnDayClickListener { eventDay ->
 
             ///////////
             val simpleDateFormat = SimpleDateFormat("yyyyMMdd")
             val date = simpleDateFormat.format(eventDay.calendar.time)
-
-            /*
-            val today : LocalDate = LocalDate.now()
-            val todaydate : String = today.toString().replace("-","")
-            Log.e("now", todaydate)
-
-            if(date.toString() == todaydate){
-                val setdate = date.toInt() + 2
-                filePath = setdate.toString()
-            }
-            else{
-                val setdate = date.toInt() - 1
-                filePath = setdate.toString()
-            }
-
-             */
-
 
             filePath = date.toString()
             Log.e("date", date)
@@ -119,19 +109,18 @@ class CalendarActivity : AppCompatActivity() {
 
             firestore!!.collection("Data")
                 .document(firebaseAuth?.currentUser?.email!!)
-                .collection("sleepdata").document(
-                    filePath).get()      // 문서 가져오기
+                .collection("sleepdata").document(filePath).get()      // 문서 가져오기
                 .addOnSuccessListener { result ->
                     // 성공할 경우
-                    Log.e("log",filePath)
-                    Log.e("로그", result.get("beer").toString())
+                    Log.e("after access filepath :",filePath)
+                    Log.e("clickedday beer :", result.get("beer").toString())
 
-                    Toast.makeText(this@CalendarActivity, filePath + " 수면 일기", Toast.LENGTH_SHORT)
+                    //Toast.makeText(this@CalendarActivity, filePath + " 수면 일기", Toast.LENGTH_SHORT)
 
                     // 수면일기에 입력된 정보 변수에 넣기
                     wine = result.get("wine").toString() + "잔"
                     beer = result.get("beer").toString() + "잔"
-                    Log.e("log", beer!!)
+                    //Log.e("log", beer!!)
                     makguli = result.get("makgeolli").toString() + "잔"
                     soju = result.get("soju").toString() + "잔"
                     coffee = result.get("coffee").toString() + "잔"
@@ -156,6 +145,7 @@ class CalendarActivity : AppCompatActivity() {
 
                     sleepLevel = emoji.toString()
 
+
                     // 사용자가 선택한 수면 이모지에 따라 다른 경로 설정
                     if(sleepLevel!!.toInt()==1){
                         emojiPath = R.drawable.emoji_bad
@@ -167,6 +157,20 @@ class CalendarActivity : AppCompatActivity() {
                         emojiPath = R.drawable.emoji_good
                     }
 
+                    binding.tvWine.text = wine
+                    binding.tvBeer.text = beer
+                    binding.tvMakgurli.text = makguli
+                    binding.tvSoju.text = soju
+                    binding.tvCoffee.text = coffee
+                    binding.tvNapTime.text = nap_time
+                    binding.tvBedTime.text = sleep_time
+                    binding.tvWakeUpTime.text = wakeup_time
+                    binding.tvBI.text = time_to_sleep
+                    binding.tvTimeInBed.text = time_in_bed
+                    binding.tvSleepTime.text = sleeptime
+                    binding.tvScore.text = calScore().toString()
+                    binding.slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
+
                     events.add(EventDay(calendar, emojiPath))
                     calendarView.setEvents(events)
 
@@ -176,20 +180,6 @@ class CalendarActivity : AppCompatActivity() {
                     Log.w("MainActivity", "Error getting documents: $exception")
                     Toast.makeText(this@CalendarActivity, "해당 날짜에 작성된 수면 일기가 없습니다.", Toast.LENGTH_SHORT)
                 }
-
-            binding.tvWine.text = wine
-            binding.tvBeer.text = beer
-            binding.tvMakgurli.text = makguli
-            binding.tvSoju.text = soju
-            binding.tvCoffee.text = coffee
-            binding.tvNapTime.text = nap_time
-            binding.tvBedTime.text = sleep_time
-            binding.tvWakeUpTime.text = wakeup_time
-            binding.tvBI.text = time_to_sleep
-            binding.tvTimeInBed.text = time_in_bed
-            binding.tvSleepTime.text = sleeptime
-            binding.tvScore.text = calScore().toString()
-            binding.slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
 
         })
 
