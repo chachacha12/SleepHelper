@@ -2,6 +2,7 @@ package com.example.sleephelper
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.ListAdapter
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sleephelper.databinding.ActivityMypageBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -39,6 +41,7 @@ class MypageActivity : AppCompatActivity() {
    // val itemList = arrayListOf<ListLayout>()    // 리스트 아이템 배열
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMypageBinding.inflate(layoutInflater)
@@ -66,7 +69,7 @@ class MypageActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signOut()
             googleSignInClient?.signOut()
 
-            var logoutIntent = Intent (this, MainActivity::class.java)
+            var logoutIntent = Intent (this, Login::class.java)
             logoutIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(logoutIntent)
         }
@@ -98,11 +101,11 @@ class MypageActivity : AppCompatActivity() {
             ?.set(data)
             ?.addOnSuccessListener {
                 // 성공할 경우
-                Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
             }
             ?.addOnFailureListener {
                 // 실패할 경우
-                Toast.makeText(this, "데이터가 추가에 실패하였습니다", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "데이터가 추가에 실패하였습니다", Toast.LENGTH_SHORT).show()
             }
 
 
@@ -123,11 +126,11 @@ class MypageActivity : AppCompatActivity() {
                 text_Name.setText(name);
                 text_Email.setText(email);
 
-                Toast.makeText(this, "성공했습니다", Toast.LENGTH_SHORT).show()
+               // Toast.makeText(this, "성공했습니다", Toast.LENGTH_SHORT).show()
             }
             ?.addOnFailureListener {
                 // 실패할 경우
-                Toast.makeText(this, "실패하였습니다", Toast.LENGTH_SHORT).show()
+               // Toast.makeText(this, "실패하였습니다", Toast.LENGTH_SHORT).show()
             }
 
     }
@@ -140,6 +143,7 @@ class MypageActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setBottomNavigation() {
         binding!!.bottomNavigation.setOnItemSelectedListener(){
             when(it.itemId){
