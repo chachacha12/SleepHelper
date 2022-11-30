@@ -60,10 +60,8 @@ class CalendarActivity : AppCompatActivity() {
     lateinit var time6:String
     lateinit var sleepLevel:String
     lateinit var filePath:String
-    lateinit var sleepDataPath: CollectionReference
 
     var emojiPath:Int = 0 // 사용자가 선택한 이모지를 캘린더에 나타내기 한 변수
-
 
     @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
@@ -86,13 +84,14 @@ class CalendarActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initDate(){
-        val calendar: Calendar = Calendar.getInstance()
-        val calendarView: CalendarView = binding.calendarView as CalendarView
-        val events: MutableList<EventDay> = ArrayList()
 
         binding.calendarView.setOnDayClickListener(OnDayClickListener { eventDay ->
 
-            ///////////
+            val calendar: Calendar = Calendar.getInstance()
+            val calendarView: CalendarView = binding.calendarView as CalendarView
+            val events: MutableList<EventDay> = ArrayList()
+
+
             val simpleDateFormat = SimpleDateFormat("yyyyMMdd")
             val date = simpleDateFormat.format(eventDay.calendar.time)
 
@@ -105,13 +104,14 @@ class CalendarActivity : AppCompatActivity() {
                 .collection("sleepdata").document(filePath).get()      // 문서 가져오기
                 .addOnSuccessListener { result ->
                     // 성공할 경우
-                    Log.e("after access filepath :",filePath)
-                    Log.e("clickedday beer :", result.get("beer").toString())
+                    Log.e("after access filepath",filePath)
+                    Log.e("clickedday beer", result.get("beer").toString())
+
+                    val clickedDayCalendar : Calendar = eventDay.calendar
 
                     // 수면일기에 입력된 정보 변수에 넣기
                     wine = result.get("wine").toString() + "잔"
                     beer = result.get("beer").toString() + "잔"
-                    //Log.e("log", beer!!)
                     makguli = result.get("makgeolli").toString() + "잔"
                     soju = result.get("soju").toString() + "잔"
                     coffee = result.get("coffee").toString() + "잔"
@@ -162,7 +162,7 @@ class CalendarActivity : AppCompatActivity() {
                     binding.tvScore.text = calScore().toString()
                     binding.slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
 
-                    events.add(EventDay(calendar, emojiPath))
+                    events.add(EventDay(clickedDayCalendar, emojiPath))
                     calendarView.setEvents(events)
 
                 }
@@ -302,6 +302,5 @@ class CalendarActivity : AppCompatActivity() {
             true
         }
     }
-
 
 }
