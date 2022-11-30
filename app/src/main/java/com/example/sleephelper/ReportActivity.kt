@@ -26,6 +26,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.*
@@ -59,6 +60,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
     private var reportDataList: ArrayList<ReportData>? = null
     private var db = FirebaseFirestore.getInstance()
+    private var firebaseAuth = FirebaseAuth.getInstance()
 
     //각 항목 들의 데이터를 30일 치 담는 리스트
     private var dbDataList: QuerySnapshot? = null
@@ -376,7 +378,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     private suspend fun getDbDataList() {
         // var dbDataList : QuerySnapshot? = null
         while (true) {
-            db.collection("Data").document("catree42@gmail.com").collection("sleepdata")
+            db.collection("Data").document(firebaseAuth.currentUser!!.email!!).collection("sleepdata")
                 .get()
                 .addOnSuccessListener { result ->
                     dbDataList = result
