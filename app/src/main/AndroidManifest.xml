@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.sleephelper">
-
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fab_Bottom_app_bar"
         tools:targetApi="31">
+        <activity
+            android:name=".CallFitActivity"
+            android:exported="false" />
         <activity
             android:name=".Login"
             android:exported="true" >
@@ -48,9 +51,7 @@
         </activity>
         <activity
             android:name=".CalendarActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ReportActivity"
             android:exported="false" />
