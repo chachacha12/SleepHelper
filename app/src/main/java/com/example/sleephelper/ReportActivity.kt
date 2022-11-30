@@ -130,50 +130,23 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     }
 
     inner class WeeklyValueFormatter : ValueFormatter() {
-        val dateList = kotlin.collections.ArrayList<String>()
+        //val dateList = kotlin.collections.ArrayList<String>()
+        var date: String? = null
 
-        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+        override fun getFormattedValue(value: Float): String {
+            date = getDaysAgo((6 - value).toLong())
 
-            for(i in getDaysAgo(Duration.WEEK.duration.toLong()).toInt()..getDaysAgo(0.toLong()).toInt()){
-                for(data in bedTimeList!!){
-                    if (i == data.date.toInt()){
-                        dateList.add(changeDateFormat(data.date!!))
-                    }else{
-                        dateList.add("")
-                    }
-                }
-            }
-
-//            for (i in 0..bedTimeList!!.size - 1) {
-//                if(bedTimeList!!.get(i).date.toInt() >= getDaysAgo(Duration.WEEK.duration.toLong()).toInt())
-//                dateList.add(changeDateFormat(bedTimeList?.get(i)?.date!!))
-//            }
-//            Log.d("weeklyDateList",dateList.toString())
-            return dateList.getOrNull(value.toInt() - 1) ?: value.toString()
+            return changeDateFormat(date!!)
         }
     }
 
     inner class MonthlyValueFormatter : ValueFormatter() {
-        val dateList = kotlin.collections.ArrayList<String>()
+        var date: String? = null
 
-        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+        override fun getFormattedValue(value: Float): String {
+            date = getDaysAgo((29 - value).toLong())
 
-            for(i in getDaysAgo(Duration.MONTH.duration.toLong()).toInt()..getDaysAgo(0.toLong()).toInt()){
-                for(data in bedTimeList!!){
-                    if (i == data.date.toInt()){
-                        dateList.add(changeDateFormat(data.date!!))
-                    }else{
-                        dateList.add("")
-                    }
-                }
-            }
-
-//            for (i in 0..bedTimeList!!.size - 1) {
-//                if(bedTimeList!!.get(i).date.toInt() >= getDaysAgo(Duration.MONTH.duration.toLong()).toInt())
-//                    dateList.add(changeDateFormat(bedTimeList?.get(i)?.date!!))
-//
-//            }
-            return dateList.getOrNull(value.toInt() - 1) ?: value.toString()
+            return changeDateFormat(date!!)
         }
     }
 
@@ -185,41 +158,42 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         var value = 0
         var date: String? = null
         val values = ArrayList<BarEntry>()
-        // dataList?.reverse()
+
+
         if (duration == Duration.WEEK.duration) {
-            for (i in 0..dataList.size - 1) {
-                Log.d("chart data", dataList.toString())
-                if (dataList.get(i).date.toInt() >= getDaysAgo(Duration.WEEK.duration.toLong()).toInt()) {
-                    value = dataList?.get(i)?.value!!
-                    //date = dataList?.get(i)?.date
-                    chart?.xAxis?.valueFormatter = WeeklyValueFormatter()
-                    //Log.d("score",value.toString())
-                    values.add(BarEntry(i.toFloat(), value.toFloat()))
+            var j = 0
+            for (i in getDaysAgo(6.toLong()).toInt()..getDaysAgo(0.toLong()).toInt()) {
+                for (data in dataList) {
+                    if (i == data.date.toInt()) {
+                        value = data.value!!
+                        values.add(BarEntry(j.toFloat(), value.toFloat()))
+                    } else {
+                        values.add(BarEntry(j.toFloat(), 0f))
+                    }
                 }
+                j++
             }
+            chart?.xAxis?.valueFormatter = WeeklyValueFormatter()
             chart?.notifyDataSetChanged();
             chart?.invalidate();
 
         } else if (duration == Duration.MONTH.duration) {
-            for (i in 0..dataList.size - 1) {
-                if (dataList.get(i).date.toInt() >= getDaysAgo(Duration.MONTH.duration.toLong()).toInt()) {
-                    value = dataList?.get(i)?.value!!
-                    //date = dataList?.get(i)?.date
-                    chart?.xAxis?.valueFormatter = MonthlyValueFormatter()
-                    //Log.d("score",value.toString())
-                    values.add(BarEntry(i.toFloat(), value.toFloat()))
+            var j = 0
+            for (i in getDaysAgo(29.toLong()).toInt()..getDaysAgo(0.toLong()).toInt()) {
+                for (data in dataList) {
+                    if (i == data.date.toInt()) {
+                        value = data.value!!
+                        values.add(BarEntry(j.toFloat(), value.toFloat()))
+                    } else {
+                        values.add(BarEntry(j.toFloat(), 0f))
+                    }
                 }
+                j++
             }
+            chart?.xAxis?.valueFormatter = MonthlyValueFormatter()
             chart?.notifyDataSetChanged();
             chart?.invalidate();
         }
-//        for(i in 0..29){
-//            value = dataList?.get(i)!!
-//            //Log.d("score",value.toString())
-//            values.add(BarEntry(i.toFloat(),value.toFloat()))
-//            chart?.notifyDataSetChanged();
-//            chart?.invalidate();
-//        }
         return values
     }
 
@@ -241,6 +215,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         }
 
         val set1 = BarDataSet(values, label)
+
 
         val dataSets: ArrayList<IBarDataSet> = ArrayList()
         dataSets.add(set1)
@@ -400,12 +375,16 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
     private suspend fun getDbDataList() {
         // var dbDataList : QuerySnapshot? = null
-        db.collection("Data").document("catree42@gmail.com").collection("sleepdata")
-            .get()
-            .addOnSuccessListener { result ->
-                dbDataList = result
-            }.await()
-        Log.d("dbServer", dbDataList.toString())
+        while (true) {
+            db.collection("Data").document("catree42@gmail.com").collection("sleepdata")
+                .get()
+                .addOnSuccessListener { result ->
+                    dbDataList = result
+                }.await()
+            if (dbDataList != null) {
+                break
+            }
+        }
     }
 
     private fun getDataList(key: String): kotlin.collections.ArrayList<SleepData> {
@@ -416,7 +395,6 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
             if (dbData.id.toInt() >= getDaysAgo(30.toLong()).toInt()) {
                 date = dbData.id
                 value = dbData.data[key] as String
-                Log.d("data", "$date : $value")
                 dataList.add(SleepData(date, value))
             }
         }
@@ -449,7 +427,6 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         for (i in 0..bedEndTimeList!!.size - 1) {
             if (bedEndTimeList?.get(i)?.date!!.toInt() >= getDaysAgo(Duration.MONTH.duration.toLong()).toInt()
             ) {
-                Log.d("bedEndList", bedEndTimeList.toString())
                 count++
                 sum += calBedTime(
                     bedStartTimeList?.get(i)?.value!!,
@@ -911,19 +888,6 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         CoroutineScope(Dispatchers.Default).launch {
 
             getDbDataList()
-
-//            bedEndTimeList = getMonthlyDbDataList("bedEndTime")
-//            bedStartTimeList = getMonthlyDbDataList("bedStartTime")
-//            beerList = getMonthlyDbDataList("beer")
-//            coffeeList = getMonthlyDbDataList("coffee")
-//            emojiList = getMonthlyDbDataList("emoji")
-//            makgeolliList = getMonthlyDbDataList("makgeolli")
-//            napTimeList = getMonthlyDbDataList("napTime")
-//            sojuList = getMonthlyDbDataList("soju")
-//            startSleepTimeList = getMonthlyDbDataList("startSleepTime")
-//            wakeUpCountList = getMonthlyDbDataList("wakeUpCount")
-//            wakeUpTimeList = getMonthlyDbDataList("wakeUpTime")
-//            wineList = getMonthlyDbDataList("wine")
 
             bedEndTimeList = getDataList("bedEndTime")
             bedStartTimeList = getDataList("bedStartTime")
