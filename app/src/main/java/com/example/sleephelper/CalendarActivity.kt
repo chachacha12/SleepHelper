@@ -77,7 +77,6 @@ class CalendarActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         firebaseAuth!!.currentUser?.email
 
-        //filePath = "20221128"
         initDate()
         setChart()
 
@@ -90,12 +89,6 @@ class CalendarActivity : AppCompatActivity() {
         val calendar: Calendar = Calendar.getInstance()
         val calendarView: CalendarView = binding.calendarView as CalendarView
         val events: MutableList<EventDay> = ArrayList()
-
-        //sleepDataPath = firestore!!.collection("Data")
-        //    .document(firebaseAuth?.currentUser?.email!!)
-        //    .collection("sleepdata")
-
-        //sleepDataPath.get()
 
         binding.calendarView.setOnDayClickListener(OnDayClickListener { eventDay ->
 
@@ -114,8 +107,6 @@ class CalendarActivity : AppCompatActivity() {
                     // 성공할 경우
                     Log.e("after access filepath :",filePath)
                     Log.e("clickedday beer :", result.get("beer").toString())
-
-                    //Toast.makeText(this@CalendarActivity, filePath + " 수면 일기", Toast.LENGTH_SHORT)
 
                     // 수면일기에 입력된 정보 변수에 넣기
                     wine = result.get("wine").toString() + "잔"
