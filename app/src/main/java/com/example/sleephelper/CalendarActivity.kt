@@ -168,11 +168,13 @@ class CalendarActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { exception ->
                     // 실패할 경우
+                    //Toast.makeText(this@CalendarActivity, "해당 날짜에 작성된 \n수면 일기가 없습니다.", Toast.LENGTH_SHORT)
+                    onStart()
                     Log.w("MainActivity", "Error getting documents: $exception")
-                    Toast.makeText(this@CalendarActivity, "해당 날짜에 작성된 수면 일기가 없습니다.", Toast.LENGTH_SHORT)
                 }
 
         })
+
 
     }
 
