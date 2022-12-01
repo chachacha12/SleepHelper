@@ -650,22 +650,37 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
         for (i in 0..bedEndTimeList!!.size - 1) {
             if (bedEndTimeList?.get(i)?.date!!.toInt() >= getDaysAgo(Duration.WEEK.duration.toLong()).toInt()) {
+                if(napTimeList!!.get(i).value == "" || napTimeList!!.get(i).value == "0:0")
+                    continue
                 count++
                 sum += calTimeInMins(napTimeList!!.get(i).value)
             }
         }
-        val weeklyAverage = changeTimeFormat(sum / count)
+        var weeklyAverage = changeTimeFormat(0)
+        if(count == 0){
+            weeklyAverage = changeTimeFormat(0)
+        }else{
+            weeklyAverage = changeTimeFormat(sum / count)
+        }
+
 
         sum = 0
         count = 0
 
         for (i in 0..bedEndTimeList!!.size - 1) {
             if (bedEndTimeList?.get(i)?.date!!.toInt() >= getDaysAgo(Duration.MONTH.duration.toLong()).toInt()) {
+                if(napTimeList!!.get(i).value == "" || napTimeList!!.get(i).value == "0:0")
+                    continue
                 count++
                 sum += calTimeInMins(napTimeList!!.get(i).value)
             }
         }
-        val monthlyAverage = changeTimeFormat(sum / count)
+        var monthlyAverage = changeTimeFormat(0)
+        if(count == 0){
+            monthlyAverage = changeTimeFormat(0)
+        }else{
+            monthlyAverage = changeTimeFormat(sum / count)
+        }
 
         reportDataList?.set(6, ReportData(weeklyAverage, monthlyAverage, false))
     }
