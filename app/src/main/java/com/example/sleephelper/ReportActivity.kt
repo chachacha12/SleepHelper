@@ -152,6 +152,19 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         }
     }
 
+    inner class TimeValueFormatter : ValueFormatter(){
+
+        override fun getFormattedValue(value: Float): String {
+            return changeTimeFormat(value.toInt())
+        }
+    }
+
+    inner class NormalValueFormatter : ValueFormatter(){
+        override fun getFormattedValue(value: Float): String {
+            return value.toInt().toString()
+        }
+    }
+
     //차트 데이터 바꾸기
     private fun changeChartData(
         dataList: kotlin.collections.ArrayList<com.example.sleephelper.ChartData>,
@@ -164,32 +177,37 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
         if (duration == Duration.WEEK.duration) {
             var j = 0
-            for (i in getDaysAgo(6.toLong()).toInt()..getDaysAgo(0.toLong()).toInt()) {
+            for (i in 0..6) {
+                var n = getDaysAgo((6-i).toLong()).toInt()
                 for (data in dataList) {
-                    if (i == data.date.toInt()) {
+                    if (n == data.date.toInt()) {
                         value = data.value!!
-                        values.add(BarEntry(j.toFloat(), value.toFloat()))
+                        break
                     } else {
-                        values.add(BarEntry(j.toFloat(), 0f))
+                        value = 0
                     }
                 }
+                values.add(BarEntry(j.toFloat(),value.toFloat()))
                 j++
             }
+            Log.d("j value", j.toString())
             chart?.xAxis?.valueFormatter = WeeklyValueFormatter()
             chart?.notifyDataSetChanged();
             chart?.invalidate();
 
         } else if (duration == Duration.MONTH.duration) {
             var j = 0
-            for (i in getDaysAgo(29.toLong()).toInt()..getDaysAgo(0.toLong()).toInt()) {
+            for (i in 0..29) {
+                var n = getDaysAgo((29-i).toLong()).toInt()
                 for (data in dataList) {
-                    if (i == data.date.toInt()) {
+                    if (n == data.date.toInt()) {
                         value = data.value!!
-                        values.add(BarEntry(j.toFloat(), value.toFloat()))
+                        break
                     } else {
-                        values.add(BarEntry(j.toFloat(), 0f))
+                        value = 0
                     }
                 }
+                values.add(BarEntry(j.toFloat(),value.toFloat()))
                 j++
             }
             chart?.xAxis?.valueFormatter = MonthlyValueFormatter()
@@ -207,12 +225,15 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
         when (label) {
             "수면 효율" -> {
                 values = changeChartData(scoreList!!, duration)
+                chart?.axisLeft?.valueFormatter = NormalValueFormatter()
             }
             "침대에서 보낸 시간" -> {
                 values = changeChartData(bedTimeList!!, duration)
+                chart?.axisLeft?.valueFormatter = TimeValueFormatter()
             }
             "수면 시간" -> {
                 values = changeChartData(sleepTimeList!!, duration)
+                chart?.axisLeft?.valueFormatter = TimeValueFormatter()
             }
         }
 
@@ -342,7 +363,8 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun getDaysAgo(day: Long): String {
-        val dayAgo = LocalDate.now().minusDays(day)
+        var dayAgo = LocalDate.now()
+        dayAgo = dayAgo.minusDays(day)
         val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
         val formatted = dayAgo.format(formatter)
 
