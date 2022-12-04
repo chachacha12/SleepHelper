@@ -21,10 +21,17 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CalendarActivity : AppCompatActivity() {
@@ -47,6 +54,13 @@ class CalendarActivity : AppCompatActivity() {
     var gotobed_time:String= "23:00" // 침대에 누운 시각
     var outtobed_time:String= "10:00"// 침대에서 벗어난 시각
     var emoji:String= "1" // 수면 이모지
+
+    private var reportDataList: ArrayList<ReportData>? = null
+    private var db = FirebaseFirestore.getInstance()
+
+    //각 항목 들의 데이터를 30일 치 담는 리스트
+    private var dbDataList: QuerySnapshot? = null
+    private var emojiList: kotlin.collections.ArrayList<SleepData>? = null
 
     var time_to_sleep:String?=null // 잠들 때까지 걸린 시간
     var time_in_bed:String?=null // 침대에서 머문 시간
@@ -75,6 +89,9 @@ class CalendarActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         firebaseAuth!!.currentUser?.email
 
+        reportDataList = ReportModel.defaultReportDataList()
+
+        init()
         initDate()
         setChart()
 
@@ -82,12 +99,137 @@ class CalendarActivity : AppCompatActivity() {
         setFabAdd()
     }
 
+    // 앱 시작 시 수면 일기 작성된 날 그에 해당하는 이모지를 보여주는 메소드
+    private fun init(){
+        CoroutineScope(Dispatchers.Default).launch{
+            val calenderView:CalendarView = binding.calendarView as CalendarView
+
+            getDbDataList()
+            emojiList = getDataList("emoji")
+            Log.e("emojilist", emojiList.toString())
+
+            val events: MutableList<EventDay> = ArrayList()
+            var calendar:Calendar = Calendar.getInstance()
+
+            var arrayLen = emojiList!!.size
+            //Log.e("arrayLen", arrayLen.toString())
+
+            for(i: Int in 0..arrayLen-1){
+                var ddate = emojiList?.get(i)?.date.toString()
+                var dyear = ddate.substring(0 until 4)
+                var dmonth = ddate.substring(4 until 6)
+                var dday = ddate.substring(6 until 8)
+
+                var setDate = dateToCalendar(dyear.toInt(), dmonth.toInt()-1, dday.toInt())
+                calendar = setDate
+
+                if(emojiList?.get(i)?.value.toString() == "1"){
+                    emojiPath = R.drawable.emoji_bad
+                }
+                else if(emojiList?.get(i)?.value.toString() == "2"){
+                    emojiPath = R.drawable.emoji_normal
+                }
+                else if(emojiList?.get(i)?.value.toString() == "3"){
+                    emojiPath = R.drawable.emoji_good
+                }
+                //Log.e("pair", calendar.toString())
+                //Log.e("pair2", emojiPath.toString())
+
+                //binding.slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
+
+                events.add(EventDay(calendar, emojiPath))
+
+                runOnUiThread(Runnable(){
+                    calenderView.setEvents(events)
+                })
+
+            }
+
+            /*
+            var setDate = dateToCalendar(2022,11,28)
+            calendar = setDate
+
+            events.add(EventDay(calendar, R.drawable.emoji_bad))
+             */
+        }
+    }
+
+    // Local date 형식 -> Calendar 형식으로 변환
+    private fun dateToCalendar(year:Int, month:Int, date:Int):Calendar{
+
+        var c : Calendar = Calendar.getInstance()
+        c.set(year, month, date)
+        return c
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getDaysAgo(day: Long): String {
+        val dayAgo = LocalDate.now().minusDays(day)
+        val formatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+        val formatted = dayAgo.format(formatter)
+
+        return formatted
+    }
+
+    //firestore에서 데이터가져와서 로컬 db에 저장
+    @RequiresApi(Build.VERSION_CODES.O)
+    private suspend fun getMonthlyDbDataList(key: String): ArrayList<String> {
+        val dbDataList = ArrayList<String>()
+        for (i in 0..29) {
+            dbDataList?.add(i.toString())
+        }
+        for (i in 0..29) {
+            var date = getDaysAgo(i.toLong())
+            db.collection("Data").document("catree42@gmail.com").collection("sleepdata")
+                .document(date)
+                .get()
+                .addOnSuccessListener { result ->
+                    var data = result[key]
+                    if (data != null)
+                        dbDataList?.set(i, data as String)
+                    else {
+                        dbDataList?.set(i, "null")
+                    }
+                }.await()
+        }
+        return dbDataList!!
+    }
+
+    private suspend fun getDbDataList() {
+        // var dbDataList : QuerySnapshot? = null
+        while (true) {
+            db.collection("Data").document(firebaseAuth?.currentUser!!.email!!).collection("sleepdata")
+                .get()
+                .addOnSuccessListener { result ->
+                    dbDataList = result
+                }.await()
+            if (dbDataList != null) {
+                break
+            }
+        }
+    }
+
+    private fun getDataList(key: String): kotlin.collections.ArrayList<SleepData> {
+        var dataList = kotlin.collections.ArrayList<SleepData>()
+        var date: String? = null
+        var value: String? = null
+        for (dbData in dbDataList!!) {
+            if (dbData.id.toInt() >= getDaysAgo(30.toLong()).toInt()) {
+                date = dbData.id
+                value = dbData.data[key] as String
+                dataList.add(SleepData(date, value))
+            }
+        }
+        return dataList
+    }
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initDate(){
 
         binding.calendarView.setOnDayClickListener(OnDayClickListener { eventDay ->
 
-            val calendar: Calendar = Calendar.getInstance()
             val calendarView: CalendarView = binding.calendarView as CalendarView
             val events: MutableList<EventDay> = ArrayList()
 
@@ -164,6 +306,8 @@ class CalendarActivity : AppCompatActivity() {
 
                     events.add(EventDay(clickedDayCalendar, emojiPath))
                     calendarView.setEvents(events)
+
+                    init()
 
                 }
                 .addOnFailureListener { exception ->
