@@ -287,10 +287,10 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
     //침상시간
     private fun calBedTime(bedStartTime: String, bedEndTime: String): Int {
         var bedTime = 0
-        if (calTimeInMins(bedStartTime) > dayInMins) {
-            bedTime = calTimeInMins(bedEndTime) - calTimeInMins(bedStartTime)
-        } else {
-            bedTime = dayInMins - calTimeInMins(bedStartTime) + calTimeInMins(bedEndTime)
+        if(calTimeInMins(bedStartTime)>calTimeInMins(bedEndTime)){
+            bedTime = dayInMins - calTimeInMins(bedStartTime)+calTimeInMins(bedEndTime)
+        }else{
+            bedTime = calTimeInMins(bedEndTime)-calTimeInMins(bedStartTime)
         }
         return bedTime
     }
@@ -308,7 +308,7 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
     //수면 시간
     private fun calSleepTime(startSleepTime: String, wakeUpTime: String): Int {
-        if (calTimeInMins(startSleepTime) < dayInMins) {
+        if (calTimeInMins(startSleepTime) > calTimeInMins(wakeUpTime)) {
             return dayInMins - calTimeInMins(startSleepTime) + calTimeInMins(wakeUpTime)
         } else {
             return calTimeInMins(wakeUpTime) - calTimeInMins(startSleepTime)
