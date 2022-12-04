@@ -1,5 +1,4 @@
 package com.example.sleephelper
-
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
@@ -12,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
+import com.example.sleephelper.*
 import com.example.sleephelper.databinding.ActivityCalendarBinding
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
@@ -148,7 +148,6 @@ class CalendarActivity : AppCompatActivity() {
             /*
             var setDate = dateToCalendar(2022,11,28)
             calendar = setDate
-
             events.add(EventDay(calendar, R.drawable.emoji_bad))
              */
         }

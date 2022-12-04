@@ -1,5 +1,6 @@
 package com.example.sleephelper
 
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,6 +21,7 @@ class RecommendTimeActivity : AppCompatActivity() {
 
     private var input: String = ""
     private var binding: ActivityRecommendTimeBinding? = null
+
     var range1 : String = ""
     var range2 : String = ""
 
@@ -144,17 +146,23 @@ class RecommendTimeActivity : AppCompatActivity() {
 
     }
 
+    var wakeUpTime: String = ""
+
     private fun connectToAI() {
+
+
 
         val timePicker: TimePicker = findViewById(R.id.timepicker)
 
         timePicker.setOnTimeChangedListener { timePicker, hourOfday, minute
             -> binding!!.BtntoAIServer.text = "${hourOfday}시 ${minute}분 설정"
+               wakeUpTime = "${hourOfday}:${minute}"
+            Log.e("wake",wakeUpTime)
         }
 
         binding!!.BtntoAIServer.setOnClickListener {
 
-            Log.e("inptt",input)
+
             // AI 서버로 소켓 네트워크
             ClientThread().start()
 
@@ -166,7 +174,7 @@ class RecommendTimeActivity : AppCompatActivity() {
             try {
 
 //              소켓 생성
-                val socket = Socket("192.168.110.59", 80)
+                val socket = Socket("192.168.0.18", 80)
 
 //              서버에 보낼 값 쓰는 것. println에 값 넣으면 된다.
                 val printWriter= PrintWriter(socket.getOutputStream())
@@ -186,7 +194,23 @@ class RecommendTimeActivity : AppCompatActivity() {
 
                 runOnUiThread {
 //              여기서 buf.toString이 읽어온 값이다.
-                    binding!!.RecommendTimetextView.text=(buf.toString())
+                    Log.e("koggg",buf.toString())
+
+                    range1 =buf.toString().split(" ")[0]
+                    range2 =buf.toString().split(" ")[1]
+
+
+//                    Log.e("minToTimeNum",minToTimeNum("500"))
+//                    Log.e("minToTimeNum",minToTimeNum("550"))
+
+                    range1 = calTime(minToTimeNum(range1),wakeUpTime).toString()
+                    range2 = calTime(minToTimeNum(range2),wakeUpTime).toString()
+
+//                    Log.e("range1",range1)
+//                    Log.e("range2",range2)
+
+                    binding!!.RecommendTimetextView.text=minToTime2(range2)+"~"+minToTime2(range1)
+                    Log.e("inptt",input)
                 }
 
             } catch (e: Exception) {
@@ -223,6 +247,26 @@ class RecommendTimeActivity : AppCompatActivity() {
         return result
     }
 
+    private fun minToTime2(test: String) : String {
+        var input = test.toInt()
+        var hour = input/60
+        var min = input - hour * 60
+
+        var result : String = hour.toString() + ":" + min.toString()
+
+        return result
+    }
+
+    private fun minToTimeNum(test: String) : String {
+        var input = test.toInt()
+        var hour = input/60
+        var min = input - hour * 60
+
+        var result : String = hour.toString() + ":" + min.toString()
+
+        return result
+    }
+
     private fun calTime(gotobedtime: String, outtobedtime: String): Int {
         var timeinbed = 0
 
@@ -240,6 +284,8 @@ class RecommendTimeActivity : AppCompatActivity() {
 
         return timeinbed
     }
+
+
 
     // 수면일기 (+) 버튼
     private fun setFabAdd(){
