@@ -297,12 +297,10 @@ class ReportActivity : AppCompatActivity(), View.OnClickListener, CoroutineScope
 
     //잠들기까지 든 시간
     private fun calBI(bedStartTime: String, startSleepTime: String): Int {
-        if (calTimeInMins(bedStartTime) > dayInMins) {
-            return calTimeInMins(startSleepTime) - calTimeInMins(bedStartTime)
-        } else if (calTimeInMins(startSleepTime) > dayInMins) {
-            return dayInMins - calTimeInMins(bedStartTime) + calTimeInMins(startSleepTime)
-        } else {
-            return calTimeInMins(startSleepTime) - calTimeInMins(bedStartTime)
+        if(calTimeInMins(bedStartTime)>calTimeInMins(startSleepTime)){
+            return dayInMins - calTimeInMins(bedStartTime)+calTimeInMins(startSleepTime)
+        }else{
+            return calTimeInMins(startSleepTime)-calTimeInMins(bedStartTime)
         }
     }
 
