@@ -229,15 +229,16 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            app:layout_constraintTop_toBottomOf="@id/line2"
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/line2">
 
           <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/cl_BI"
-              app:layout_constraintTop_toTopOf="parent"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_BI"
@@ -282,9 +283,9 @@
 
           <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/cl_bedtime"
-              app:layout_constraintTop_toBottomOf="@id/cl_BI"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/cl_BI">
 
             <ImageView
                 android:id="@+id/iv_moon"
@@ -320,9 +321,9 @@
 
           <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/cl_wake_up_time"
-              app:layout_constraintTop_toBottomOf="@id/cl_bedtime"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/cl_bedtime">
 
             <ImageView
                 android:id="@+id/iv_alarm"
@@ -352,16 +353,15 @@
                 android:text="기상 시간"
                 android:textColor="@color/light_gray"
                 app:layout_constraintLeft_toLeftOf="@id/tv_wake_up_time"
-                app:layout_constraintTop_toBottomOf="@id/tv_wake_up_time"
-                />
+                app:layout_constraintTop_toBottomOf="@id/tv_wake_up_time" />
 
           </androidx.constraintlayout.widget.ConstraintLayout>
 
           <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/cl_nap"
-              app:layout_constraintTop_toBottomOf="@id/cl_wake_up_time"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/cl_wake_up_time">
 
             <ImageView
                 android:id="@+id/iv_nap"
@@ -398,9 +398,10 @@
 
           <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/cl_coffee"
-              app:layout_constraintTop_toBottomOf="@id/cl_nap"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/cl_nap">
+
             <ImageView
                 android:id="@+id/iv_coffee"
                 android:layout_width="50dp"
@@ -435,9 +436,9 @@
 
           <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/cl_beer"
-              app:layout_constraintTop_toBottomOf="@id/cl_coffee"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/cl_coffee">
 
             <ImageView
                 android:id="@+id/iv_beer"
@@ -473,9 +474,10 @@
 
           <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/cl_soju"
-              app:layout_constraintTop_toBottomOf="@id/cl_beer"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/cl_beer">
+
             <ImageView
                 android:id="@+id/iv_soju"
                 android:layout_width="50dp"
@@ -510,9 +512,10 @@
 
           <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/cl_makgurli"
-              app:layout_constraintTop_toBottomOf="@id/cl_soju"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/cl_soju">
+
             <ImageView
                 android:id="@+id/iv_makgurli"
                 android:layout_width="50dp"
@@ -546,9 +549,10 @@
 
           <androidx.constraintlayout.widget.ConstraintLayout
               android:id="@+id/cl_wine"
-              app:layout_constraintTop_toBottomOf="@id/cl_makgurli"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              app:layout_constraintTop_toBottomOf="@id/cl_makgurli">
+
             <ImageView
                 android:id="@+id/iv_wine"
                 android:layout_width="50dp"

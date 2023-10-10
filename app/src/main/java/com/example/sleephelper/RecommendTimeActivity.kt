@@ -174,7 +174,7 @@ class RecommendTimeActivity : AppCompatActivity() {
             try {
 
 //              소켓 생성
-                val socket = Socket("192.168.0.18", 80)
+                val socket = Socket("192.168.163.59", 80)
 
 //              서버에 보낼 값 쓰는 것. println에 값 넣으면 된다.
                 val printWriter= PrintWriter(socket.getOutputStream())
